@@ -61,8 +61,6 @@ nautilus_python_load_file(GTypeModule *type_module, char *filename)
 	locals = PyModule_GetDict(module);
 	
 	while (PyDict_Next(locals, &pos, &key, &value)) {
-		PyObject *class, *bases;
-			
 		if (!PyType_Check(value))
 			continue;
 

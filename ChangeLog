@@ -1,5 +1,8 @@
 2004-10-08  Johan Dahlin  <johan@gnome.org>
 
+	* src/nautilus-python.c (nautilus_python_load_file): Remove unused
+	variables. Patch by Ross Burton.
+
 	* nautilus-python.pc.in: Remove mono leftovers, and add pythondir
 	so external packages know where it can install stuff. Patch by
 	Ross Burton

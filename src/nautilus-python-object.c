@@ -104,9 +104,10 @@ nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provide
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     PyObject *py_files, *py_ret;
     GList *ret = NULL;
+	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
-	
+
 	CHECK_METHOD_NAME(object->instance);
 
 	CONVERT_LIST(py_files, files);
@@ -118,6 +119,7 @@ nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provide
 	HANDLE_LIST(py_ret, NautilusPropertyPage, "nautilus.PropertyPage");
 	
  beach:
+	pyg_gil_state_release(state);
     return ret;
 }
 #undef METHOD_NAME
@@ -138,6 +140,7 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
     PyObject *py_ret, *py_files;
+	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
 
@@ -154,6 +157,7 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 
  beach:
+	pyg_gil_state_release(state);
     return ret;
 }
 #undef METHOD_NAME
@@ -167,6 +171,7 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
     PyObject *py_ret;
+	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
 	
@@ -195,6 +200,7 @@ nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
     PyObject *py_ret;
+	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
 
@@ -209,6 +215,7 @@ nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 	
  beach:
+	pyg_gil_state_release(state);
     return ret;
 }
 #undef METHOD_NAME
@@ -228,6 +235,7 @@ nautilus_python_object_get_columns (NautilusColumnProvider *provider)
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
     PyObject *py_ret;
+	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 
 	debug_enter();
 		
@@ -241,6 +249,7 @@ nautilus_python_object_get_columns (NautilusColumnProvider *provider)
 	HANDLE_LIST(py_ret, NautilusColumn, "nautilus.Column");
 	
  beach:
+	pyg_gil_state_release(state);
     return ret;
 }
 #undef METHOD_NAME
@@ -271,6 +280,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider *provider,
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
     PyObject *py_ret;
+	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
 
@@ -291,6 +301,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider *provider,
 	ret = PyInt_AsLong(py_ret);
 	
  beach:
+	pyg_gil_state_release(state);
     return ret;
 }
 #undef METHOD_NAME

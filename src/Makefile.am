@@ -36,7 +36,7 @@ nautilus_la_SOURCES = nautilusmodule.c
 nodist_nautilus_la_SOURCES = nautilus.c
 nautilus.c: nautilus.defs nautilus.override
 CLEANFILES = nautilus.c
-EXTRA_DIST = nautilus.override nautilus.defs
+EXTRA_DIST = nautilus.override nautilus.defs pygnomevfs.h
 
 .defs.c:
 	(cd $(srcdir)\

@@ -14,8 +14,8 @@ Requirements
 ============
 
 Nautilus 2.6.0
-PyGtk   2.3.95
-Python  2.3
+Python   2.3
+PyGtk    2.4.0
 
 Problems
 ========

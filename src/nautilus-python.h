@@ -1,7 +1,6 @@
 /*
  *  nautilus-python.c - Nautilus Python extension
  * 
- *  Copyright (C) 2003, 2004 Novell, Inc.
  *  Copyright (C) 2004 Johan Dahlin
  *
  *  This library is free software; you can redistribute it and/or
@@ -18,9 +17,6 @@
  *  License along with this library; if not, write to the Free
  *  Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- *  Author: Calvin Gaisford <cgaisford@novell.com>
- *          Dave Camp <dave@ximian.com>
- * 
  */
 
 #ifndef NAUTILUS_PYTHON_H
@@ -38,9 +34,6 @@
 # define debug_enter()
 # define debug_enter_args(x, y)
 #endif
-
-#define NAUTILUS_TYPE_OBJECT_LIST (nautilus_object_list_get_type ())
-GType nautilus_object_list_get_type (void);
 
 /* Macros from PyGTK, changed to return FALSE instead of nothing */
 #define np_init_pygobject() { \

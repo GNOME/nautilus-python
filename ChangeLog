@@ -1,3 +1,15 @@
+2005-01-08  Johan Dahlin  <johan@gnome.org>
+
+	* src/nautilus.override
+	(_wrap_nautilus_file_info_get_vfs_file_info): Wrap.
+
+	* src/pygnomevfs.h: Add from gnome-python, since it's not installed.
+
+	* src/nautilus-python.c (nautilus_python_init_python): Check
+	.nautilus/python-extensions-2.	
+
+	* src/nautilus-python-object.c: Thread fixes.
+
 2004-12-11  Thomas Vander Stichele  <thomas at apestaart dot org>
 
 	* Makefile.am:

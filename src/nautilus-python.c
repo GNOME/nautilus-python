@@ -27,6 +27,7 @@
 
 #include "nautilus-python.h"
 #include "nautilus-python-object.h"
+#include "pygnomevfs.h"
 
 #include <libnautilus-extension/nautilus-extension-types.h>
 
@@ -111,6 +112,7 @@ nautilus_python_init_python (void)
 {
 	PyObject *pygtk, *mdict, *require;
 	PyObject *sys_path, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
+	char *home_dir;
 	char *argv[] = { "nautilus", NULL };
 
 	if (Py_IsInitialized())
@@ -124,11 +126,18 @@ nautilus_python_init_python (void)
 	require = PyDict_GetItemString(mdict, "require");
 	PyObject_CallObject(require, Py_BuildValue("(S)", PyString_FromString("2.0")));
 	
-	debug("init_pygobject");
+  	debug("init_pygobject");
 	np_init_pygobject();
 	debug("init_pygtk");
 	np_init_pygtk();
+	debug("init_gnomevfs");
+        np_init_pygnomevfs();
 
+    debug("pyg_enable_threads");
+	setenv("PYGTK_USE_GIL_STATE_API", "", 0);
+	putenv("PYGTK_USE_GIL_STATE_API=");
+	pyg_enable_threads();
+	
 	gtk = PyImport_ImportModule("gtk");
 	mdict = PyModule_GetDict(gtk);
 	pygtk_version = PyDict_GetItemString(mdict, "pygtk_version");
@@ -144,9 +153,14 @@ nautilus_python_init_python (void)
 	
 	debug("sys.path.insert(0, ...)");
 	sys_path = PySys_GetObject("path");
-	PyList_Insert(sys_path, 0, PyString_FromString(NAUTILUS_LIBDIR "/nautilus-python"));
-	PyList_Insert(sys_path, 1, PyString_FromString(NAUTILUS_LIBDIR "/nautilus/extensions-1.0/python"));
-	
+	PyList_Insert(sys_path, 0,
+				  PyString_FromString(NAUTILUS_LIBDIR "/nautilus-python"));
+	home_dir = g_strdup_printf("%s/.nautilus/python-extensions/",
+							   g_get_home_dir());
+	PyList_Insert(sys_path, 1, PyString_FromString(home_dir));
+	PyList_Insert(sys_path, 2,
+				  PyString_FromString(NAUTILUS_LIBDIR "/nautilus/extensions-1.0/python"));
+			
 	debug("import nautilus");
 	nautilus = PyImport_ImportModule("nautilus");
 	if (!nautilus) {

@@ -135,7 +135,6 @@ nautilus_python_init_python (void)
 
     debug("pyg_enable_threads");
 	setenv("PYGTK_USE_GIL_STATE_API", "", 0);
-	putenv("PYGTK_USE_GIL_STATE_API=");
 	pyg_enable_threads();
 	
 	gtk = PyImport_ImportModule("gtk");

@@ -1,4 +1,4 @@
-EXTRA_DIST = documentation.py test.py
+EXTRA_DIST = documentation.py
 
 test_PYTHON = 			\
 	background-image.py 	\

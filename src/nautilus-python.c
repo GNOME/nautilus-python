@@ -111,12 +111,13 @@ nautilus_python_init_python (void)
 {
 	PyObject *pygtk, *mdict, *require;
 	PyObject *sys_path, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
+	char *argv[] = { "nautilus", NULL };
 
 	if (Py_IsInitialized())
 		return;
 	
 	Py_Initialize();
-	PySys_SetArgv(1, "nautilus");
+	PySys_SetArgv(1, argv);
 	
 	pygtk = PyImport_ImportModule("pygtk");
 	mdict = PyModule_GetDict(pygtk);
@@ -184,12 +185,8 @@ nautilus_module_initialize(GTypeModule *module)
 
 	all_types = g_array_new(FALSE, FALSE, sizeof(GType));
 
-	if (!initialized_python) {
-		if (!nautilus_python_init_python())
-			return;
-		
-		initialized_python = TRUE;
-	}
+	if (!nautilus_python_init_python())
+		return;
 		
 	filenames = nautilus_python_load_dir(NAUTILUS_LIBDIR "/nautilus/extensions-1.0/python");
 	if (!filenames) {

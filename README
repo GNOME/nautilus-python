@@ -1,7 +1,7 @@
 libautilus-extension Python bindings.
 ========================
 
-This are unstable bindings for the nautilus extension library
+These are unstable bindings for the nautilus extension library
 introduced in Gnome 2.6. 
 
 For examples and documentation check the examples sub directory.
@@ -14,8 +14,8 @@ Requirements
 ============
 
 Nautilus 2.6.0
-Python   2.3.95
-PyGtk    2.3
+PyGtk   2.3.95
+Python  2.3
 
 Problems
 ========

@@ -1,0 +1,53 @@
+Name:		nautilus-python
+Summary:        python bindings for GNOME 2's nautilus.
+Version:        @VERSION@
+Release:        1
+
+%define python python2
+%define pyver %(%{__python} -c "import sys; print sys.version[:3]")
+
+Source:		%{name}-%{version}.tar.gz
+
+License:        LGPL
+Group:          Development/Languages
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+Requires:	gnome-python2-gconf
+Requires:	pygtk2 >= 2.3.95
+
+BuildRequires:  pygtk2-devel >= 2.3.95
+BuildRequires:  %{python}-devel >= 2.3.0
+BuildRequires:  eel2-devel >= 2.8.1
+BuildRequires:  nautilus-devel
+
+Provides:       nautilus-python-devel
+
+%description
+These are unstable bindings for the nautilus extension library
+introduced in Gnome 2.6.
+
+%prep
+%setup -q -n %{name}-%{version}
+
+%build
+%configure
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%makeinstall NAUTILUS_LIBDIR=$RPM_BUILD_ROOT%{_libdir}
+find $RPM_BUILD_ROOT -name '*.la' -exec rm {} \;
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root,-)
+%doc AUTHORS ChangeLog NEWS
+%{_libdir}/nautilus-python
+%{_libdir}/nautilus/extensions-1.0
+%{_libdir}/pkgconfig/nautilus-python.pc
+
+%changelog
+* Sat Dec 11 2004 Thomas Vander Stichele <thomas at apestaart dot org>
+- initial spec file

@@ -1,3 +1,11 @@
+2004-12-11  Thomas Vander Stichele  <thomas at apestaart dot org>
+
+	* Makefile.am:
+	* README:
+	* configure.in:
+	* nautilus-python.spec.in:
+	  add spec file
+
 2004-10-08  Johan Dahlin  <johan@gnome.org>
 
 	* src/nautilus-python.c (nautilus_python_load_file): Remove unused

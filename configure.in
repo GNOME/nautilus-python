@@ -152,6 +152,7 @@ AC_DEFINE_UNQUOTED(NAUTILUS_LIBDIR, "$NAUTILUS_LIBDIR", [Nautilus libdir])
 AC_OUTPUT([
   Makefile 
   nautilus-python.pc
+  nautilus-python.spec
   examples/Makefile
   src/Makefile
 ])

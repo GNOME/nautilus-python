@@ -1,3 +1,9 @@
+2004-10-08  Johan Dahlin  <johan@gnome.org>
+
+	* nautilus-python.pc.in: Remove mono leftovers, and add pythondir
+	so external packages know where it can install stuff. Patch by
+	Ross Burton
+
 2004-10-05  Johan Dahlin  <johan@gnome.org>
 
 	* src/nautilus-python.c (nautilus_python_init_python): Use

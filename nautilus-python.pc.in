@@ -1,13 +1,7 @@
-# pkg-config metadata file for simias
-Name: Nautilus-Mono
-Description: Nautilus-Mono Components
+Name: Nautilus-Python
+Description: Nautilus-Python Components
 Version: @VERSION@
-Requires: @PKG_CONFIG_REQUIRES@
-Conflicts: @PKG_CONFIG_CONFLICTS@
-                                                                               
+
 prefix=@prefix@
-
 libdir=${prefix}/lib
-
-Libs:/lib:${libdir} @PKG_CONFIG_LIBS@
-
+pythondir=@NAUTILUS_LIBDIR@/nautilus/extensions-1.0/python

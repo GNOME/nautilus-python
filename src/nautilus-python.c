@@ -38,20 +38,20 @@ static GArray *all_types = NULL;
 static void
 nautilus_python_load_file(GTypeModule *type_module, char *filename)
 {
-	PyObject *main, *main_locals, *locals, *key, *value;
+	PyObject *main_module, *main_locals, *locals, *key, *value;
 	PyObject *module;
 	GType gtype;
 	int pos = 0;
 	
 	debug_enter_args("filename=%s", filename);
 	
-	main = PyImport_AddModule("__main__");
-	if (main == NULL) {
+	main_module = PyImport_AddModule("__main__");
+	if (main_module == NULL) {
 		g_warning("Could not get __main__.");
 		return;
 	}
 	
-	main_locals = PyModule_GetDict(main);
+	main_locals = PyModule_GetDict(main_module);
 	module = PyImport_ImportModuleEx(filename, main_locals, main_locals, NULL);
 	if (!module) {
 		PyErr_Print();
@@ -114,7 +114,7 @@ nautilus_python_init_python (void)
 	char *argv[] = { "nautilus", NULL };
 
 	if (Py_IsInitialized())
-		return;
+		return TRUE;
 	
 	Py_Initialize();
 	PySys_SetArgv(1, argv);
@@ -125,9 +125,9 @@ nautilus_python_init_python (void)
 	PyObject_CallObject(require, Py_BuildValue("(S)", PyString_FromString("2.0")));
 	
 	debug("init_pygobject");
-	init_pygobject();
+	np_init_pygobject();
 	debug("init_pygtk");
-	init_pygtk();
+	np_init_pygtk();
 
 	gtk = PyImport_ImportModule("gtk");
 	mdict = PyModule_GetDict(gtk);

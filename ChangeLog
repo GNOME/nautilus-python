@@ -1,3 +1,7 @@
+2005-03-21  Johan Dahlin  <johan@gnome.org>
+
+        * src/pygnomevfs.h: Import gnomevfs instead of gnome.vfs
+
 2005-01-08  Johan Dahlin  <johan@gnome.org>
 
 	* src/nautilus.override

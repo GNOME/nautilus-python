@@ -84,7 +84,7 @@ struct _PyGnomeVFS_Functions *_PyGnomeVFS_API;
 #define PyGnomeVFSContext_Type      (*_PyGnomeVFS_API->context_type)
 
 #define np_init_pygnomevfs() { \
-    PyObject *gobject = PyImport_ImportModule("gnome.vfs"); \
+    PyObject *gobject = PyImport_ImportModule("gnomevfs"); \
     if (gobject != NULL) { \
         PyObject *mdict = PyModule_GetDict(gobject); \
         PyObject *cobject = PyDict_GetItemString(mdict, "_PyGnomeVFS_API"); \
@@ -95,7 +95,7 @@ struct _PyGnomeVFS_Functions *_PyGnomeVFS_API;
 	    return FALSE; \
         } \
     } else { \
-        Py_FatalError("could not import gnome.vfs"); \
+        Py_FatalError("could not import gnomevfs"); \
         return FALSE; \
     } \
 }

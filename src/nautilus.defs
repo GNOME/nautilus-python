@@ -1,0 +1,252 @@
+;; -*- scheme -*-
+; object definitions ...
+(define-object Column
+  (in-module "Nautilus")
+  (parent "GObject")
+  (c-name "NautilusColumn")
+  (gtype-id "NAUTILUS_TYPE_COLUMN")
+)
+
+(define-interface ColumnProvider
+  (in-module "Nautilus")
+  (c-name "NautilusColumnProvider")
+  (gtype-id "NAUTILUS_TYPE_COLUMN_PROVIDER")
+)
+
+(define-interface FileInfo
+  (in-module "Nautilus")
+  (c-name "NautilusFileInfo")
+  (gtype-id "NAUTILUS_TYPE_FILE_INFO")
+)
+
+(define-interface InfoProvider
+  (in-module "Nautilus")
+  (c-name "NautilusInfoProvider")
+  (gtype-id "NAUTILUS_TYPE_INFO_PROVIDER")
+)
+
+(define-object MenuItem
+  (in-module "Nautilus")
+  (parent "GObject")
+  (c-name "NautilusMenuItem")
+  (gtype-id "NAUTILUS_TYPE_MENU_ITEM")
+)
+
+(define-interface MenuProvider
+  (in-module "Nautilus")
+  (c-name "NautilusMenuProvider")
+  (gtype-id "NAUTILUS_TYPE_MENU_PROVIDER")
+)
+
+(define-object PropertyPage
+  (in-module "Nautilus")
+  (parent "GObject")
+  (c-name "NautilusPropertyPage")
+  (gtype-id "NAUTILUS_TYPE_PROPERTY_PAGE")
+)
+
+(define-interface PropertyPageProvider
+  (in-module "Nautilus")
+  (c-name "NautilusPropertyPageProvider")
+  (gtype-id "NAUTILUS_TYPE_PROPERTY_PAGE_PROVIDER")
+)
+
+;; Enumerations and flags ...
+
+(define-enum OperationResult
+  (in-module "Nautilus")
+  (c-name "NautilusOperationResult")
+  (gtype-id "NAUTILUS_TYPE_OPERATION_RESULT")
+  (values
+    '("complete" "NAUTILUS_OPERATION_COMPLETE")
+    '("failed" "NAUTILUS_OPERATION_FAILED")
+    '("in-progress" "NAUTILUS_OPERATION_IN_PROGRESS")
+  )
+)
+
+
+;; From /usr/include/nautilus/libnautilus-extension/nautilus-column.h
+
+(define-function nautilus_column_get_type
+  (c-name "nautilus_column_get_type")
+  (return-type "GType")
+)
+
+(define-function nautilus_column_new
+  (c-name "nautilus_column_new")
+  (is-constructor-of "NautilusColumn")
+  (return-type "NautilusColumn*")
+  (parameters
+    '("const-char*" "name")
+    '("const-char*" "attribute")
+    '("const-char*" "label")
+    '("const-char*" "description")
+  )
+)
+
+
+
+;; From /usr/include/nautilus/libnautilus-extension/nautilus-extension-types.h
+
+(define-function nautilus_operation_result_get_type
+  (c-name "nautilus_operation_result_get_type")
+  (return-type "GType")
+)
+
+;; From /usr/include/nautilus/libnautilus-extension/nautilus-file-info.h
+
+(define-function nautilus_file_info_list_copy
+  (c-name "nautilus_file_info_list_copy")
+  (return-type "GList*")
+  (parameters
+    '("GList*" "files")
+  )
+)
+
+(define-function nautilus_file_info_list_free
+  (c-name "nautilus_file_info_list_free")
+  (return-type "none")
+  (parameters
+    '("GList*" "files")
+  )
+)
+
+(define-function nautilus_file_info_get_type
+  (c-name "nautilus_file_info_get_type")
+  (return-type "GType")
+)
+
+(define-method is_gone
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_is_gone")
+  (return-type "gboolean")
+)
+
+(define-method get_name
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_name")
+  (return-type "char*")
+)
+
+(define-method get_uri
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_uri")
+  (return-type "char*")
+)
+
+(define-method get_parent_uri
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_parent_uri")
+  (return-type "char*")
+)
+
+(define-method get_uri_scheme
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_uri_scheme")
+  (return-type "char*")
+)
+
+(define-method get_mime_type
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_mime_type")
+  (return-type "char*")
+)
+
+(define-method is_mime_type
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_is_mime_type")
+  (return-type "gboolean")
+  (parameters
+    '("const-char*" "mime_type")
+  )
+)
+
+(define-method is_directory
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_is_directory")
+  (return-type "gboolean")
+)
+
+(define-method get_vfs_file_info
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_vfs_file_info")
+  (return-type "GnomeVFSFileInfo*")
+)
+
+(define-method add_emblem
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_add_emblem")
+  (return-type "none")
+  (parameters
+    '("const-char*" "emblem_name")
+  )
+)
+
+(define-method get_string_attribute
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_string_attribute")
+  (return-type "char*")
+  (parameters
+    '("const-char*" "attribute_name")
+  )
+)
+
+(define-method add_string_attribute
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_add_string_attribute")
+  (return-type "none")
+  (parameters
+    '("const-char*" "attribute_name")
+    '("const-char*" "value")
+  )
+)
+
+(define-method invalidate_extension_info
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_invalidate_extension_info")
+  (return-type "none")
+)
+
+;; From /usr/include/nautilus/libnautilus-extension/nautilus-menu-item.h
+
+(define-function nautilus_menu_item_get_type
+  (c-name "nautilus_menu_item_get_type")
+  (return-type "GType")
+)
+
+(define-function nautilus_menu_item_new
+  (c-name "nautilus_menu_item_new")
+  (is-constructor-of "NautilusMenuItem")
+  (return-type "NautilusMenuItem*")
+  (parameters
+    '("const-char*" "name")
+    '("const-char*" "label")
+    '("const-char*" "tip")
+    '("const-char*" "icon" (null-ok) (default "NULL"))
+  )
+)
+
+(define-method activate
+  (of-object "NautilusMenuItem")
+  (c-name "nautilus_menu_item_activate")
+  (return-type "none")
+)
+
+
+;; From /usr/include/nautilus/libnautilus-extension/nautilus-property-page.h
+
+(define-function nautilus_property_page_get_type
+  (c-name "nautilus_property_page_get_type")
+  (return-type "GType")
+)
+
+(define-function nautilus_property_page_new
+  (c-name "nautilus_property_page_new")
+  (is-constructor-of "NautilusPropertyPage")
+  (return-type "NautilusPropertyPage*")
+  (parameters
+    '("const-char*" "name")
+    '("GtkWidget*" "label")
+    '("GtkWidget*" "page")
+  )
+)

@@ -1,0 +1,57 @@
+2004-06-13  Jürg Billeter  <j@bitron.ch>
+
+	* src/Makefile.am:
+	* src/nautilus/File.cs:
+	* src/nautilus/Makefile.am: Update to reflect changes in mono
+	and Gtk# Beta 2.
+
+2004-05-28  Dave Camp  <dave@ximian.com>
+
+	* src/nautilus/Makefile.am:
+	* src/nautilus/nautilus-sharp.dll.config: Install
+
+2004-05-27  Dave Camp  <dave@ximian.com>
+
+	* src/nautilus-mono-helpers.c: (invoke_print_exceptions),
+	(nautilus_mono_invoke_with_values):
+	* src/nautilus-mono-object.c: (nautilus_mono_object_get_type):
+	* src/nautilus-mono.c: (nautilus_mono_get_nautilus_assembly):
+	* src/nautilus/Makefile.am:
+
+2004-05-27  Dave Camp  <dave@ximian.com>
+
+	* src/nautilus-mono.c: (nautilus_mono_get_glib_assembly),
+	(nautilus_mono_get_gtk_assembly): Use 
+	mono_assembly_load_with_partial_name().
+
+2004-05-27  Dave Camp  <dave@ximian.com>
+
+	* Makefile.am:
+	* configure.in: Build and install nautilus-mono.pc.in
+	* nautilus-mono.pc.in: New file
+	* src/nautilus-mono.c: (nautilus_mono_get_glib_assembly),
+	(nautilus_mono_get_gtk_assembly): Use different path.
+
+2004-03-09  Dave Camp  <dave@ximian.com>
+
+	* configure.in:
+	* src/Makefile.am:
+	* src/nautilus-mono.c: (nautilus_mono_get_glib_assembly),
+	(nautilus_mono_get_gtk_assembly): (nautilus_module_initialize),
+	(nautilus_module_shutdown): Don't shutdown mono if it wasn't 
+	initialized.
+
+2004-03-09  Dave Camp  <dave@ximian.com>
+
+	* src/nautilus-mono.c: (load_dir), (nautilus_module_initialize):
+	* src/nautilus/Makefile: Don't initialize mono if there are no
+	plugins.
+
+2004-03-04  Dave Camp  <dave@ximian.com>
+
+	* Made it all sort work.
+
+2003-12-09  Calvin Gaisford	<cgaisford@novell.com>
+	
+	* Initial project created based on nautilus-vcs project
+

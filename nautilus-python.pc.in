@@ -1,0 +1,13 @@
+# pkg-config metadata file for simias
+Name: Nautilus-Mono
+Description: Nautilus-Mono Components
+Version: @VERSION@
+Requires: @PKG_CONFIG_REQUIRES@
+Conflicts: @PKG_CONFIG_CONFLICTS@
+                                                                               
+prefix=@prefix@
+
+libdir=${prefix}/lib
+
+Libs:/lib:${libdir} @PKG_CONFIG_LIBS@
+

@@ -1,0 +1,158 @@
+AC_INIT
+
+PACKAGE=nautilus-python
+VERSION=0.3.0
+
+AC_SUBST(PACKAGE)
+AC_SUBST(VERSION)
+
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
+AM_CONFIG_HEADER(config.h)
+
+NAUTILUS_REQUIRED=2.6.0
+EEL_REQUIRED=2.6.0
+PYGTK_REQUIRED=2.4.0
+GNOME_PYTHON_REQUIRED=2.0.0
+
+AC_PROG_CC
+AC_DISABLE_STATIC
+AC_PROG_LIBTOOL
+
+dnl Check for pkgconfig first
+AC_CHECK_PROG(HAVE_PKGCONFIG, pkg-config, yes, no)
+
+dnl Give error and exit if we don't have pkgconfig
+if test "x$HAVE_PKGCONFIG" = "xno"; then
+  AC_MSG_ERROR(you need to have pkgconfig installed !)
+fi
+
+AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
+
+dnl **************************************************
+dnl * Check for Python
+dnl **************************************************
+try_python=true
+try_pygtk=false
+python_msg=no
+AC_ARG_WITH(python,
+	[--{with,without}-python   Compile the Python plugin loader],
+	if test "x$withval" = xno; then
+		python_msg="Disabled by request"
+		try_python=false
+	else
+		python_prog="$withval"
+	fi
+)
+
+if $try_python; then
+	if test "x$python_prog" = xyes -o "x$python_prog" = x ; then
+	    python_prog=python
+	fi
+
+	python_val=
+	python_msg="unable to find python"
+	AC_CHECK_PROG(python_val, "$python_prog", true, false)
+	if $python_val; then
+		  AC_MSG_CHECKING(for python >= 2.3)
+		  PY_PREFIX=`$python_prog -c 'import sys ; print sys.prefix'`
+		  PY_EXEC_PREFIX=`$python_prog -c 'import sys ; print sys.exec_prefix'`
+		  changequote(<<, >>)dnl
+		  PY_VERSION=`$python_prog -c 'import sys ; print sys.version[0:3]'`
+		  broken_py_initialize=`$python_prog -c \
+'import sys
+if int(sys.version[0]) < 2:
+    print "yes"
+else:
+    print "no"'`
+		  changequote([, ])dnl
+	  	  if test "x$broken_py_initialize" = "xyes"; then
+			  AC_MSG_RESULT(no)
+			  python_val=false
+			  python_msg="NO.  Python version is too old."
+		  else	
+			  AC_MSG_RESULT(yes)
+		  fi
+	fi
+	if $python_val; then
+		  AC_MSG_CHECKING(Look for $PY_PREFIX/include/python$PY_VERSION/Python.h)
+		  if test -f $PY_PREFIX/include/python$PY_VERSION/Python.h; then
+			  AC_MSG_RESULT(yes)
+			  PY_LIBS="python$PY_VERSION"
+			  PY_LIB_LOC="-L$PY_EXEC_PREFIX/lib/python$PY_VERSION/config"
+			  PY_CFLAGS="-I$PY_PREFIX/include/python$PY_VERSION"
+			  PY_MAKEFILE="$PY_EXEC_PREFIX/lib/python$PY_VERSION/config/Makefile"
+			  PY_LOCALMODLIBS=`sed -n -e 's/^LOCALMODLIBS=\(.*\)/\1/p' $PY_MAKEFILE`
+			  PY_BASEMODLIBS=`sed -n -e 's/^BASEMODLIBS=\(.*\)/\1/p' $PY_MAKEFILE`
+			  PY_OTHER_LIBS=`sed -n -e 's/^LIBS=\(.*\)/\1/p' $PY_MAKEFILE`
+			  PY_EXTRA_LIBS="$PY_LOCALMODLIBS $PY_BASEMODLIBS $PY_OTHER_LIBS"
+			  AC_SUBST(PY_LIBS)
+			  AC_SUBST(PY_LIB_LOC)
+			  AC_SUBST(PY_CFLAGS)
+			  AC_SUBST(PY_EXTRA_LIBS)
+		  else
+			  AC_MSG_RESULT(no)
+			  python_val=false
+		  fi
+	fi
+	if $python_val; then
+		AC_MSG_CHECKING(if we can build a shared library depending on libpython)
+		rm -rf testpython
+		mkdir testpython
+		cd testpython
+		cat > testpython.c <<EOF
+#include <Python.h>
+int testpython (void)
+{
+Py_Exit (0);
+}
+EOF
+		if /bin/sh ../libtool --mode=compile ${CC} $PY_CFLAGS -c testpython.c >/dev/null 2>&1 && \
+		   /bin/sh ../libtool --mode=link ${CC} -o testpython.la -rpath `pwd` -module -avoid-version $PY_LIB_LOC testpython.lo -l$PY_LIBS $PY_EXTRA_LIBS >/dev/null 2>&1 && \
+		   grep 'dlname.*testpython' testpython.la >/dev/null 2>&1; then
+			AC_MSG_RESULT(yes)
+			python_msg="yes"
+		else
+			AC_MSG_RESULT(no)
+			python_val=false
+			python_msg="unable to link to python"
+		fi
+		cd ..
+		rm -rf testpython
+	fi
+	AM_CONDITIONAL(WITH_PYTHON, $python_val)
+else
+	AC_MSG_ERROR(you need to have python installed !)
+fi
+
+PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= $PYGTK_REQUIRED)
+AC_SUBST(PYGTK_CFLAGS)
+
+AC_MSG_CHECKING(for pygtk defs)
+PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
+AC_SUBST(PYGTK_DEFSDIR)
+AC_MSG_RESULT($PYGTK_DEFSDIR)
+
+AC_MSG_CHECKING(for pygtk codegen)
+PYGTK_CODEGEN="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/codegen.py"
+AC_SUBST(PYGTK_CODEGEN)
+AC_MSG_RESULT($PYGTK_CODEGEN)
+
+PKG_CHECK_MODULES(GNOME_PYTHON, gnome-python-2.0 >= $GNOME_PYTHON_REQUIRED)
+
+dnl nautilus and its extension library
+PKG_CHECK_MODULES(NAUTILUS, libnautilus-extension >= $NAUTILUS_REQUIRED eel-2.0 >= $EEL_REQUIRED)
+
+AC_SUBST(NAUTILUS_CFLAGS)
+AC_SUBST(NAUTILUS_LIBS)
+
+NAUTILUS_LIBDIR=`$PKG_CONFIG --variable=libdir libnautilus-extension`
+AC_SUBST(NAUTILUS_LIBDIR)
+AC_DEFINE_UNQUOTED(NAUTILUS_LIBDIR, "$NAUTILUS_LIBDIR", [Nautilus libdir])
+
+AC_OUTPUT([
+  Makefile 
+  nautilus-python.pc
+  examples/Makefile
+  src/Makefile
+])
+

@@ -341,8 +341,6 @@ nautilus_python_object_get_type (GTypeModule *module,
 	GTypeInfo *info;
 	const char *type_name;
 	GType gtype;
-
-	debug_enter_args("type=%s", PyString_AsString(PyObject_GetAttrString(type, "__name__")));
 	  
 	static const GInterfaceInfo property_page_provider_iface_info = {
 		(GInterfaceInitFunc) nautilus_python_object_property_page_provider_iface_init,
@@ -368,6 +366,7 @@ nautilus_python_object_get_type (GTypeModule *module,
 		NULL
 	};
 
+	debug_enter_args("type=%s", PyString_AsString(PyObject_GetAttrString(type, "__name__")));
 	info = g_new0 (GTypeInfo, 1);
 	
 	info->class_size = sizeof (NautilusPythonObjectClass);

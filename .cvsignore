@@ -9,5 +9,7 @@ config.log
 config.status
 libtool
 nautilus-python.pc
+nautilus-python.spec
+nautilus-python-*.tar.gz
 stamp-h1
 

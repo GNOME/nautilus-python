@@ -32,7 +32,6 @@
 
 
 static GArray *all_types = NULL;
-static gboolean initialized_python = FALSE;
 
 #define ENTRY_POINT "nautilus_extension_types"
 
@@ -115,7 +114,11 @@ nautilus_python_init_python (void)
 	PyObject *pygtk, *mdict, *require;
 	PyObject *sys_path, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
 
+	if (Py_IsInitialized())
+		return;
+	
 	Py_Initialize();
+	PySys_SetArgv(1, "nautilus");
 	
 	pygtk = PyImport_ImportModule("pygtk");
 	mdict = PyModule_GetDict(pygtk);
@@ -130,7 +133,7 @@ nautilus_python_init_python (void)
 	gtk = PyImport_ImportModule("gtk");
 	mdict = PyModule_GetDict(gtk);
 	pygtk_version = PyDict_GetItemString(mdict, "pygtk_version");
-	pygtk_required_version = Py_BuildValue("(iii)", 2, 3, 95);
+	pygtk_required_version = Py_BuildValue("(iii)", 2, 4, 0);
 	if (PyObject_Compare(pygtk_version, pygtk_required_version) == -1) {
 		g_warning("PyGTK %s required, but %s found.",
 				  PyString_AsString(PyObject_Repr(pygtk_required_version)),
@@ -209,7 +212,7 @@ nautilus_module_shutdown(void)
 {
 	debug_enter();
 
-	if (initialized_python) {
+	if (Py_IsInitialized()) {
 		Py_Finalize();
 	}
 

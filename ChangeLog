@@ -1,3 +1,12 @@
+2004-10-05  Johan Dahlin  <johan@gnome.org>
+
+	* src/nautilus-python.c (nautilus_python_init_python): Use
+	Py_IsInitialized instead of saving our own state.
+	Call PySys_Argv, so functions inside python that excepts sys.argv
+	to be non NULL work correctly without crashing.
+	Also require PyGTK 2.4.0 in here. Should find a way of exporting
+	it from configure.in
+	
 2004-10-04  Johan Dahlin  <johan@gnome.org>
 
 	* examples/test.py: Remove, it shouldn't really be here

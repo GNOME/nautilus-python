@@ -1,3 +1,8 @@
+2005-05-17  Johan Dahlin  <jdahlin@async.com.br>
+
+	* src/nautilus-python-object.c
+	(nautilus_python_object_get_background_items): Release GIL state.
+
 2005-03-21  Johan Dahlin  <johan@gnome.org>
 
         * src/pygnomevfs.h: Import gnomevfs instead of gnome.vfs

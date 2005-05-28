@@ -187,6 +187,7 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 	
  beach:
+	pyg_gil_state_release(state);
     return ret;
 }
 #undef METHOD_NAME

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
- *  Copyright (C) 2004 Johan Dahlin
+ *  Copyright (C) 2004,2005 Johan Dahlin
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -120,23 +120,31 @@ nautilus_python_init_python (void)
 	
 	Py_Initialize();
 	PySys_SetArgv(1, argv);
-	
+
+	/* pygtk.require("2.0") */
 	pygtk = PyImport_ImportModule("pygtk");
 	mdict = PyModule_GetDict(pygtk);
 	require = PyDict_GetItemString(mdict, "require");
 	PyObject_CallObject(require, Py_BuildValue("(S)", PyString_FromString("2.0")));
-	
+
+	/* import gobject */
   	debug("init_pygobject");
 	np_init_pygobject();
+
+	/* import gtk */
 	debug("init_pygtk");
 	np_init_pygtk();
-	debug("init_gnomevfs");
-        np_init_pygnomevfs();
 
+	/* import gnomevfs */
+	debug("init_gnomevfs");
+	np_init_pygnomevfs();
+
+	/* gobject.threads_init() */
     debug("pyg_enable_threads");
 	setenv("PYGTK_USE_GIL_STATE_API", "", 0);
 	pyg_enable_threads();
-	
+
+	/* gtk.pygtk_version < (2, 4, 0) */
 	gtk = PyImport_ImportModule("gtk");
 	mdict = PyModule_GetDict(gtk);
 	pygtk_version = PyDict_GetItemString(mdict, "pygtk_version");
@@ -150,6 +158,7 @@ nautilus_python_init_python (void)
 	}
 	Py_DECREF(pygtk_required_version);
 	
+	/* sys.path.insert(., ...) */
 	debug("sys.path.insert(0, ...)");
 	sys_path = PySys_GetObject("path");
 	PyList_Insert(sys_path, 0,
@@ -160,6 +169,8 @@ nautilus_python_init_python (void)
 	PyList_Insert(sys_path, 2,
 				  PyString_FromString(NAUTILUS_LIBDIR "/nautilus/extensions-1.0/python"));
 			
+	/* import nautilus */
+	g_setenv("INSIDE_NAUTILUS_PYTHON", "", FALSE);
 	debug("import nautilus");
 	nautilus = PyImport_ImportModule("nautilus");
 	if (!nautilus) {
@@ -167,6 +178,7 @@ nautilus_python_init_python (void)
 		return FALSE;
 	}
 
+	/* Extract types and interfaces from nautilus */
 	mdict = PyModule_GetDict(nautilus);
 	
 #define IMPORT(x, y) \

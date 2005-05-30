@@ -26,8 +26,6 @@
 /* include this first, before NO_IMPORT_PYGOBJECT is defined */
 #include <pygtk/pygtk.h>
 
-#include <libgnome/gnome-program.h>
-
 void pynautilus_register_classes (PyObject *d);
 void pynautilus_add_constants(PyObject *module, const gchar *strip_prefix);
 
@@ -37,10 +35,8 @@ DL_EXPORT(void)
 initnautilus(void)
 {
     PyObject *m, *d;
-    GnomeProgram *program;
     
-    program = gnome_program_get();
-    if (!program || strcmp (gnome_program_get_app_id(program), "nautilus") != 0) {
+    if (!g_getenv("INSIDE_NAUTILUS_PYTHON")) {
 	Py_FatalError("This module can only be used from nautilus");
 	return;
     }

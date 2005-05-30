@@ -1,5 +1,11 @@
 2005-05-30  Johan Dahlin  <johan@gnome.org>
 
+	* NEWS:
+	* README:
+	* configure.in: Bump version to 0.4.0
+
+2005-05-30  Johan Dahlin  <johan@gnome.org>
+
 	* src/nautilus-python.c: (nautilus_python_init_python):
 	* src/nautilusmodule.c: (initnautilus): Use an environment variable to
 	ensure the module is only imported from nautilus-python itself. 

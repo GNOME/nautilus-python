@@ -116,7 +116,6 @@ class FileInfo:
     def is_directory(self):
         pass
 
-    # NOTE: This is currently not implemented
     def get_vfs_file_info(self):
         pass
     

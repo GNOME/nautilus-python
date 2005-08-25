@@ -1,5 +1,9 @@
 2005-08-25  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
+	* examples/documentation.py: Remove note saying
+	FileInfo.get_vfs_file_info was not implemented; it is not true at
+	this moment.
+
 	* src/pygnomevfs.h: Removed.  Now it is installed by gnome-python.
 
 	* src/Makefile.am: Update to use NAUTILUS_PYTHON_{LIBS,CFLAGS}.

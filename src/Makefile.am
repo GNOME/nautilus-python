@@ -5,9 +5,8 @@ INCLUDES =						\
 	-I$(top_srcdir)					\
 	-I$(top_builddir)				\
 	$(DISABLE_DEPRECATED_CFLAGS)			\
-	$(NAUTILUS_CFLAGS)				\
-	$(PY_CFLAGS)					\
-	$(PYGTK_CFLAGS)
+	$(NAUTILUS_PYTHON_CFLAGS)			\
+	$(PY_CFLAGS)
 
 PYTHON_LIBS = 			\
 	-l$(PY_LIBS)		\
@@ -25,18 +24,18 @@ libnautilus_python_la_SOURCES =     	\
 	nautilus-python-object.h
 
 libnautilus_python_la_LDFLAGS = -module -avoid-version $(PY_LIB_LOC)
-libnautilus_python_la_LIBADD  = $(NAUTILUS_LIBS) $(PYTHON_LIBS)
+libnautilus_python_la_LIBADD  = $(NAUTILUS_PYTHON_LIBS) $(PYTHON_LIBS)
 
 pyexec_LTLIBRARIES = nautilus.la
 pyexecdir = $(NAUTILUS_LIBDIR)/nautilus-python
 
 nautilus_la_LDFLAGS = -module -avoid-version -export-symbols-regex initnautilus
-nautilus_la_LIBADD = $(NAUTILUS_LIBS)
+nautilus_la_LIBADD = $(NAUTILUS_PYTHON_LIBS)
 nautilus_la_SOURCES = nautilusmodule.c
 nodist_nautilus_la_SOURCES = nautilus.c
 nautilus.c: nautilus.defs nautilus.override
 CLEANFILES = nautilus.c
-EXTRA_DIST = nautilus.override nautilus.defs pygnomevfs.h
+EXTRA_DIST = nautilus.override nautilus.defs
 
 .defs.c:
 	(cd $(srcdir)\

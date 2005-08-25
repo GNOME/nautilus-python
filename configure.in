@@ -13,8 +13,8 @@ AC_SUBST(ACLOCAL_AMFLAGS, "-I m4 -I .")
 
 NAUTILUS_REQUIRED=2.6.0
 EEL_REQUIRED=2.6.0
-PYGTK_REQUIRED=2.4.0
-GNOME_PYTHON_REQUIRED=2.0.0
+PYGTK_REQUIRED=2.7.99
+GNOME_PYTHON_REQUIRED=2.12.0
 
 AC_PROG_CC
 AC_DISABLE_STATIC
@@ -126,8 +126,10 @@ else
 	AC_MSG_ERROR(you need to have python installed !)
 fi
 
-PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= $PYGTK_REQUIRED)
-AC_SUBST(PYGTK_CFLAGS)
+PKG_CHECK_MODULES(NAUTILUS_PYTHON, [pygtk-2.0 >= $PYGTK_REQUIRED
+                                   gnome-python-2.0 >= $GNOME_PYTHON_REQUIRED
+                                   libnautilus-extension >= $NAUTILUS_REQUIRED
+                                   eel-2.0 >= $EEL_REQUIRED])
 
 AC_MSG_CHECKING(for pygtk defs)
 PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
@@ -138,14 +140,6 @@ AC_MSG_CHECKING(for pygtk codegen)
 PYGTK_CODEGEN="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/codegen.py"
 AC_SUBST(PYGTK_CODEGEN)
 AC_MSG_RESULT($PYGTK_CODEGEN)
-
-PKG_CHECK_MODULES(GNOME_PYTHON, gnome-python-2.0 >= $GNOME_PYTHON_REQUIRED)
-
-dnl nautilus and its extension library
-PKG_CHECK_MODULES(NAUTILUS, libnautilus-extension >= $NAUTILUS_REQUIRED eel-2.0 >= $EEL_REQUIRED)
-
-AC_SUBST(NAUTILUS_CFLAGS)
-AC_SUBST(NAUTILUS_LIBS)
 
 NAUTILUS_LIBDIR=`$PKG_CONFIG --variable=libdir libnautilus-extension`
 AC_SUBST(NAUTILUS_LIBDIR)

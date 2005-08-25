@@ -1,5 +1,13 @@
 2005-08-25  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
+	* src/pygnomevfs.h: Removed.  Now it is installed by gnome-python.
+
+	* src/Makefile.am: Update to use NAUTILUS_PYTHON_{LIBS,CFLAGS}.
+	(EXTRA_DIST): Remove pygnomevfs.h.
+
+	* configure.in: Call PKG_CHECK_MODULES only one time, store
+	LIBS/CFLAGS in NAUTILUS_PYTHON.
+
 	* examples/Makefile.am: Don't install examples into extensions
 	dir; they're only examples, not something the user normally would
 	like to run.  Instead, they are installed into the package doc

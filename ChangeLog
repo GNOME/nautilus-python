@@ -1,3 +1,16 @@
+2005-08-25  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
+	reviewed by: Johan Dahlin
+
+	* src/nautilus-python-object.c:
+	(nautilus_python_object_get_property_pages),
+	(nautilus_python_object_get_file_items),
+	(nautilus_python_object_get_background_items),
+	(nautilus_python_object_get_toolbar_items),
+	(nautilus_python_object_update_file_info),
+	(nautilus_python_object_instance_init): Assorted memory leak
+	fixes.
+
 2005-05-30  Johan Dahlin  <johan@gnome.org>
 
 	* NEWS:

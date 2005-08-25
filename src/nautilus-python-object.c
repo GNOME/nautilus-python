@@ -58,20 +58,18 @@ static GObjectClass *parent_class;
 		GList *l;                                                      \
         py_files = PyList_New(0);                                      \
 		for (l = files; l; l = l->next) {                              \
-			PyList_Append(py_files, pygobject_new((GObject*)l->data)); \
+            PyObject *obj = pygobject_new((GObject*)l->data);          \
+			PyList_Append(py_files, obj);							   \
+			Py_DECREF(obj);                                            \
 		}                                                              \
 	}
 
 #define HANDLE_RETVAL(py_ret)                                          \
     if (!py_ret) {                                                     \
-		if (PyErr_Occurred()) {                                        \
-			PyErr_Print();                                             \
-			PyErr_Clear();                                             \
-			goto beach;                                                \
-		}                                                              \
-	} else if (py_ret == Py_None) {                                    \
-		Py_DECREF(py_ret);                                             \
+		PyErr_Print();                                                 \
 		goto beach;                                                    \
+ 	} else if (py_ret == Py_None) {                                    \
+ 		goto beach;                                                    \
 	}
 
 #define HANDLE_LIST(py_ret, type, type_name)                           \
@@ -92,7 +90,8 @@ static GObjectClass *parent_class;
     							type_name);                            \
     			goto beach;                                            \
     		}                                                          \
-    		ret = g_list_append (ret, (type*)py_item->obj);            \
+    		ret = g_list_append (ret, (type*) g_object_ref(py_item->obj)); \
+            Py_DECREF(py_item);                                        \
     	}                                                              \
     }
 
@@ -102,7 +101,7 @@ nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provide
 										   GList *files)
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
-    PyObject *py_files, *py_ret;
+    PyObject *py_files, *py_ret = NULL;
     GList *ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
@@ -113,12 +112,13 @@ nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provide
 	CONVERT_LIST(py_files, files);
 	
     py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(O)", py_files);
+								 "(N)", py_files);
 	HANDLE_RETVAL(py_ret);
 
 	HANDLE_LIST(py_ret, NautilusPropertyPage, "nautilus.PropertyPage");
 	
  beach:
+	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
 }
@@ -139,24 +139,23 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
-    PyObject *py_ret, *py_files;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
+    PyObject *py_ret = NULL, *py_files;
+	PyGILState_STATE state = pyg_gil_state_ensure();
 	
   	debug_enter();
 
 	CHECK_METHOD_NAME(object->instance);
 
 	CONVERT_LIST(py_files, files);
-	
+
     py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(OO)",
-								 pygobject_new((GObject *)window),
-								 py_files);
+								 "(NN)", pygobject_new((GObject *)window), py_files);
 	HANDLE_RETVAL(py_ret);
 
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 
  beach:
+	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
 }
@@ -170,7 +169,7 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
-    PyObject *py_ret;
+    PyObject *py_ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
@@ -178,7 +177,7 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 	CHECK_METHOD_NAME(object->instance);
 
     py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(OO)",
+								 "(NN)",
 								 pygobject_new((GObject *)window),
 								 pygobject_new((GObject *)file));
 								 
@@ -187,6 +186,7 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 	
  beach:
+	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
 }
@@ -200,7 +200,7 @@ nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
-    PyObject *py_ret;
+    PyObject *py_ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
@@ -208,7 +208,7 @@ nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
 	CHECK_METHOD_NAME(object->instance);
 
     py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(OO)",
+								 "(NN)",
 								 pygobject_new((GObject *)window),
 								 pygobject_new((GObject *)file));
 	HANDLE_RETVAL(py_ret);
@@ -216,6 +216,7 @@ nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 	
  beach:
+	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
 }
@@ -280,7 +281,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider *provider,
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
-    PyObject *py_ret;
+    PyObject *py_ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
@@ -288,7 +289,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider *provider,
 	CHECK_METHOD_NAME(object->instance);
 
     py_ret = PyObject_CallMethod(object->instance,
-								 METHOD_PREFIX METHOD_NAME, "(O)",
+								 METHOD_PREFIX METHOD_NAME, "(N)",
 								 pygobject_new((GObject*)file));
 	HANDLE_RETVAL(py_ret);
 
@@ -302,6 +303,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider *provider,
 	ret = PyInt_AsLong(py_ret);
 	
  beach:
+	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
 }
@@ -323,6 +325,8 @@ nautilus_python_object_instance_init (NautilusPythonObject *object)
 	class = (NautilusPythonObjectClass*)(((GTypeInstance*)object)->g_class);
 
 	object->instance = PyObject_CallObject(class->type, NULL);
+	if (object->instance == NULL)
+		PyErr_Print();
 }
 
 static void

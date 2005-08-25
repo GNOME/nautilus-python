@@ -1,0 +1,11 @@
+To try any of the examples, copy them over to:
+
+    @NAUTILUS_LIBDIR@/nautilus/extensions-1.0/python
+
+Then restart nautilus.
+
+Hint: if you're testing an extensions that you're developing, it may
+be useful to start a 'private' copy of nautilus, like this:
+  $ mkdir /tmp/testing
+  $ export TMPDIR=/tmp/testing
+  $ nautilus --no-desktop

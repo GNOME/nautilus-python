@@ -1,5 +1,16 @@
 2005-08-25  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
+	* examples/Makefile.am: Don't install examples into extensions
+	dir; they're only examples, not something the user normally would
+	like to run.  Instead, they are installed into the package doc
+	dir, along with documentation.py and a README.
+	
+	* examples/README.in: Add this small file explaining how to
+	install the examples and how to run a private instance of nautilus
+	for testing.
+
+2005-08-25  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
 	reviewed by: Johan Dahlin
 
 	* src/nautilus-python-object.c:

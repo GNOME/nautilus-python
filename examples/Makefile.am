@@ -1,9 +1,16 @@
-EXTRA_DIST = documentation.py
+EXTRA_DIST = documentation.py README.in
 
-test_PYTHON = 			\
-	background-image.py 	\
-	block-size-column.py 	\
-	open-terminal.py 	\
-	md5sum-property-page.py 
+docsdir = $(datadir)/doc/$(PACKAGE)
+docs_DATA = documentation.py README
 
-testdir = $(NAUTILUS_LIBDIR)/nautilus/extensions-1.0/python
+examplesdir = $(datadir)/doc/$(PACKAGE)/examples
+examples_DATA =					\
+	background-image.py			\
+	block-size-column.py			\
+	open-terminal.py			\
+	md5sum-property-page.py
+
+README: README.in
+	sed -e s!\@NAUTILUS_LIBDIR\@!@NAUTILUS_LIBDIR@! < $< > $@
+README: Makefile
+

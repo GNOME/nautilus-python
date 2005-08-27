@@ -1,3 +1,10 @@
+2005-08-27  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
+	* src/nautilus-python.c: s/np_init_pygnomevfs/init_pygnomevfs/
+	 (forgotten from when pygnomevfs.h was removed).  Fix a bug
+	 preventing loading of extensions from
+	 $HOME/.nautilus/python-extensions.
+
 2005-08-25  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
 	* examples/documentation.py: Remove note saying

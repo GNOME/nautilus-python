@@ -31,13 +31,12 @@
 
 #include <libnautilus-extension/nautilus-extension-types.h>
 
-
 static GArray *all_types = NULL;
 
 #define ENTRY_POINT "nautilus_extension_types"
 
 static void
-nautilus_python_load_file(GTypeModule *type_module, char *filename)
+nautilus_python_load_file(GTypeModule *type_module, const gchar *filename)
 {
 	PyObject *main_module, *main_locals, *locals, *key, *value;
 	PyObject *module;
@@ -53,7 +52,7 @@ nautilus_python_load_file(GTypeModule *type_module, char *filename)
 	}
 	
 	main_locals = PyModule_GetDict(main_module);
-	module = PyImport_ImportModuleEx(filename, main_locals, main_locals, NULL);
+	module = PyImport_ImportModuleEx((char *) filename, main_locals, main_locals, NULL);
 	if (!module) {
 		PyErr_Print();
 		return;
@@ -78,18 +77,17 @@ nautilus_python_load_file(GTypeModule *type_module, char *filename)
 	debug("Loaded python modules");
 }
 
-static GList *
-nautilus_python_load_dir (const char *dirname)
+static void
+nautilus_python_load_dir (GTypeModule *module, const char *dirname)
 {
 	GDir *dir;
-	GList *files = NULL;
 	const char *name;
 
 	debug_enter_args("dirname=%s", dirname);
 	
 	dir = g_dir_open(dirname, 0, NULL);
 	if (!dir)
-		return NULL;
+		return;
 			
 	while ((name = g_dir_read_name(dir))) {
 		if (g_str_has_suffix(name, ".py")) {
@@ -99,16 +97,14 @@ nautilus_python_load_dir (const char *dirname)
 			len = strlen(name) - 3;
 			modulename = g_new0(char, len + 1 );
 			strncpy(modulename, name, len);
-			files = g_list_append(files, modulename);
+			nautilus_python_load_file(module, modulename);
 		}
 	}
 	g_dir_close(dir);
-
-	return files;
 }
 
 gboolean
-nautilus_python_init_python (void)
+nautilus_python_init_python (gchar **user_extensions_dir)
 {
 	PyObject *pygtk, *mdict, *require;
 	PyObject *sys_path, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
@@ -137,7 +133,7 @@ nautilus_python_init_python (void)
 
 	/* import gnomevfs */
 	debug("init_gnomevfs");
-	np_init_pygnomevfs();
+	init_pygnomevfs();
 
 	/* gobject.threads_init() */
     debug("pyg_enable_threads");
@@ -161,13 +157,12 @@ nautilus_python_init_python (void)
 	/* sys.path.insert(., ...) */
 	debug("sys.path.insert(0, ...)");
 	sys_path = PySys_GetObject("path");
-	PyList_Insert(sys_path, 0,
-				  PyString_FromString(NAUTILUS_LIBDIR "/nautilus-python"));
 	home_dir = g_strdup_printf("%s/.nautilus/python-extensions/",
 							   g_get_home_dir());
-	PyList_Insert(sys_path, 1, PyString_FromString(home_dir));
-	PyList_Insert(sys_path, 2,
-				  PyString_FromString(NAUTILUS_LIBDIR "/nautilus/extensions-1.0/python"));
+	*user_extensions_dir = home_dir;
+	PyList_Insert(sys_path, 0,
+				  PyString_FromString(NAUTILUS_LIBDIR "/nautilus-python"));
+	PyList_Insert(sys_path, 0, PyString_FromString(home_dir));
 			
 	/* import nautilus */
 	g_setenv("INSIDE_NAUTILUS_PYTHON", "", FALSE);
@@ -204,27 +199,18 @@ nautilus_python_init_python (void)
 void
 nautilus_module_initialize(GTypeModule *module)
 {
-	GList *filenames, *l;
+	gchar *user_extensions_dir;
 	
 	debug_enter();
 
 	all_types = g_array_new(FALSE, FALSE, sizeof(GType));
 
-	if (!nautilus_python_init_python())
+	if (!nautilus_python_init_python(&user_extensions_dir))
 		return;
 		
-	filenames = nautilus_python_load_dir(NAUTILUS_LIBDIR "/nautilus/extensions-1.0/python");
-	if (!filenames) {
-		debug("No python extensions found.");
-		return;
-	}
-
-	for (l = filenames; l; l = l->next) {
-		nautilus_python_load_file(module, l->data);
-		g_free(l->data);
-	}
-
-	g_list_free(filenames);
+	nautilus_python_load_dir(module, NAUTILUS_LIBDIR "/nautilus/extensions-1.0/python");
+	nautilus_python_load_dir(module, user_extensions_dir);
+	g_free(user_extensions_dir);
 }
  
 void

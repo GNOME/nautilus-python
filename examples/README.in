@@ -6,7 +6,7 @@ or:
 
 Then restart nautilus.
 
-Hint: if you're testing an extensions that you're developing, it may
+Hint: if you're testing an extension that you're developing, it may
 be useful to start a 'private' instance of nautilus, like this:
   $ mkdir /tmp/testing
   $ export TMPDIR=/tmp/testing

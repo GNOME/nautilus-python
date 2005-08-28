@@ -1,3 +1,8 @@
+2005-08-28  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
+	* examples/README.in: Indicate how you can also install extensions
+	in the home dir.
+
 2005-08-27  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
 	* src/nautilus-python.c: s/np_init_pygnomevfs/init_pygnomevfs/

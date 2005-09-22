@@ -1,3 +1,9 @@
+2005-09-22  Johan Dahlin  <johan@gnome.org>
+
+	* configure.in:
+	* examples/Makefile.am:
+	Release 0.4.1
+
 2005-08-28  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
 	* examples/README.in: Indicate how you can also install extensions

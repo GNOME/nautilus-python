@@ -10,6 +10,10 @@ examples_DATA =					\
 	open-terminal.py			\
 	md5sum-property-page.py
 
+EXTRA_DIST += $(examples_DATA)
+
+CLEANFILES = README
+
 README: README.in
 	sed -e s!\@NAUTILUS_LIBDIR\@!@NAUTILUS_LIBDIR@! < $< > $@
 README: Makefile

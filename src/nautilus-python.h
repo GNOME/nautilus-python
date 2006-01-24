@@ -49,8 +49,8 @@
 	    return FALSE; \
         } \
     } else { \
-        PyErr_SetString(PyExc_ImportError, \
-                        "could not import gobject"); \
+        PyErr_Print(); \
+        g_warning("could not import gobject"); \
         return FALSE; \
     } \
 }
@@ -69,8 +69,8 @@
 	    return FALSE; \
         } \
     } else { \
-        PyErr_SetString(PyExc_ImportError, \
-                        "could not import gtk._gtk"); \
+        PyErr_Print(); \
+        g_warning("could not import gtk._gtk"); \
         return FALSE; \
     } \
 }

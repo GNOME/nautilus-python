@@ -1,3 +1,11 @@
+2006-01-24  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
+	* src/nautilus-python.h (np_init_pygobject): Don't try to set an
+	exception if PyImport_ImportModule returns NULL.  Instead, print
+	the current exception and issue a g_warning.
+	(np_init_pygtk): idem.  PS: macros that return values behind your
+	back are _EVIL_.
+
 2005-09-22  Johan Dahlin  <johan@gnome.org>
 
 	* configure.in:

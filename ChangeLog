@@ -1,3 +1,10 @@
+=== 0.4.2 ===
+2006-02-10  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
+	* NEWS: Update.
+
+	* configure.in: Bump version to 0.4.2.
+
 2006-02-10  Gustavo J. A. M. Carneiro  <gjc@inescporto.pt>
 
 	* src/nautilus-python.c (nautilus_python_init_python):
@@ -16,6 +23,7 @@
 	(np_init_pygtk): idem.  PS: macros that return values behind your
 	back are _EVIL_.
 
+=== 0.4.1 ===
 2005-09-22  Johan Dahlin  <johan@gnome.org>
 
 	* configure.in:
@@ -70,6 +78,7 @@
 	(nautilus_python_object_instance_init): Assorted memory leak
 	fixes.
 
+=== 0.4.0 ===
 2005-05-30  Johan Dahlin  <johan@gnome.org>
 
 	* NEWS:

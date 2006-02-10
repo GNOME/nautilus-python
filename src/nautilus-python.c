@@ -108,12 +108,17 @@ nautilus_python_init_python (gchar **user_extensions_dir)
 {
 	PyObject *pygtk, *mdict, *require;
 	PyObject *sys_path, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
+	GModule *libpython;
 	char *home_dir;
 	char *argv[] = { "nautilus", NULL };
 
 	if (Py_IsInitialized())
 		return TRUE;
-	
+
+	libpython = g_module_open("libpython" PYTHON_VERSION "." G_MODULE_SUFFIX, 0);
+	if (!libpython)
+		g_warning("g_module_open libpython failed: %s", g_module_error());
+
 	Py_Initialize();
 	PySys_SetArgv(1, argv);
 

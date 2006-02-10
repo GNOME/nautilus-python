@@ -1,3 +1,13 @@
+2006-02-10  Gustavo J. A. M. Carneiro  <gjc@inescporto.pt>
+
+	* src/nautilus-python.c (nautilus_python_init_python):
+	g_module_open libpythonX.Y.so, to make the symbols visible in
+	global namespace.  Fixes #327739.
+
+	* src/Makefile.am (INCLUDES): Define PYTHON_VERSION.
+
+	* src/nautilusmodule.c: Missing #include <pygobject.h>.
+
 2006-01-24  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
 	* src/nautilus-python.h (np_init_pygobject): Don't try to set an

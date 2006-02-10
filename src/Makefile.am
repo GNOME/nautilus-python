@@ -6,6 +6,7 @@ INCLUDES =						\
 	-I$(top_builddir)				\
 	$(DISABLE_DEPRECATED_CFLAGS)			\
 	$(NAUTILUS_PYTHON_CFLAGS)			\
+	-DPYTHON_VERSION=\"$(PYTHON_VERSION)\"		\
 	$(PY_CFLAGS)
 
 PYTHON_LIBS = 			\

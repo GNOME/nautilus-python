@@ -19,11 +19,13 @@
  * USA
  */
 
+
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+# include "config.h"
 #endif
 
 /* include this first, before NO_IMPORT_PYGOBJECT is defined */
+#include <pygobject.h>
 #include <pygtk/pygtk.h>
 
 void pynautilus_register_classes (PyObject *d);

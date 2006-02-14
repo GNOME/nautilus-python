@@ -1,3 +1,10 @@
+2006-02-14  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
+	* src/nautilus-python.c,
+	* src/nautilus-python.h: Make debugging messages be activated
+	through the environment variable NAUTILUS_PYTHON_DEBUG, instead of
+	the DEBUG preprocessor macro.
+
 === 0.4.2 ===
 2006-02-10  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 

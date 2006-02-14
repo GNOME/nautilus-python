@@ -31,6 +31,12 @@
 
 #include <libnautilus-extension/nautilus-extension-types.h>
 
+static const GDebugKey nautilus_python_debug_keys[] = {
+  {"misc", NAUTILUS_PYTHON_DEBUG_MISC},
+};
+static const guint nautilus_python_ndebug_keys = sizeof (nautilus_python_debug_keys) / sizeof (GDebugKey);
+NautilusPythonDebug nautilus_python_debug;
+
 static GArray *all_types = NULL;
 
 #define ENTRY_POINT "nautilus_extension_types"
@@ -205,6 +211,15 @@ void
 nautilus_module_initialize(GTypeModule *module)
 {
 	gchar *user_extensions_dir;
+	const gchar *env_string;
+
+	env_string = g_getenv("NAUTILUS_PYTHON_DEBUG");
+	if (env_string != NULL) {
+		nautilus_python_debug = g_parse_debug_string(env_string,
+													 nautilus_python_debug_keys,
+													 nautilus_python_ndebug_keys);
+		env_string = NULL;
+    }
 	
 	debug_enter();
 

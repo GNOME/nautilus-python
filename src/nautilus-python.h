@@ -23,17 +23,21 @@
 #define NAUTILUS_PYTHON_H
 
 #include <glib-object.h>
+#include <glib/gprintf.h>
 #include <Python.h>
 
-#ifdef DEBUG
-# define debug(x) (g_printf( "nautilus-python:" x "\n"))
-# define debug_enter() (g_printf("%s: entered\n", __FUNCTION__))
-# define debug_enter_args(x, y) (g_printf("%s: entered " x "\n", __FUNCTION__, y))
-#else
-# define debug(x)
-# define debug_enter()
-# define debug_enter_args(x, y)
-#endif
+typedef enum {
+    NAUTILUS_PYTHON_DEBUG_MISC = 1 << 0,
+} NautilusPythonDebug;
+
+extern NautilusPythonDebug nautilus_python_debug;
+
+#define debug(x) { if (nautilus_python_debug & NAUTILUS_PYTHON_DEBUG_MISC) \
+                       g_printf( "nautilus-python:" x "\n"); }
+#define debug_enter()  { if (nautilus_python_debug & NAUTILUS_PYTHON_DEBUG_MISC) \
+                             g_printf("%s: entered\n", __FUNCTION__); }
+#define debug_enter_args(x, y) { if (nautilus_python_debug & NAUTILUS_PYTHON_DEBUG_MISC) \
+                                     g_printf("%s: entered " x "\n", __FUNCTION__, y); }
 
 /* Macros from PyGTK, changed to return FALSE instead of nothing */
 #define np_init_pygobject() { \

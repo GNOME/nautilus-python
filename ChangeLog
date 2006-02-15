@@ -1,3 +1,9 @@
+2006-02-15  Gustavo J. A. M. Carneiro  <gjc@inescporto.pt>
+
+	* src/nautilus-python.c (nautilus_module_shutdown): Don't shutdown
+	Python to avoid a bug that causes nautilus to crash.  We should
+	fix this eventually, but for now...
+
 2006-02-14  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
 	* src/nautilus-python.c,

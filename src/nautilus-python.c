@@ -88,12 +88,19 @@ nautilus_python_load_dir (GTypeModule *module, const char *dirname)
 {
 	GDir *dir;
 	const char *name;
+	PyObject *sys_path, *py_path;
 
 	debug_enter_args("dirname=%s", dirname);
 	
 	dir = g_dir_open(dirname, 0, NULL);
 	if (!dir)
 		return;
+
+	  /* sys.path.insert(0, dirname) */
+	sys_path = PySys_GetObject("path");
+	py_path = PyString_FromString(dirname);
+	PyList_Insert(sys_path, 0, py_path);
+	Py_DECREF(py_path);
 			
 	while ((name = g_dir_read_name(dir))) {
 		if (g_str_has_suffix(name, ".py")) {
@@ -113,7 +120,7 @@ gboolean
 nautilus_python_init_python (gchar **user_extensions_dir)
 {
 	PyObject *pygtk, *mdict, *require;
-	PyObject *sys_path, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
+	PyObject *sys_path, *tmp, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
 	GModule *libpython;
 	char *home_dir;
 	char *argv[] = { "nautilus", NULL };
@@ -172,9 +179,9 @@ nautilus_python_init_python (gchar **user_extensions_dir)
 							   g_get_home_dir());
 	*user_extensions_dir = home_dir;
 	PyList_Insert(sys_path, 0,
-				  PyString_FromString(NAUTILUS_LIBDIR "/nautilus-python"));
-	PyList_Insert(sys_path, 0, PyString_FromString(home_dir));
-			
+				  (tmp = PyString_FromString(NAUTILUS_LIBDIR "/nautilus-python")));
+	Py_DECREF(tmp);
+	
 	/* import nautilus */
 	g_setenv("INSIDE_NAUTILUS_PYTHON", "", FALSE);
 	debug("import nautilus");

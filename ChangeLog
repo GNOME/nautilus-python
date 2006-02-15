@@ -3,6 +3,11 @@
 	* src/nautilus-python.c (nautilus_module_shutdown): Don't shutdown
 	Python to avoid a bug that causes nautilus to crash.  We should
 	fix this eventually, but for now...
+	(nautilus_python_load_dir): Add directory to sys.path here.
+	(nautilus_python_init_python): Don't manipulate sys.path here,
+	except to add path for 'nautilus' module, everything else now
+	taken care in nautilus_python_load_dir.  Should fix loading
+	extensions from the nautilus system dir.
 
 2006-02-14  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 

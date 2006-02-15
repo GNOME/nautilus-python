@@ -1,3 +1,8 @@
+0.4.3:
+        - Make debugging messages a run-time option
+        - Fix bug in loading extensions from system extensions dir
+        - Fix crash when no extensions were loaded
+
 0.4.2:
 	- Make it work again with nautilus >= 2.13.4
         - Minor bug fixes

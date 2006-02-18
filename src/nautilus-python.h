@@ -39,45 +39,6 @@ extern NautilusPythonDebug nautilus_python_debug;
 #define debug_enter_args(x, y) { if (nautilus_python_debug & NAUTILUS_PYTHON_DEBUG_MISC) \
                                      g_printf("%s: entered " x "\n", __FUNCTION__, y); }
 
-/* Macros from PyGTK, changed to return FALSE instead of nothing */
-#define np_init_pygobject() { \
-    PyObject *gobject = PyImport_ImportModule("gobject"); \
-    if (gobject != NULL) { \
-        PyObject *mdict = PyModule_GetDict(gobject); \
-        PyObject *cobject = PyDict_GetItemString(mdict, "_PyGObject_API"); \
-        if (PyCObject_Check(cobject)) \
-            _PyGObject_API = (struct _PyGObject_Functions *)PyCObject_AsVoidPtr(cobject); \
-        else { \
-            PyErr_SetString(PyExc_RuntimeError, \
-                            "could not find _PyGObject_API object"); \
-	    return FALSE; \
-        } \
-    } else { \
-        PyErr_Print(); \
-        g_warning("could not import gobject"); \
-        return FALSE; \
-    } \
-}
-
-#define np_init_pygtk() { \
-    PyObject *pygtk = PyImport_ImportModule("gtk._gtk"); \
-    if (pygtk != NULL) { \
-	PyObject *module_dict = PyModule_GetDict(pygtk); \
-	PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API"); \
-	if (PyCObject_Check(cobject)) \
-	    _PyGtk_API = (struct _PyGtk_FunctionStruct*) \
-		PyCObject_AsVoidPtr(cobject); \
-	else { \
-            PyErr_SetString(PyExc_RuntimeError, \
-                            "could not find _PyGtk_API object"); \
-	    return FALSE; \
-        } \
-    } else { \
-        PyErr_Print(); \
-        g_warning("could not import gtk._gtk"); \
-        return FALSE; \
-    } \
-}
 
 PyTypeObject *_PyNautilusColumn_Type;
 #define PyNautilusColumn_Type (*_PyNautilusColumn_Type)

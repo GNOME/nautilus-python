@@ -1,5 +1,20 @@
 2006-02-18  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
+	* src/nautilus-python.c (np_init_pygnomevfs): Copy-paste of
+	init_pygnomevfs from pygnomevfs.h, but changing error handling to
+	avoid Py_FatalError, so we don't crash nautilus if gnomevfs module
+	is missing.
+	(np_init_pygnomevfs): Convert macro to inline function, make it
+	return TRUE/FALSE on success/failure.  Update rest of code to
+	reflect these changes.
+	(np_init_pygtk): idem.
+	(np_init_pygobject): idem.
+	(nautilus_python_init_python): Call np_init_pygnomevfs instead of
+	init_pygnomevfs.
+
+	* src/nautilus-python.h: Moved np_init_pygobject and
+	np_init_pygtk to src/nautilus-python.c.
+
 	* src/nautilus-python.c: Refactor to initialize nautilus-python on
 	demand: python/pygtk/pygnomevfs are not initialized if no python
 	extension is actually found.

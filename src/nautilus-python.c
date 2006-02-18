@@ -41,7 +41,70 @@ static gboolean nautilus_python_init_python(void);
 
 static GArray *all_types = NULL;
 
-#define ENTRY_POINT "nautilus_extension_types"
+
+static inline gboolean np_init_pygobject(void)
+{
+    PyObject *gobject = PyImport_ImportModule("gobject");
+    if (gobject != NULL) {
+        PyObject *mdict = PyModule_GetDict(gobject);
+        PyObject *cobject = PyDict_GetItemString(mdict, "_PyGObject_API");
+        if (PyCObject_Check(cobject))
+            _PyGObject_API = (struct _PyGObject_Functions *)PyCObject_AsVoidPtr(cobject);
+        else {
+            PyErr_SetString(PyExc_RuntimeError,
+                            "could not find _PyGObject_API object");
+			return FALSE;
+        }
+    } else {
+        PyErr_Print();
+        g_warning("could not import gobject");
+        return FALSE;
+    }
+	return TRUE;
+}
+
+static inline gboolean np_init_pygtk(void)
+{
+    PyObject *pygtk = PyImport_ImportModule("gtk._gtk");
+    if (pygtk != NULL) {
+		PyObject *module_dict = PyModule_GetDict(pygtk);
+		PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
+		if (PyCObject_Check(cobject))
+			_PyGtk_API = (struct _PyGtk_FunctionStruct*)
+				PyCObject_AsVoidPtr(cobject);
+		else {
+            PyErr_SetString(PyExc_RuntimeError,
+                            "could not find _PyGtk_API object");
+			return FALSE;
+        }
+    } else {
+        PyErr_Print();
+        g_warning("could not import gtk._gtk");
+        return FALSE;
+    }
+	return TRUE;
+}
+
+static inline gboolean np_init_pygnomevfs(void)
+{
+    PyObject *module = PyImport_ImportModule("gnomevfs");
+    if (module != NULL) {
+        PyObject *mdict = PyModule_GetDict(module);
+        PyObject *cobject = PyDict_GetItemString(mdict, "_PyGnomeVFS_API");
+        if (PyCObject_Check(cobject))
+            _PyGnomeVFS_API = (struct _PyGnomeVFS_Functions *)PyCObject_AsVoidPtr(cobject);
+        else {
+	         g_warning("could not find _PyGnomeVFS_API object in the gnomevfs module");
+			 return FALSE;
+        }
+    } else {
+        PyErr_Print();
+        g_warning("could not import gnomevfs");
+		return FALSE;
+    }
+	return TRUE;
+}
+
 
 static void
 nautilus_python_load_file(GTypeModule *type_module, const gchar *filename)
@@ -154,15 +217,18 @@ nautilus_python_init_python (void)
 
 	/* import gobject */
   	debug("init_pygobject");
-	np_init_pygobject();
+	if (!np_init_pygobject())
+		return FALSE;
 
 	/* import gtk */
 	debug("init_pygtk");
-	np_init_pygtk();
+	if (!np_init_pygtk())
+		return FALSE;
 
 	/* import gnomevfs */
 	debug("init_gnomevfs");
-	init_pygnomevfs();
+	if (!np_init_pygnomevfs())
+		return FALSE;
 
 	/* gobject.threads_init() */
     debug("pyg_enable_threads");

@@ -37,6 +37,8 @@ static const GDebugKey nautilus_python_debug_keys[] = {
 static const guint nautilus_python_ndebug_keys = sizeof (nautilus_python_debug_keys) / sizeof (GDebugKey);
 NautilusPythonDebug nautilus_python_debug;
 
+static gboolean nautilus_python_init_python(void);
+
 static GArray *all_types = NULL;
 
 #define ENTRY_POINT "nautilus_extension_types"
@@ -88,7 +90,7 @@ nautilus_python_load_dir (GTypeModule *module, const char *dirname)
 {
 	GDir *dir;
 	const char *name;
-	PyObject *sys_path, *py_path;
+	gboolean initialized = FALSE;
 
 	debug_enter_args("dirname=%s", dirname);
 	
@@ -96,11 +98,6 @@ nautilus_python_load_dir (GTypeModule *module, const char *dirname)
 	if (!dir)
 		return;
 
-	  /* sys.path.insert(0, dirname) */
-	sys_path = PySys_GetObject("path");
-	py_path = PyString_FromString(dirname);
-	PyList_Insert(sys_path, 0, py_path);
-	Py_DECREF(py_path);
 			
 	while ((name = g_dir_read_name(dir))) {
 		if (g_str_has_suffix(name, ".py")) {
@@ -110,14 +107,28 @@ nautilus_python_load_dir (GTypeModule *module, const char *dirname)
 			len = strlen(name) - 3;
 			modulename = g_new0(char, len + 1 );
 			strncpy(modulename, name, len);
+
+			if (!initialized) {
+				PyObject *sys_path, *py_path;
+				  /* n-p python part is initialized on demand (or not
+				   * at all if no extensions are found) */
+				if (!nautilus_python_init_python())
+					goto exit;
+				  /* sys.path.insert(0, dirname) */
+				sys_path = PySys_GetObject("path");
+				py_path = PyString_FromString(dirname);
+				PyList_Insert(sys_path, 0, py_path);
+				Py_DECREF(py_path);
+			}
 			nautilus_python_load_file(module, modulename);
 		}
 	}
+exit:
 	g_dir_close(dir);
 }
 
-gboolean
-nautilus_python_init_python (gchar **user_extensions_dir)
+static gboolean
+nautilus_python_init_python (void)
 {
 	PyObject *pygtk, *mdict, *require;
 	PyObject *sys_path, *tmp, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
@@ -175,9 +186,6 @@ nautilus_python_init_python (gchar **user_extensions_dir)
 	/* sys.path.insert(., ...) */
 	debug("sys.path.insert(0, ...)");
 	sys_path = PySys_GetObject("path");
-	home_dir = g_strdup_printf("%s/.nautilus/python-extensions/",
-							   g_get_home_dir());
-	*user_extensions_dir = home_dir;
 	PyList_Insert(sys_path, 0,
 				  (tmp = PyString_FromString(NAUTILUS_LIBDIR "/nautilus-python")));
 	Py_DECREF(tmp);
@@ -232,10 +240,9 @@ nautilus_module_initialize(GTypeModule *module)
 
 	all_types = g_array_new(FALSE, FALSE, sizeof(GType));
 
-	if (!nautilus_python_init_python(&user_extensions_dir))
-		return;
-		
 	nautilus_python_load_dir(module, NAUTILUS_LIBDIR "/nautilus/extensions-1.0/python");
+	user_extensions_dir = g_strdup_printf("%s/.nautilus/python-extensions/",
+										  g_get_home_dir());
 	nautilus_python_load_dir(module, user_extensions_dir);
 	g_free(user_extensions_dir);
 }
@@ -253,6 +260,7 @@ nautilus_module_shutdown(void)
 
 	debug("Shutting down nautilus-python extension.");
 #endif
+	g_array_free(all_types, TRUE);
 }
 
 void 

@@ -7,13 +7,8 @@ INCLUDES =						\
 	$(DISABLE_DEPRECATED_CFLAGS)			\
 	$(NAUTILUS_PYTHON_CFLAGS)			\
 	-DPYTHON_VERSION=\"$(PYTHON_VERSION)\"		\
-	-DPY_LIB_LOC="\"$(PY_LIB_LOC)\""		\
-	$(PY_CFLAGS)
-
-PYTHON_LIBS =					\
-	-L$(PY_LIB_LOC) -l$(PY_LIBS)		\
-	$(PY_OTHER_LIBS)			\
-	$(PY_EXTRA_LIBS)
+	-DPY_LIB_LOC="\"$(PYTHON_LIB_LOC)\""		\
+	$(PYTHON_INCLUDES)
 
 nautilus_extensiondir=$(NAUTILUS_LIBDIR)/nautilus/extensions-1.0
 
@@ -25,7 +20,7 @@ libnautilus_python_la_SOURCES =     	\
 	nautilus-python-object.c	\
 	nautilus-python-object.h
 
-libnautilus_python_la_LDFLAGS = -module -avoid-version $(PY_LIB_LOC)
+libnautilus_python_la_LDFLAGS = -module -avoid-version
 libnautilus_python_la_LIBADD  = $(NAUTILUS_PYTHON_LIBS) $(PYTHON_LIBS)
 
 pyexec_LTLIBRARIES = nautilus.la

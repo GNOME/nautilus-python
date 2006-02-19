@@ -1,5 +1,14 @@
 2006-02-19  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
+	* src/Makefile.am: Update to use PYTHON_LIBS/PYTHON_LIB_LOC.
+
+	* m4/python.m4: Define also PYTHON_LIB_LOC.
+
+	* configure.in: Use AM_CHECK_PYTHON_LIBS and remove a large chunk
+	of code that is not really needed.
+
+	* m4/python.m4: Copy-paste AM_CHECK_PYTHON_LIBS from gnome-python.
+
 	* configure.in: Fix PY_LIB_LOC to point to $PY_EXEC_PREFIX/lib,
 	which is where a normal (i.e. not distribution patched) python
 	installation puts the shared library.

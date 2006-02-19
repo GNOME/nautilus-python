@@ -7,11 +7,12 @@ INCLUDES =						\
 	$(DISABLE_DEPRECATED_CFLAGS)			\
 	$(NAUTILUS_PYTHON_CFLAGS)			\
 	-DPYTHON_VERSION=\"$(PYTHON_VERSION)\"		\
+	-DPY_LIB_LOC="\"$(PY_LIB_LOC)\""		\
 	$(PY_CFLAGS)
 
-PYTHON_LIBS = 			\
-	-l$(PY_LIBS)		\
-	$(PY_OTHER_LIBS)	\
+PYTHON_LIBS =					\
+	-L$(PY_LIB_LOC) -l$(PY_LIBS)		\
+	$(PY_OTHER_LIBS)			\
 	$(PY_EXTRA_LIBS)
 
 nautilus_extensiondir=$(NAUTILUS_LIBDIR)/nautilus/extensions-1.0

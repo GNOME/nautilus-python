@@ -1,3 +1,21 @@
+2006-02-19  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
+	* configure.in: Fix PY_LIB_LOC to point to $PY_EXEC_PREFIX/lib,
+	which is where a normal (i.e. not distribution patched) python
+	installation puts the shared library.
+
+	* src/nautilus-python.c (nautilus_python_init_python): Use
+	PY_LIB_LOC here to open the correct python library (for cases of
+	prefix != /usr).
+
+	* src/Makefile.am (PYTHON_LIBS): Use PY_LIB_LOC here.
+
+	* configure.in: Remove -L from $PY_LIB_LOC.
+
+	* src/nautilus-python.c (np_init_pygobject): Add a missing
+	PyErr_Print(); for the case when _PyGObbject_API is not found.
+	(np_init_pygtk): idem.
+
 2006-02-18  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
 	* src/nautilus-python.c (np_init_pygnomevfs): Copy-paste of

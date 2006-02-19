@@ -53,6 +53,7 @@ static inline gboolean np_init_pygobject(void)
         else {
             PyErr_SetString(PyExc_RuntimeError,
                             "could not find _PyGObject_API object");
+			PyErr_Print();
 			return FALSE;
         }
     } else {
@@ -75,6 +76,7 @@ static inline gboolean np_init_pygtk(void)
 		else {
             PyErr_SetString(PyExc_RuntimeError,
                             "could not find _PyGtk_API object");
+			PyErr_Print();
 			return FALSE;
         }
     } else {
@@ -175,8 +177,10 @@ nautilus_python_load_dir (GTypeModule *module, const char *dirname)
 				PyObject *sys_path, *py_path;
 				  /* n-p python part is initialized on demand (or not
 				   * at all if no extensions are found) */
-				if (!nautilus_python_init_python())
+				if (!nautilus_python_init_python()) {
+					g_warning("nautilus_python_init_python failed");
 					goto exit;
+				}
 				  /* sys.path.insert(0, dirname) */
 				sys_path = PySys_GetObject("path");
 				py_path = PyString_FromString(dirname);
@@ -196,35 +200,56 @@ nautilus_python_init_python (void)
 	PyObject *pygtk, *mdict, *require;
 	PyObject *sys_path, *tmp, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
 	GModule *libpython;
-	char *home_dir;
 	char *argv[] = { "nautilus", NULL };
 
 	if (Py_IsInitialized())
 		return TRUE;
 
-	libpython = g_module_open("libpython" PYTHON_VERSION "." G_MODULE_SUFFIX, 0);
+  	debug("g_module_open " PY_LIB_LOC "/libpython" PYTHON_VERSION "." G_MODULE_SUFFIX);
+	libpython = g_module_open(PY_LIB_LOC "/libpython" PYTHON_VERSION "." G_MODULE_SUFFIX, 0);
 	if (!libpython)
 		g_warning("g_module_open libpython failed: %s", g_module_error());
-
+	debug("Py_Initialize");
 	Py_Initialize();
+	if (PyErr_Occurred()) {
+		PyErr_Print();
+		return FALSE;
+	}
+	
+	debug("PySys_SetArgv");
 	PySys_SetArgv(1, argv);
+	if (PyErr_Occurred()) {
+		PyErr_Print();
+		return FALSE;
+	}
 
 	/* pygtk.require("2.0") */
+	debug("pygtk.require(\"2.0\")");
 	pygtk = PyImport_ImportModule("pygtk");
+	if (!pygtk) {
+		PyErr_Print();
+		return FALSE;
+	}
 	mdict = PyModule_GetDict(pygtk);
 	require = PyDict_GetItemString(mdict, "require");
 	PyObject_CallObject(require, Py_BuildValue("(S)", PyString_FromString("2.0")));
+	if (PyErr_Occurred()) {
+		PyErr_Print();
+		return FALSE;
+	}
 
 	/* import gobject */
   	debug("init_pygobject");
-	if (!np_init_pygobject())
+	if (!np_init_pygobject()) {
+		g_warning("pygobject initialization failed");
 		return FALSE;
-
+	}
 	/* import gtk */
 	debug("init_pygtk");
-	if (!np_init_pygtk())
+	if (!np_init_pygtk()) {
+		g_warning("pygtk initialization failed");
 		return FALSE;
-
+	}
 	/* import gnomevfs */
 	debug("init_gnomevfs");
 	if (!np_init_pygnomevfs())

@@ -342,15 +342,9 @@ void
 nautilus_module_shutdown(void)
 {
 	debug_enter();
-	  /* Shutting down Python triggers a bug that causes nautilus to
-	   * crash; better not to open this can of worms... */
-#if 0
 	if (Py_IsInitialized()) {
 		Py_Finalize();
 	}
-
-	debug("Shutting down nautilus-python extension.");
-#endif
 	g_array_free(all_types, TRUE);
 }
 

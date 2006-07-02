@@ -1,3 +1,8 @@
+2006-07-02  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
+
+	* src/nautilus-python.c (nautilus_module_shutdown): Re-enable
+	shutting down python to fix bug #345754.
+
 2006-02-19  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
 	* src/Makefile.am: Update to use PYTHON_LIBS/PYTHON_LIB_LOC.

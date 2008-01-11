@@ -69,8 +69,12 @@ AC_DEFUN([AM_CHECK_PYTHON_LIBS],
 AC_MSG_CHECKING(for libraries required to embed python)
 dnl deduce PYTHON_LIBS
 py_exec_prefix=`$PYTHON -c "import sys; print sys.exec_prefix"`
-PYTHON_LIBS="-L${py_prefix}/lib -lpython${PYTHON_VERSION}"
-PYTHON_LIB_LOC="${py_prefix}/lib" 
+if test "x$PYTHON_LIBS" == x; then
+	PYTHON_LIBS="-L${py_prefix}/lib -lpython${PYTHON_VERSION}"
+fi
+if test "x$PYTHON_LIB_LOC" == x; then
+	PYTHON_LIB_LOC="${py_prefix}/lib" 
+fi
 AC_SUBST(PYTHON_LIBS)
 AC_SUBST(PYTHON_LIB_LOC)
 dnl check if the headers exist:

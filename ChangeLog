@@ -1,3 +1,10 @@
+2008-01-11  Scott Tsai  <scottt.tw@gmail.com>
+
+	reviewed by: Johan Dahlin
+
+	* m4/python.m4 (py_exec_prefix): Allowing the PYTHON_LIB_LOC and 
+	PYTHON_LIBS configure variables to be overriden.
+
 2008-01-11  Jonathan Rogers <jonner@teegra.net>
 
 	reviewed by: Johan Dahlin

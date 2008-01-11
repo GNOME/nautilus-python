@@ -114,7 +114,7 @@ nautilus_python_load_file(GTypeModule *type_module, const gchar *filename)
 	PyObject *main_module, *main_locals, *locals, *key, *value;
 	PyObject *module;
 	GType gtype;
-	int pos = 0;
+	Py_ssize_t pos = 0;
 	
 	debug_enter_args("filename=%s", filename);
 	

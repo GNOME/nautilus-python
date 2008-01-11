@@ -1,3 +1,13 @@
+2008-01-11  Jonathan Rogers <jonner@teegra.net>
+
+	reviewed by: Johan Dahlin
+
+	* src/nautilus-python-object.c:
+	* src/nautilus-python.c: (nautilus_python_load_file):
+	* src/nautilus-python.h:
+	Use Py_ssize_t instead of int, so nautilus-python works on Python 2.5
+	fixes #444366	
+
 2006-07-02  Gustavo J. A. M. Carneiro  <gjc@gnome.org>
 
 	* src/nautilus-python.c (nautilus_module_shutdown): Re-enable

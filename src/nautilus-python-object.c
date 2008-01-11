@@ -74,7 +74,7 @@ static GObjectClass *parent_class;
 
 #define HANDLE_LIST(py_ret, type, type_name)                           \
     {                                                                  \
-        int i = 0;                                                     \
+        Py_ssize_t i = 0;                                                     \
     	if (!PySequence_Check(py_ret) || PyString_Check(py_ret)) {     \
     		PyErr_SetString(PyExc_TypeError,                           \
     						METHOD_NAME " must return a sequence");    \

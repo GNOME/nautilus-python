@@ -22,6 +22,7 @@ AC_PROG_LIBTOOL
 
 dnl Check for pkgconfig first
 AC_CHECK_PROG(HAVE_PKGCONFIG, pkg-config, yes, no)
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 
 dnl Give error and exit if we don't have pkgconfig
 if test "x$HAVE_PKGCONFIG" = "xno"; then
@@ -53,6 +54,12 @@ AC_MSG_RESULT($PYGTK_CODEGEN)
 NAUTILUS_LIBDIR=`$PKG_CONFIG --variable=libdir libnautilus-extension`
 AC_SUBST(NAUTILUS_LIBDIR)
 AC_DEFINE_UNQUOTED(NAUTILUS_LIBDIR, "$NAUTILUS_LIBDIR", [Nautilus libdir])
+
+dnl ---------------------------------
+dnl Get nautilus extensions directory
+dnl ---------------------------------
+NAUTILUS_EXTENSION_DIR=`$PKG_CONFIG --variable=extensiondir libnautilus-extension`
+AC_SUBST(NAUTILUS_EXTENSION_DIR)
 
 AC_OUTPUT([
   Makefile 

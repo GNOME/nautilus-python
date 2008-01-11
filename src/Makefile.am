@@ -10,7 +10,7 @@ INCLUDES =						\
 	-DPY_LIB_LOC="\"$(PYTHON_LIB_LOC)\""		\
 	$(PYTHON_INCLUDES)
 
-nautilus_extensiondir=$(NAUTILUS_LIBDIR)/nautilus/extensions-1.0
+nautilus_extensiondir=$(NAUTILUS_EXTENSION_DIR)
 
 nautilus_extension_LTLIBRARIES = libnautilus-python.la
 

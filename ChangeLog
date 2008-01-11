@@ -1,3 +1,13 @@
+2008-01-11  Johan Dahlin  <johan@gnome.org>
+
+	* examples/Makefile.am:
+	* src/nautilus-python.c: (nautilus_python_init_python):
+	* src/nautilus-python.h:
+	* src/nautilus.defs:
+	* examples/submenu.py:
+	Add Menu wrapper which makes it possible to implement submenus.
+	#440026, Lukáš Lalinský, Sylvain Baubeau, Erik Wien
+
 2008-01-11  Scott Tsai  <scottt.tw@gmail.com>
 
 	reviewed by: Johan Dahlin

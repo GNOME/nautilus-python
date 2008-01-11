@@ -303,6 +303,7 @@ nautilus_python_init_python (void)
 	IMPORT(Column, "Column");
 	IMPORT(ColumnProvider, "ColumnProvider");
 	IMPORT(InfoProvider, "InfoProvider");
+	IMPORT(Menu, "Menu");
 	IMPORT(MenuItem, "MenuItem");
 	IMPORT(MenuProvider, "MenuProvider");
 	IMPORT(PropertyPage, "PropertyPage");

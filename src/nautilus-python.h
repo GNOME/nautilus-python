@@ -55,6 +55,9 @@ PyTypeObject *_PyNautilusColumnProvider_Type;
 PyTypeObject *_PyNautilusInfoProvider_Type;
 #define PyNautilusInfoProvider_Type (*_PyNautilusInfoProvider_Type)
 
+PyTypeObject *_PyNautilusMenu_Type;
+#define PyNautilusMenu_Type (*_PyNautilusMenu_Type)
+
 PyTypeObject *_PyNautilusMenuItem_Type;
 #define PyNautilusMenuItem_Type (*_PyNautilusMenuItem_Type)
 

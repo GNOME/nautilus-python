@@ -25,6 +25,13 @@
   (gtype-id "NAUTILUS_TYPE_INFO_PROVIDER")
 )
 
+(define-object Menu
+  (in-module "Nautilus")
+  (parent "GObject")
+  (c-name "NautilusMenu")
+  (gtype-id "NAUTILUS_TYPE_MENU")
+)
+
 (define-object MenuItem
   (in-module "Nautilus")
   (parent "GObject")
@@ -214,6 +221,35 @@
   (return-type "GType")
 )
 
+(define-function nautilus_menu_new
+  (c-name "nautilus_menu_new")
+  (is-constructor-of "NautilusMenu")
+  (return-type "NautilusMenu*")
+)
+
+(define-method append_item
+  (of-object "NautilusMenu")
+  (c-name "nautilus_menu_append_item")
+  (return-type "none")
+  (parameters
+    '("NautilusMenuItem*" "item")
+  )
+)
+
+(define-method get_items
+  (of-object "NautilusMenu")
+  (c-name "nautilus_menu_get_items")
+  (return-type "GList*")
+)
+
+(define-function nautilus_menu_item_list_free
+  (c-name "nautilus_menu_item_list_free")
+  (return-type "none")
+  (parameters
+    '("GList*", "item_list")
+  )
+)
+
 (define-function nautilus_menu_item_new
   (c-name "nautilus_menu_item_new")
   (is-constructor-of "NautilusMenuItem")
@@ -226,12 +262,20 @@
   )
 )
 
+(define-method set_submenu
+  (of-object "NautilusMenuItem")
+  (c-name "nautilus_menu_item_set_submenu")
+  (return-type "none")
+  (parameters
+    '("NautilusMenu*" "menu")
+  )
+)
+
 (define-method activate
   (of-object "NautilusMenuItem")
   (c-name "nautilus_menu_item_activate")
   (return-type "none")
 )
-
 
 ;; From /usr/include/nautilus/libnautilus-extension/nautilus-property-page.h
 

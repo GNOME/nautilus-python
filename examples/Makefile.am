@@ -8,7 +8,8 @@ examples_DATA =					\
 	background-image.py			\
 	block-size-column.py			\
 	open-terminal.py			\
-	md5sum-property-page.py
+	md5sum-property-page.py			\
+	submenu.py
 
 EXTRA_DIST += $(examples_DATA)
 

@@ -1,3 +1,11 @@
+2008-01-11  Scott Tsai  <scottt.tw@gmail.com>
+
+	reviewed by: Johan Dahlin
+
+	* src/nautilusmodule.c (DL_EXPORT): 
+	Initialize gnomevfs, which will prevent nautilus-python from freezing.
+	Fixes #500996
+
 2008-01-01  Brian Pepple  <bpepple@fedoraproject.org>
 
 	reviewed by: Johan Dahlin
@@ -5,6 +13,7 @@
 	* src/Makefile.am (nautilus_extensiondir): 
 	* configure.in (NAUTILUS_LIBDIR): Fetch nautilus
 	extension dir from nautilus-extension.pc
+	Fixes #506759
 
 2008-01-11  Scott Tsai  <scottt.tw@gmail.com>
 
@@ -12,6 +21,7 @@
 
 	* m4/python.m4 (py_exec_prefix): Allowing the PYTHON_LIB_LOC and 
 	PYTHON_LIBS configure variables to be overriden.
+	Fixes #505589
 
 2008-01-11  Jonathan Rogers <jonner@teegra.net>
 

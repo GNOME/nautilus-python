@@ -27,6 +27,7 @@
 /* include this first, before NO_IMPORT_PYGOBJECT is defined */
 #include <pygobject.h>
 #include <pygtk/pygtk.h>
+#include "pygnomevfs.h"
 
 void pynautilus_register_classes (PyObject *d);
 void pynautilus_add_constants(PyObject *module, const gchar *strip_prefix);
@@ -45,6 +46,7 @@ initnautilus(void)
 	
     init_pygobject ();
     init_pygtk ();
+    init_pygnomevfs();
 
     m = Py_InitModule ("nautilus", pynautilus_functions);
     d = PyModule_GetDict (m);

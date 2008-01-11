@@ -1,4 +1,7 @@
+=== 0.5.0 ===
 2008-01-11  Johan Dahlin  <johan@gnome.org>
+
+	* NEWS: Update
 
 	* examples/Makefile.am:
 	* src/nautilus-python.c: (nautilus_python_init_python):

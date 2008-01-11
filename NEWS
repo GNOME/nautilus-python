@@ -1,3 +1,11 @@
+0.5.0:
+	- Add support for submenus (Lukáš Lalinský, Sylvain Baubeau, Erik Wien)
+	- Make it work with nautilus 2.22 (Brian Pepple)
+	- Initialize gnomevfs explicitly (Scott Tsai)
+	- Compilable with Python 2.5 (Jonathan Rogers)
+	- Shutdown Python (Gustavo Carneiro)
+	- Initialize PyGObject/PyGTK/PyGNOMEVFS on demand (Gustavo Carneiro)
+
 0.4.3:
         - Make debugging messages a run-time option
         - Fix bug in loading extensions from system extensions dir

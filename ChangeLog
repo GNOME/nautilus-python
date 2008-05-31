@@ -1,7 +1,7 @@
 2008-05-31  German Poo-Caaman~o  <gpoo@gnome.org>
 
 	* src/nautilus.defs: Sync the binding with libnautilus-extension.
-	Fixes #518824
+	Fixes #518824 (James Westby)
 
 === 0.5.0 ===
 2008-01-11  Johan Dahlin  <johan@gnome.org>

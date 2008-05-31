@@ -129,6 +129,18 @@
   (return-type "gboolean")
 )
 
+(define-method get_file_type
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_file_type")
+  (return-type "GFileType")
+)
+
+(define-method get_location
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_location")
+  (return-type "GFile")
+)
+
 (define-method get_name
   (of-object "NautilusFileInfo")
   (c-name "nautilus_file_info_get_name")
@@ -139,6 +151,18 @@
   (of-object "NautilusFileInfo")
   (c-name "nautilus_file_info_get_uri")
   (return-type "char*")
+)
+
+(define-method get_activation_uri
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_activation_uri")
+  (return-type "char*")
+)
+
+(define-method get_parent_location
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_parent_location")
+  (return-type "GFile")
 )
 
 (define-method get_parent_uri
@@ -172,12 +196,6 @@
   (of-object "NautilusFileInfo")
   (c-name "nautilus_file_info_is_directory")
   (return-type "gboolean")
-)
-
-(define-method get_vfs_file_info
-  (of-object "NautilusFileInfo")
-  (c-name "nautilus_file_info_get_vfs_file_info")
-  (return-type "GnomeVFSFileInfo*")
 )
 
 (define-method add_emblem

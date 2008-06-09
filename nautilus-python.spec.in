@@ -45,7 +45,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog NEWS
 %{_libdir}/nautilus-python
-%{_libdir}/nautilus/extensions-1.0
+@NAUTILUS_EXTENSION_DIR@
 %{_libdir}/pkgconfig/nautilus-python.pc
 
 %changelog

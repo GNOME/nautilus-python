@@ -332,7 +332,7 @@ nautilus_module_initialize(GTypeModule *module)
 
 	all_types = g_array_new(FALSE, FALSE, sizeof(GType));
 
-	nautilus_python_load_dir(module, NAUTILUS_LIBDIR "/nautilus/extensions-1.0/python");
+	nautilus_python_load_dir(module, NAUTILUS_EXTENSION_DIR "/python");
 	user_extensions_dir = g_strdup_printf("%s/.nautilus/python-extensions/",
 										  g_get_home_dir());
 	nautilus_python_load_dir(module, user_extensions_dir);

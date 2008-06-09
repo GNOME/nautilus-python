@@ -60,6 +60,7 @@ dnl Get nautilus extensions directory
 dnl ---------------------------------
 NAUTILUS_EXTENSION_DIR=`$PKG_CONFIG --variable=extensiondir libnautilus-extension`
 AC_SUBST(NAUTILUS_EXTENSION_DIR)
+AC_DEFINE_UNQUOTED(NAUTILUS_EXTENSION_DIR, "$NAUTILUS_EXTENSION_DIR", [Nautilus' extensions directory])
 
 AC_OUTPUT([
   Makefile 

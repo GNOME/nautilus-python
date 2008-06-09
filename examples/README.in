@@ -1,6 +1,6 @@
 To try any of the examples, copy them over to:
 
-    @NAUTILUS_LIBDIR@/nautilus/extensions-1.0/python/
+    @NAUTILUS_EXTENSION_DIR@/python/
 or:
     ~/.nautilus/python-extensions/
 

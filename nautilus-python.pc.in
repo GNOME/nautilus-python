@@ -4,4 +4,4 @@ Version: @VERSION@
 
 prefix=@prefix@
 libdir=${prefix}/lib
-pythondir=@NAUTILUS_LIBDIR@/nautilus/extensions-1.0/python
+pythondir=@NAUTILUS_EXTENSION_DIR@/python

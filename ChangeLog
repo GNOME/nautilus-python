@@ -1,3 +1,14 @@
+2008-06-09  German Poo-Caaman~o  <gpoo@gnome.org>
+
+	* config.h.in
+	* configure.in
+	* examples/README.in
+	* nautilus-python.pc.in
+	* nautilus-python.spec.in
+	* src/nautilus-python.c:
+	Fixed hardcoded path for Nautilus extension. 
+	Fixed #527604 (Kjell Braden).
+
 2008-05-31  German Poo-Caaman~o  <gpoo@gnome.org>
 
 	* src/nautilus.defs: Sync the binding with libnautilus-extension.

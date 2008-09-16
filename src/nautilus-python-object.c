@@ -33,6 +33,7 @@
 #include <libnautilus-extension/nautilus-file-info.h>
 #include <libnautilus-extension/nautilus-info-provider.h>
 #include <libnautilus-extension/nautilus-column-provider.h>
+#include <libnautilus-extension/nautilus-location-widget-provider.h>
 #include <libnautilus-extension/nautilus-menu-item.h>
 #include <libnautilus-extension/nautilus-menu-provider.h>
 #include <libnautilus-extension/nautilus-property-page-provider.h>
@@ -129,6 +130,51 @@ static void
 nautilus_python_object_property_page_provider_iface_init (NautilusPropertyPageProviderIface *iface)
 {
 	iface->get_pages = nautilus_python_object_get_property_pages;
+}
+
+#define METHOD_NAME "get_widget"
+static GtkWidget *
+nautilus_python_object_get_widget (NautilusLocationWidgetProvider *provider,
+								   const char *uri,
+								   GtkWidget *window)
+{
+	NautilusPythonObject *object = (NautilusPythonObject*)provider;
+	GtkWidget *ret = NULL;
+	PyObject *py_ret = NULL;
+	PyGObject *py_ret_gobj;
+	PyObject *py_uri = NULL;
+	PyGILState_STATE state = pyg_gil_state_ensure();
+
+	debug_enter();
+
+	CHECK_METHOD_NAME(object->instance);
+
+	py_uri = PyString_FromString(uri);
+
+	py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+								 "(NN)", py_uri,
+								 pygobject_new((GObject *)window));
+	HANDLE_RETVAL(py_ret);
+
+	py_ret_gobj = (PyGObject *)py_ret;
+	if (!pygobject_check(py_ret_gobj, &PyGtkWidget_Type)) {
+		PyErr_SetString(PyExc_TypeError,
+					    METHOD_NAME "should return a gtk.Widget");
+		goto beach;
+	}
+	ret = (GtkWidget *)g_object_ref(py_ret_gobj->obj);
+
+ beach:
+	Py_XDECREF(py_ret);
+	pyg_gil_state_release(state);
+	return ret;
+}
+#undef METHOD_NAME
+
+static void
+nautilus_python_object_location_widget_provider_iface_init (NautilusLocationWidgetProviderIface *iface)
+{
+	iface->get_widget = nautilus_python_object_get_widget;
 }
 
 #define METHOD_NAME "get_file_items"
@@ -364,6 +410,12 @@ nautilus_python_object_get_type (GTypeModule *module,
 		NULL
 	};
 
+	static const GInterfaceInfo location_widget_provider_iface_info = {
+		(GInterfaceInitFunc) nautilus_python_object_location_widget_provider_iface_init,
+		NULL,
+		NULL
+	};
+
 	static const GInterfaceInfo menu_provider_iface_info = {
 		(GInterfaceInitFunc) nautilus_python_object_menu_provider_iface_init,
 		NULL,
@@ -405,6 +457,12 @@ nautilus_python_object_get_type (GTypeModule *module,
 		g_type_module_add_interface (module, gtype, 
 									 NAUTILUS_TYPE_PROPERTY_PAGE_PROVIDER,
 									 &property_page_provider_iface_info);
+	}
+
+	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusLocationWidgetProvider_Type)) {
+		g_type_module_add_interface (module, gtype,
+									 NAUTILUS_TYPE_LOCATION_WIDGET_PROVIDER,
+									 &location_widget_provider_iface_info);
 	}
 	
 	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusMenuProvider_Type)) {

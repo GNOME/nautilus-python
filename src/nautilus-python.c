@@ -139,6 +139,7 @@ nautilus_python_load_file(GTypeModule *type_module, const gchar *filename)
 
 		if (PyObject_IsSubclass(value, (PyObject*)&PyNautilusColumnProvider_Type) ||
 			PyObject_IsSubclass(value, (PyObject*)&PyNautilusInfoProvider_Type) ||
+			PyObject_IsSubclass(value, (PyObject*)&PyNautilusLocationWidgetProvider_Type) ||
 			PyObject_IsSubclass(value, (PyObject*)&PyNautilusMenuProvider_Type) ||
 			PyObject_IsSubclass(value, (PyObject*)&PyNautilusPropertyPageProvider_Type)) {
 			
@@ -293,6 +294,9 @@ nautilus_python_init_python (void)
 	/* Extract types and interfaces from nautilus */
 	mdict = PyModule_GetDict(nautilus);
 	
+	_PyGtkWidget_Type = pygobject_lookup_class(GTK_TYPE_WIDGET);
+	g_assert(_PyGtkWidget_Type != NULL);
+
 #define IMPORT(x, y) \
     _PyNautilus##x##_Type = (PyTypeObject *)PyDict_GetItemString(mdict, y); \
 	if (_PyNautilus##x##_Type == NULL) { \
@@ -303,6 +307,7 @@ nautilus_python_init_python (void)
 	IMPORT(Column, "Column");
 	IMPORT(ColumnProvider, "ColumnProvider");
 	IMPORT(InfoProvider, "InfoProvider");
+	IMPORT(LocationWidgetProvider, "LocationWidgetProvider");
 	IMPORT(Menu, "Menu");
 	IMPORT(MenuItem, "MenuItem");
 	IMPORT(MenuProvider, "MenuProvider");

@@ -25,6 +25,12 @@
   (gtype-id "NAUTILUS_TYPE_INFO_PROVIDER")
 )
 
+(define-interface LocationWidgetProvider
+  (in-module "Nautilus")
+  (c-name "NautilusLocationWidgetProvider")
+  (gtype-id "NAUTILUS_TYPE_LOCATION_WIDGET_PROVIDER")
+)
+
 (define-object Menu
   (in-module "Nautilus")
   (parent "GObject")

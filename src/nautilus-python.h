@@ -46,6 +46,9 @@ extern NautilusPythonDebug nautilus_python_debug;
                                      g_printf("%s: entered " x "\n", __FUNCTION__, y); }
 
 
+PyTypeObject *_PyGtkWidget_Type;
+#define PyGtkWidget_Type (*_PyGtkWidget_Type)
+
 PyTypeObject *_PyNautilusColumn_Type;
 #define PyNautilusColumn_Type (*_PyNautilusColumn_Type)
 
@@ -54,6 +57,9 @@ PyTypeObject *_PyNautilusColumnProvider_Type;
 
 PyTypeObject *_PyNautilusInfoProvider_Type;
 #define PyNautilusInfoProvider_Type (*_PyNautilusInfoProvider_Type)
+
+PyTypeObject *_PyNautilusLocationWidgetProvider_Type;
+#define PyNautilusLocationWidgetProvider_Type (*_PyNautilusLocationWidgetProvider_Type)
 
 PyTypeObject *_PyNautilusMenu_Type;
 #define PyNautilusMenu_Type (*_PyNautilusMenu_Type)

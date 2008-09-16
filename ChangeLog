@@ -1,3 +1,18 @@
+2008-09-16  Johan Dahlin  <jdahlin@async.com.br>
+
+	Bug 552534 – nautilus-python should support writing location widget providers
+
+	* src/nautilus-python-object.c (nautilus_python_object_get_widget),
+	(nautilus_python_object_location_widget_provider_iface_init),
+	(nautilus_python_object_get_type):
+	* src/nautilus-python.c (nautilus_python_load_file),
+	(nautilus_python_init_python):
+	* src/nautilus-python.h:
+	* src/nautilus.defs:
+	* src/nautilus.override:
+
+	Patch by Tim Cole
+
 2008-06-09  German Poo-Caaman~o  <gpoo@gnome.org>
 
 	* config.h.in

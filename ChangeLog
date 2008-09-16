@@ -1,3 +1,9 @@
+=== 0.5.1 ===
+2008-09-16  Johan Dahlin  <johan@gnome.org>
+
+	* NEWS: Update
+	* configure.in
+
 2008-09-16  Johan Dahlin  <jdahlin@async.com.br>
 
 	Bug 552534 – nautilus-python should support writing location widget providers

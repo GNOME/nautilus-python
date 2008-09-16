@@ -1,3 +1,6 @@
+0.5.1:
+    - Add support for location widgets (Tim Cole)
+
 0.5.0:
 	- Add support for submenus (Lukáš Lalinský, Sylvain Baubeau, Erik Wien)
 	- Make it work with nautilus 2.22 (Brian Pepple)

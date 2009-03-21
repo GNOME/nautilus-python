@@ -2,7 +2,7 @@
 
 	* examples/submenu.py: fix the submenu example to make it work
 	properly once installed.
-	Patch by Bruce van der Kooji (#559172).
+	Patch by Bruce van der Kooij (#559172).
 
 === 0.5.1 ===
 2008-09-16  Johan Dahlin  <johan@gnome.org>

@@ -1,19 +1,23 @@
 import nautilus
 
 class ExampleMenuProvider(nautilus.MenuProvider):
-
+    
+    # Nautilus crashes if a plugin doesn't implement the __init__ method.
+    # See Bug #374958
+    def __init__(self):
+        pass
+        
     def get_file_items(self, window, files):
-        menuitem = nautilus.MenuItem('ExampleMenuProvider::Foo', 'Foo', '')
+        top_menuitem = nautilus.MenuItem('ExampleMenuProvider::Foo', 'Foo', '')
 
         submenu = nautilus.Menu()
-        menuitem.set_submenu(submenu)
+        top_menuitem.set_submenu(submenu)
 
-        menuitem = nautilus.MenuItem('ExampleMenuProvider::Bar', 'Bar', '')
-        submenu.append_item(menuitem)
+        sub_menuitem = nautilus.MenuItem('ExampleMenuProvider::Bar', 'Bar', '')
+        submenu.append_item(sub_menuitem)
 
-        return menuitem,
+        return top_menuitem,
 
-    # FIXME: Why isn't this working?
     def get_background_items(self, window, file):
         submenu = nautilus.Menu()
         submenu.append_item(nautilus.MenuItem('ExampleMenuProvider::Bar', 'Bar', ''))

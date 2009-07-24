@@ -2,7 +2,7 @@ libautilus-extension Python bindings
 ====================================
 
 These are unstable bindings for the nautilus extension library
-introduced in Gnome 2.6. 
+introduced in Gnome 2.6.
 
 For examples and documentation check the examples sub directory.
 
@@ -22,7 +22,3 @@ Problems
 It's currently not possible to reload the python file without
 restarting nautilus. That's a planned feature for future versions
 
-Author
-======
-
-Johan Dahlin <johan@gnome.org>

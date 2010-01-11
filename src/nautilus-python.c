@@ -27,7 +27,6 @@
 
 #include "nautilus-python.h"
 #include "nautilus-python-object.h"
-#include "pygnomevfs.h"
 
 #include <libnautilus-extension/nautilus-extension-types.h>
 
@@ -83,26 +82,6 @@ static inline gboolean np_init_pygtk(void)
         PyErr_Print();
         g_warning("could not import gtk._gtk");
         return FALSE;
-    }
-	return TRUE;
-}
-
-static inline gboolean np_init_pygnomevfs(void)
-{
-    PyObject *module = PyImport_ImportModule("gnomevfs");
-    if (module != NULL) {
-        PyObject *mdict = PyModule_GetDict(module);
-        PyObject *cobject = PyDict_GetItemString(mdict, "_PyGnomeVFS_API");
-        if (PyCObject_Check(cobject))
-            _PyGnomeVFS_API = (struct _PyGnomeVFS_Functions *)PyCObject_AsVoidPtr(cobject);
-        else {
-	         g_warning("could not find _PyGnomeVFS_API object in the gnomevfs module");
-			 return FALSE;
-        }
-    } else {
-        PyErr_Print();
-        g_warning("could not import gnomevfs");
-		return FALSE;
     }
 	return TRUE;
 }
@@ -258,11 +237,7 @@ nautilus_python_init_python (void)
 		g_warning("pygtk initialization failed");
 		return FALSE;
 	}
-	/* import gnomevfs */
-	debug("init_gnomevfs");
-	if (!np_init_pygnomevfs())
-		return FALSE;
-
+	
 	/* gobject.threads_init() */
     debug("pyg_enable_threads");
 	setenv("PYGTK_USE_GIL_STATE_API", "", 0);

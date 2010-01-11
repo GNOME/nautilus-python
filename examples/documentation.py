@@ -116,9 +116,6 @@ class FileInfo:
     def is_directory(self):
         pass
 
-    def get_vfs_file_info(self):
-        pass
-    
     def add_emblem(self, emblem):
         pass
     

@@ -23,8 +23,6 @@ headers
 #define NO_IMPORT_PYGOBJECT
 #include "pygobject.h"
 
-#include "pygnomevfs.h"
-
 #include <libnautilus-extension/nautilus-file-info.h>
 #include <libnautilus-extension/nautilus-info-provider.h>
 #include <libnautilus-extension/nautilus-column-provider.h>
@@ -42,17 +40,3 @@ import gtk.Window as PyGtkWindow_Type
 ignore-glob
   *_get_type
 %%
-override nautilus_file_info_get_vfs_file_info noargs
-static PyObject *
-_wrap_nautilus_file_info_get_vfs_file_info(PyGObject *self)
-{
-    GnomeVFSFileInfo *ret;
-    
-    ret = nautilus_file_info_get_vfs_file_info(NAUTILUS_FILE_INFO(self->obj));
-    if (ret) {
-        return pygnome_vfs_file_info_new(ret);
-    }
-    
-    Py_INCREF(Py_None);
-    return Py_None;
-}

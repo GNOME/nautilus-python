@@ -223,6 +223,13 @@ nautilus_python_init_python (void)
 		PyErr_Print();
 		return FALSE;
 	}
+	
+	/* Sanitize sys.path */
+	PyRun_SimpleString("import sys; sys.path = filter(None, sys.path)");
+	if (PyErr_Occurred()) {
+		PyErr_Print();
+		return FALSE;
+	}
 
 	/* pygtk.require("2.0") */
 	debug("pygtk.require(\"2.0\")");

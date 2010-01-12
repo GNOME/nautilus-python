@@ -53,6 +53,13 @@ static GObjectClass *parent_class;
 #define CHECK_METHOD_NAME(self)                                        \
 	if (!PyObject_HasAttrString(self, METHOD_NAME))                    \
 		goto beach;
+
+#define CHECK_OBJECT(object)										   \
+  	if (object->instance == NULL)									   \
+  	{																   \
+  		g_object_unref (object);									   \
+  		goto beach;													   \
+  	}																   \
 	
 #define CONVERT_LIST(py_files, files)                                  \
 	{                                                                  \
@@ -108,6 +115,7 @@ nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provide
 	
   	debug_enter();
 
+	CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
 	CONVERT_LIST(py_files, files);
@@ -147,6 +155,7 @@ nautilus_python_object_get_widget (NautilusLocationWidgetProvider *provider,
 
 	debug_enter();
 
+	CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
 	py_uri = PyString_FromString(uri);
@@ -190,6 +199,7 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
 	
   	debug_enter();
 
+	CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
 	CONVERT_LIST(py_files, files);
@@ -219,7 +229,8 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
-	
+
+	CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
     py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
@@ -250,7 +261,8 @@ nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	
   	debug_enter();
-
+  	
+	CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
     py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
@@ -287,6 +299,7 @@ nautilus_python_object_get_columns (NautilusColumnProvider *provider)
 
 	debug_enter();
 		
+	CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
     py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
@@ -332,6 +345,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider *provider,
 	
   	debug_enter();
 
+	CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
 
     py_ret = PyObject_CallMethod(object->instance,
@@ -372,7 +386,9 @@ nautilus_python_object_instance_init (NautilusPythonObject *object)
 
 	object->instance = PyObject_CallObject(class->type, NULL);
 	if (object->instance == NULL)
+	{
 		PyErr_Print();
+	}
 }
 
 static void
@@ -380,7 +396,8 @@ nautilus_python_object_finalize (GObject *object)
 {
   	debug_enter();
 
-	Py_DECREF(((NautilusPythonObject *)object)->instance);
+	if (((NautilusPythonObject *)object)->instance != NULL)
+		Py_DECREF(((NautilusPythonObject *)object)->instance);
 }
 
 static void

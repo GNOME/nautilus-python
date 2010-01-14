@@ -95,10 +95,22 @@ class FileInfo:
     def is_gone(self):
         pass
 
+    def get_file_type(self):
+        pass
+
+    def get_location(self):
+        pass
+
     def get_name(self):
         pass
 
     def get_uri(self):
+        pass
+
+    def get_activation_uri(self):
+        pass
+
+    def get_parent_location(self):
         pass
 
     def get_parent_uri(self):
@@ -127,7 +139,6 @@ class FileInfo:
 
     def invalidate_extension_info(self):
         pass
-
     
 class PropertyPage:
     """

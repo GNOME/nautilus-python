@@ -144,7 +144,7 @@
 (define-method get_location
   (of-object "NautilusFileInfo")
   (c-name "nautilus_file_info_get_location")
-  (return-type "GFile")
+  (return-type "GFile*")
 )
 
 (define-method get_name
@@ -168,7 +168,7 @@
 (define-method get_parent_location
   (of-object "NautilusFileInfo")
   (c-name "nautilus_file_info_get_parent_location")
-  (return-type "GFile")
+  (return-type "GFile*")
 )
 
 (define-method get_parent_uri

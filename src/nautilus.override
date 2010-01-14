@@ -29,6 +29,32 @@ headers
 #include <libnautilus-extension/nautilus-location-widget-provider.h>
 #include <libnautilus-extension/nautilus-menu-provider.h>
 #include <libnautilus-extension/nautilus-property-page-provider.h>
+#include <libnautilus-extension/nautilus-menu.h>
+
+static PyObject *
+_glist_to_pyobject (GList *list)
+{
+	GList *l;
+	PyObject *item, *py_ret;
+
+	py_ret = PyList_New (0);
+
+	for (l = list; l != NULL; l = l->next)
+	{
+		item = pygobject_new ((GObject *)l->data);
+
+		if (item == NULL)
+		{
+			Py_DECREF (py_ret);
+			return NULL;
+		}
+
+		PyList_Append (py_ret, item);
+		Py_DECREF (item);
+	}
+
+	return py_ret;
+}
 
 %%
 modulename nautilus
@@ -40,3 +66,24 @@ import gtk.Window as PyGtkWindow_Type
 ignore-glob
   *_get_type
 %%
+define NautilusMenu.get_items
+static PyObject *
+_wrap_nautilus_menu_get_items(PyGObject *self)
+{
+    GList *ret;
+    
+    if(self == NULL)
+    {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+    
+    ret = nautilus_menu_get_items(NAUTILUS_MENU(self->obj));
+    if (ret) {
+        PyObject *py_ret = _glist_to_pyobject(ret);
+        return py_ret;
+    }
+    
+    Py_INCREF(Py_None);
+    return Py_None;
+}

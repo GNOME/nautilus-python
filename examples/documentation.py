@@ -57,6 +57,19 @@ class InfoProvider:
         and use together with the other extensions
         """
 
+class Menu:
+    def append(self, menu_item):
+        """
+        @type   menu_item   nautilus.MenuItem
+        """
+        pass
+        
+    def get_items(self):
+        """
+        @rtype  list of nautilus.MenuItem
+        """
+        pass
+
 class MenuItem:
     """
     Properties:
@@ -75,6 +88,12 @@ class MenuItem:
         pass
     
     def activate(self):
+        pass
+
+    def set_submenu(self, menu):
+        """
+        @type   menu    nautilus.Menu
+        """
         pass
     
 class Column:

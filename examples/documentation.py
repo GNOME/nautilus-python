@@ -100,13 +100,13 @@ class FileInfo:
 
     def get_file_type(self):
         """
-        @rtype   gio.GFileType
+        @rtype   gio FileType enum
         """
         pass
 
     def get_location(self):
         """
-        @rtype   gio.GFile
+        @rtype   gio.File
         """
         pass
 
@@ -130,7 +130,7 @@ class FileInfo:
 
     def get_parent_location(self):
         """
-        @rtype   gio.GFile
+        @rtype   gio.File
         """
         pass
 

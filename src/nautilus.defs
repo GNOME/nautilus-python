@@ -177,6 +177,12 @@
   (return-type "char*")
 )
 
+(define-method get_mount
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_get_mount")
+  (return-type "GMount*")
+)
+
 (define-method get_uri_scheme
   (of-object "NautilusFileInfo")
   (c-name "nautilus_file_info_get_uri_scheme")

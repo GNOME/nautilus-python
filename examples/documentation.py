@@ -140,6 +140,12 @@ class FileInfo:
         """
         pass
 
+    def get_mount(self):
+        """
+        @rtype   gio.Mount
+        """
+        pass
+
     def get_uri_scheme(self):
         """
         @rtype   string

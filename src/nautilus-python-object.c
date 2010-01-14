@@ -65,7 +65,8 @@ static GObjectClass *parent_class;
 	{                                                                  \
 		GList *l;                                                      \
         py_files = PyList_New(0);                                      \
-		for (l = files; l; l = l->next) {                              \
+		for (l = files; l; l = l->next)                                \
+		{                                                              \
             PyObject *obj = pygobject_new((GObject*)l->data);          \
 			PyList_Append(py_files, obj);							   \
 			Py_DECREF(obj);                                            \
@@ -73,45 +74,52 @@ static GObjectClass *parent_class;
 	}
 
 #define HANDLE_RETVAL(py_ret)                                          \
-    if (!py_ret) {                                                     \
-		PyErr_Print();                                                 \
+    if (!py_ret)                                                       \
+    {                                                                  \
+        PyErr_Print();                                                 \
 		goto beach;                                                    \
- 	} else if (py_ret == Py_None) {                                    \
+ 	}                                                                  \
+ 	else if (py_ret == Py_None)                                        \
+ 	{                                                                  \
  		goto beach;                                                    \
 	}
 
 #define HANDLE_LIST(py_ret, type, type_name)                           \
     {                                                                  \
-        Py_ssize_t i = 0;                                                     \
-    	if (!PySequence_Check(py_ret) || PyString_Check(py_ret)) {     \
+        Py_ssize_t i = 0;                                              \
+    	if (!PySequence_Check(py_ret) || PyString_Check(py_ret))       \
+    	{                                                              \
     		PyErr_SetString(PyExc_TypeError,                           \
     						METHOD_NAME " must return a sequence");    \
     		goto beach;                                                \
     	}                                                              \
-    	for (i = 0; i < PySequence_Size (py_ret); i++) {               \
+    	for (i = 0; i < PySequence_Size (py_ret); i++)                 \
+    	{                                                              \
     		PyGObject *py_item;                                        \
     		py_item = (PyGObject*)PySequence_GetItem (py_ret, i);      \
-    		if (!pygobject_check(py_item, &Py##type##_Type)) {         \
+    		if (!pygobject_check(py_item, &Py##type##_Type))           \
+    		{                                                          \
     			PyErr_SetString(PyExc_TypeError,                       \
     							METHOD_NAME                            \
     							" must return a sequence of "          \
     							type_name);                            \
     			goto beach;                                            \
     		}                                                          \
-    		ret = g_list_append (ret, (type*) g_object_ref(py_item->obj)); \
+    		ret = g_list_append (ret, (type*) g_object_ref(py_item->obj));  \
             Py_DECREF(py_item);                                        \
     	}                                                              \
     }
+    
 
 #define METHOD_NAME "get_property_pages"
 static GList *
 nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provider,
-										   GList *files)
+										   GList 						*files)
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     PyObject *py_files, *py_ret = NULL;
     GList *ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
+	PyGILState_STATE state = pyg_gil_state_ensure();
 	
   	debug_enter();
 
@@ -143,8 +151,8 @@ nautilus_python_object_property_page_provider_iface_init (NautilusPropertyPagePr
 #define METHOD_NAME "get_widget"
 static GtkWidget *
 nautilus_python_object_get_widget (NautilusLocationWidgetProvider *provider,
-								   const char *uri,
-								   GtkWidget *window)
+								   const char 				 	  *uri,
+								   GtkWidget 					  *window)
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
 	GtkWidget *ret = NULL;
@@ -166,7 +174,8 @@ nautilus_python_object_get_widget (NautilusLocationWidgetProvider *provider,
 	HANDLE_RETVAL(py_ret);
 
 	py_ret_gobj = (PyGObject *)py_ret;
-	if (!pygobject_check(py_ret_gobj, &PyGtkWidget_Type)) {
+	if (!pygobject_check(py_ret_gobj, &PyGtkWidget_Type))
+	{
 		PyErr_SetString(PyExc_TypeError,
 					    METHOD_NAME "should return a gtk.Widget");
 		goto beach;
@@ -189,8 +198,8 @@ nautilus_python_object_location_widget_provider_iface_init (NautilusLocationWidg
 #define METHOD_NAME "get_file_items"
 static GList *
 nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
-									   GtkWidget *window,
-									   GList *files)
+									   GtkWidget 			*window,
+									   GList 				*files)
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
@@ -220,8 +229,8 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
 #define METHOD_NAME "get_background_items"
 static GList *
 nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
-											 GtkWidget *window,
-											 NautilusFileInfo *file)
+											 GtkWidget 			  *window,
+											 NautilusFileInfo 	  *file)
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
@@ -252,8 +261,8 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 #define METHOD_NAME "get_toolbar_items"
 static GList *
 nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
-										  GtkWidget *window,
-										  NautilusFileInfo *file)
+										  GtkWidget 		   *window,
+										  NautilusFileInfo 	   *file)
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
@@ -310,6 +319,7 @@ nautilus_python_object_get_columns (NautilusColumnProvider *provider)
 	HANDLE_LIST(py_ret, NautilusColumn, "nautilus.Column");
 	
  beach:
+ 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
 }
@@ -324,8 +334,8 @@ nautilus_python_object_column_provider_iface_init (NautilusColumnProviderIface *
 
 #define METHOD_NAME "cancel_update"
 static void
-nautilus_python_object_cancel_update (NautilusInfoProvider *provider,
-									  NautilusOperationHandle *handle)
+nautilus_python_object_cancel_update (NautilusInfoProvider 		*provider,
+									  NautilusOperationHandle 	*handle)
 {
   	debug_enter();
 }
@@ -333,10 +343,10 @@ nautilus_python_object_cancel_update (NautilusInfoProvider *provider,
 
 #define METHOD_NAME "update_file_info"
 static NautilusOperationResult
-nautilus_python_object_update_file_info (NautilusInfoProvider *provider,
-										 NautilusFile *file,
-										 GClosure *update_complete,
-										 NautilusOperationHandle **handle)
+nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
+										 NautilusFile 				*file,
+										 GClosure 					*update_complete,
+										 NautilusOperationHandle   **handle)
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
@@ -354,7 +364,8 @@ nautilus_python_object_update_file_info (NautilusInfoProvider *provider,
 	HANDLE_RETVAL(py_ret);
 
 
-	if (!PyInt_Check(py_ret)) {
+	if (!PyInt_Check(py_ret))
+	{
 		PyErr_SetString(PyExc_TypeError,
 						METHOD_NAME " must return None or a int");
 		goto beach;
@@ -386,9 +397,7 @@ nautilus_python_object_instance_init (NautilusPythonObject *object)
 
 	object->instance = PyObject_CallObject(class->type, NULL);
 	if (object->instance == NULL)
-	{
 		PyErr_Print();
-	}
 }
 
 static void
@@ -402,7 +411,7 @@ nautilus_python_object_finalize (GObject *object)
 
 static void
 nautilus_python_object_class_init (NautilusPythonObjectClass *class,
-								   gpointer class_data)
+								   gpointer 				  class_data)
 {
 	debug_enter();
 
@@ -415,7 +424,7 @@ nautilus_python_object_class_init (NautilusPythonObjectClass *class,
 
 GType 
 nautilus_python_object_get_type (GTypeModule *module, 
-								 PyObject *type)
+								 PyObject 	*type)
 {
 	GTypeInfo *info;
 	const char *type_name;
@@ -470,31 +479,36 @@ nautilus_python_object_get_type (GTypeModule *module,
 										 type_name,
 										 info, 0);
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusPropertyPageProvider_Type)) {
+	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusPropertyPageProvider_Type))
+	{
 		g_type_module_add_interface (module, gtype, 
 									 NAUTILUS_TYPE_PROPERTY_PAGE_PROVIDER,
 									 &property_page_provider_iface_info);
 	}
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusLocationWidgetProvider_Type)) {
+	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusLocationWidgetProvider_Type))
+	{
 		g_type_module_add_interface (module, gtype,
 									 NAUTILUS_TYPE_LOCATION_WIDGET_PROVIDER,
 									 &location_widget_provider_iface_info);
 	}
 	
-	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusMenuProvider_Type)) {
+	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusMenuProvider_Type))
+	{
 		g_type_module_add_interface (module, gtype, 
 									 NAUTILUS_TYPE_MENU_PROVIDER,
 									 &menu_provider_iface_info);
 	}
 
-	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusColumnProvider_Type)) {
+	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusColumnProvider_Type))
+	{
 		g_type_module_add_interface (module, gtype, 
 									 NAUTILUS_TYPE_COLUMN_PROVIDER,
 									 &column_provider_iface_info);
 	}
 	
-	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusInfoProvider_Type)) {
+	if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusInfoProvider_Type))
+	{
 		g_type_module_add_interface (module, gtype, 
 									 NAUTILUS_TYPE_INFO_PROVIDER,
 									 &info_provider_iface_info);

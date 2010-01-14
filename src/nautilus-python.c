@@ -31,7 +31,7 @@
 #include <libnautilus-extension/nautilus-extension-types.h>
 
 static const GDebugKey nautilus_python_debug_keys[] = {
-  {"misc", NAUTILUS_PYTHON_DEBUG_MISC},
+	{"misc", NAUTILUS_PYTHON_DEBUG_MISC},
 };
 static const guint nautilus_python_ndebug_keys = sizeof (nautilus_python_debug_keys) / sizeof (GDebugKey);
 NautilusPythonDebug nautilus_python_debug;
@@ -41,21 +41,28 @@ static gboolean nautilus_python_init_python(void);
 static GArray *all_types = NULL;
 
 
-static inline gboolean np_init_pygobject(void)
+static inline gboolean 
+np_init_pygobject(void)
 {
     PyObject *gobject = PyImport_ImportModule("gobject");
-    if (gobject != NULL) {
+    if (gobject != NULL)
+    {
         PyObject *mdict = PyModule_GetDict(gobject);
         PyObject *cobject = PyDict_GetItemString(mdict, "_PyGObject_API");
         if (PyCObject_Check(cobject))
+        {
             _PyGObject_API = (struct _PyGObject_Functions *)PyCObject_AsVoidPtr(cobject);
-        else {
+        }
+        else
+        {
             PyErr_SetString(PyExc_RuntimeError,
                             "could not find _PyGObject_API object");
 			PyErr_Print();
 			return FALSE;
         }
-    } else {
+    }
+    else
+    {
         PyErr_Print();
         g_warning("could not import gobject");
         return FALSE;
@@ -63,22 +70,29 @@ static inline gboolean np_init_pygobject(void)
 	return TRUE;
 }
 
-static inline gboolean np_init_pygtk(void)
+static inline gboolean 
+np_init_pygtk(void)
 {
     PyObject *pygtk = PyImport_ImportModule("gtk._gtk");
-    if (pygtk != NULL) {
+    if (pygtk != NULL)
+    {
 		PyObject *module_dict = PyModule_GetDict(pygtk);
 		PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
 		if (PyCObject_Check(cobject))
+		{
 			_PyGtk_API = (struct _PyGtk_FunctionStruct*)
 				PyCObject_AsVoidPtr(cobject);
-		else {
+		}
+		else
+		{
             PyErr_SetString(PyExc_RuntimeError,
                             "could not find _PyGtk_API object");
 			PyErr_Print();
 			return FALSE;
         }
-    } else {
+    }
+    else
+    {
         PyErr_Print();
         g_warning("could not import gtk._gtk");
         return FALSE;
@@ -88,7 +102,8 @@ static inline gboolean np_init_pygtk(void)
 
 
 static void
-nautilus_python_load_file(GTypeModule *type_module, const gchar *filename)
+nautilus_python_load_file(GTypeModule *type_module, 
+						  const gchar *filename)
 {
 	PyObject *main_module, *main_locals, *locals, *key, *value;
 	PyObject *module;
@@ -98,21 +113,24 @@ nautilus_python_load_file(GTypeModule *type_module, const gchar *filename)
 	debug_enter_args("filename=%s", filename);
 	
 	main_module = PyImport_AddModule("__main__");
-	if (main_module == NULL) {
+	if (main_module == NULL)
+	{
 		g_warning("Could not get __main__.");
 		return;
 	}
 	
 	main_locals = PyModule_GetDict(main_module);
 	module = PyImport_ImportModuleEx((char *) filename, main_locals, main_locals, NULL);
-	if (!module) {
+	if (!module)
+	{
 		PyErr_Print();
 		return;
 	}
 	
 	locals = PyModule_GetDict(module);
 	
-	while (PyDict_Next(locals, &pos, &key, &value)) {
+	while (PyDict_Next(locals, &pos, &key, &value))
+	{
 		if (!PyType_Check(value))
 			continue;
 
@@ -120,8 +138,8 @@ nautilus_python_load_file(GTypeModule *type_module, const gchar *filename)
 			PyObject_IsSubclass(value, (PyObject*)&PyNautilusInfoProvider_Type) ||
 			PyObject_IsSubclass(value, (PyObject*)&PyNautilusLocationWidgetProvider_Type) ||
 			PyObject_IsSubclass(value, (PyObject*)&PyNautilusMenuProvider_Type) ||
-			PyObject_IsSubclass(value, (PyObject*)&PyNautilusPropertyPageProvider_Type)) {
-			
+			PyObject_IsSubclass(value, (PyObject*)&PyNautilusPropertyPageProvider_Type))
+		{
 			gtype = nautilus_python_object_get_type(type_module, value);
 			g_array_append_val(all_types, gtype);
 		}
@@ -131,7 +149,8 @@ nautilus_python_load_file(GTypeModule *type_module, const gchar *filename)
 }
 
 static void
-nautilus_python_load_dir (GTypeModule *module, const char *dirname)
+nautilus_python_load_dir (GTypeModule *module, 
+						  const char  *dirname)
 {
 	GDir *dir;
 	const char *name;
@@ -142,10 +161,11 @@ nautilus_python_load_dir (GTypeModule *module, const char *dirname)
 	dir = g_dir_open(dirname, 0, NULL);
 	if (!dir)
 		return;
-
 			
-	while ((name = g_dir_read_name(dir))) {
-		if (g_str_has_suffix(name, ".py")) {
+	while ((name = g_dir_read_name(dir)))
+	{
+		if (g_str_has_suffix(name, ".py"))
+		{
 			char *modulename;
 			int len;
 
@@ -153,15 +173,19 @@ nautilus_python_load_dir (GTypeModule *module, const char *dirname)
 			modulename = g_new0(char, len + 1 );
 			strncpy(modulename, name, len);
 
-			if (!initialized) {
+			if (!initialized)
+			{
 				PyObject *sys_path, *py_path;
-				  /* n-p python part is initialized on demand (or not
-				   * at all if no extensions are found) */
-				if (!nautilus_python_init_python()) {
+				
+				/* n-p python part is initialized on demand (or not
+				* at all if no extensions are found) */
+				if (!nautilus_python_init_python())
+				{
 					g_warning("nautilus_python_init_python failed");
-					goto exit;
+					g_dir_close(dir);
 				}
-				  /* sys.path.insert(0, dirname) */
+				
+				/* sys.path.insert(0, dirname) */
 				sys_path = PySys_GetObject("path");
 				py_path = PyString_FromString(dirname);
 				PyList_Insert(sys_path, 0, py_path);
@@ -169,9 +193,7 @@ nautilus_python_load_dir (GTypeModule *module, const char *dirname)
 			}
 			nautilus_python_load_file(module, modulename);
 		}
-	}
-exit:
-	g_dir_close(dir);
+	}	
 }
 
 static gboolean
@@ -189,23 +211,27 @@ nautilus_python_init_python (void)
 	libpython = g_module_open(PY_LIB_LOC "/libpython" PYTHON_VERSION "." G_MODULE_SUFFIX, 0);
 	if (!libpython)
 		g_warning("g_module_open libpython failed: %s", g_module_error());
+
 	debug("Py_Initialize");
 	Py_Initialize();
-	if (PyErr_Occurred()) {
+	if (PyErr_Occurred())
+	{
 		PyErr_Print();
 		return FALSE;
 	}
 	
 	debug("PySys_SetArgv");
 	PySys_SetArgv(1, argv);
-	if (PyErr_Occurred()) {
+	if (PyErr_Occurred())
+	{
 		PyErr_Print();
 		return FALSE;
 	}
 	
-	/* Sanitize sys.path */
+	debug("Sanitize the python search path");
 	PyRun_SimpleString("import sys; sys.path = filter(None, sys.path)");
-	if (PyErr_Occurred()) {
+	if (PyErr_Occurred())
+	{
 		PyErr_Print();
 		return FALSE;
 	}
@@ -213,27 +239,32 @@ nautilus_python_init_python (void)
 	/* pygtk.require("2.0") */
 	debug("pygtk.require(\"2.0\")");
 	pygtk = PyImport_ImportModule("pygtk");
-	if (!pygtk) {
+	if (!pygtk)
+	{
 		PyErr_Print();
 		return FALSE;
 	}
 	mdict = PyModule_GetDict(pygtk);
 	require = PyDict_GetItemString(mdict, "require");
 	PyObject_CallObject(require, Py_BuildValue("(S)", PyString_FromString("2.0")));
-	if (PyErr_Occurred()) {
+	if (PyErr_Occurred())
+	{
 		PyErr_Print();
 		return FALSE;
 	}
 
 	/* import gobject */
   	debug("init_pygobject");
-	if (!np_init_pygobject()) {
+	if (!np_init_pygobject())
+	{
 		g_warning("pygobject initialization failed");
 		return FALSE;
 	}
+	
 	/* import gtk */
 	debug("init_pygtk");
-	if (!np_init_pygtk()) {
+	if (!np_init_pygtk())
+	{
 		g_warning("pygtk initialization failed");
 		return FALSE;
 	}
@@ -248,7 +279,8 @@ nautilus_python_init_python (void)
 	mdict = PyModule_GetDict(gtk);
 	pygtk_version = PyDict_GetItemString(mdict, "pygtk_version");
 	pygtk_required_version = Py_BuildValue("(iii)", 2, 4, 0);
-	if (PyObject_Compare(pygtk_version, pygtk_required_version) == -1) {
+	if (PyObject_Compare(pygtk_version, pygtk_required_version) == -1)
+	{
 		g_warning("PyGTK %s required, but %s found.",
 				  PyString_AsString(PyObject_Repr(pygtk_required_version)),
 				  PyString_AsString(PyObject_Repr(pygtk_version)));
@@ -268,7 +300,8 @@ nautilus_python_init_python (void)
 	g_setenv("INSIDE_NAUTILUS_PYTHON", "", FALSE);
 	debug("import nautilus");
 	nautilus = PyImport_ImportModule("nautilus");
-	if (!nautilus) {
+	if (!nautilus)
+	{
 		PyErr_Print();
 		return FALSE;
 	}
@@ -308,7 +341,8 @@ nautilus_module_initialize(GTypeModule *module)
 	const gchar *env_string;
 
 	env_string = g_getenv("NAUTILUS_PYTHON_DEBUG");
-	if (env_string != NULL) {
+	if (env_string != NULL)
+	{
 		nautilus_python_debug = g_parse_debug_string(env_string,
 													 nautilus_python_debug_keys,
 													 nautilus_python_ndebug_keys);
@@ -330,9 +364,10 @@ void
 nautilus_module_shutdown(void)
 {
 	debug_enter();
-	if (Py_IsInitialized()) {
+
+	if (Py_IsInitialized())
 		Py_Finalize();
-	}
+
 	g_array_free(all_types, TRUE);
 }
 

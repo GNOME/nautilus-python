@@ -38,7 +38,8 @@ initnautilus(void)
 {
     PyObject *m, *d;
     
-    if (!g_getenv("INSIDE_NAUTILUS_PYTHON")) {
+    if (!g_getenv("INSIDE_NAUTILUS_PYTHON"))
+    {
 	    Py_FatalError("This module can only be used from nautilus");
 	    return;
     }

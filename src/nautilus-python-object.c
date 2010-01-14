@@ -133,6 +133,7 @@ nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provide
 	HANDLE_LIST(py_ret, NautilusPropertyPage, "nautilus.PropertyPage");
 	
  beach:
+ 	Py_XDECREF(py_files);
 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
@@ -181,6 +182,8 @@ nautilus_python_object_get_widget (NautilusLocationWidgetProvider *provider,
 	ret = (GtkWidget *)g_object_ref(py_ret_gobj->obj);
 
  beach:
+ 	Py_XDECREF(py_uri);
+ 	Py_XDECREF(py_ret_gobj);
 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
 	return ret;
@@ -218,6 +221,7 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 
  beach:
+ 	Py_XDECREF(py_files);
 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;

@@ -93,54 +93,106 @@ class Column:
 
 class FileInfo:
     def is_gone(self):
+        """
+        @rtype   boolean
+        """
         pass
 
     def get_file_type(self):
+        """
+        @rtype   gio.GFileType
+        """
         pass
 
     def get_location(self):
+        """
+        @rtype   gio.GFile
+        """
         pass
 
     def get_name(self):
+        """
+        @rtype   string
+        """
         pass
 
     def get_uri(self):
+        """
+        @rtype   string
+        """
         pass
 
     def get_activation_uri(self):
+        """
+        @rtype   string
+        """
         pass
 
     def get_parent_location(self):
+        """
+        @rtype   gio.GFile
+        """
         pass
 
     def get_parent_uri(self):
+        """
+        @rtype   string
+        """
         pass
 
     def get_uri_scheme(self):
+        """
+        @rtype   string
+        """
         pass
 
     def get_mime_type(self):
+        """
+        @rtype   string
+        """
         pass
     
     def is_mime_type(self, mime_type):
+        """
+        @type   mime_type   string
+        @rtype  boolean
+        """
         pass
 
     def is_directory(self):
+        """
+        @rtype   boolean
+        """
         pass
     
     def can_write(self):
+        """
+        @rtype   boolean
+        """
         pass
 
     def add_emblem(self, emblem):
+        """
+        @rtype   void
+        """
         pass
     
     def get_string_attribute(self, attribute_name):
+        """
+        @rtype   string
+        """
         pass
 
     def add_string_attribute(self, attribute_name, value):
+        """
+        @rtype   void
+        """
         pass
 
     def invalidate_extension_info(self):
+        """
+        @rtype   void
+        """
         pass
     
 class PropertyPage:

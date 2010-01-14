@@ -127,6 +127,9 @@ class FileInfo:
 
     def is_directory(self):
         pass
+    
+    def can_write(self):
+        pass
 
     def add_emblem(self, emblem):
         pass

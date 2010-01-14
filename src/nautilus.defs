@@ -204,6 +204,12 @@
   (return-type "gboolean")
 )
 
+(define-method can_write
+  (of-object "NautilusFileInfo")
+  (c-name "nautilus_file_info_can_write")
+  (return-type "gboolean")
+)
+
 (define-method add_emblem
   (of-object "NautilusFileInfo")
   (c-name "nautilus_file_info_add_emblem")

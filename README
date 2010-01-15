@@ -6,16 +6,17 @@ introduced in Gnome 2.6.
 
 For examples and documentation check the examples sub directory.
 
-Note that scripts are loaded from $prefix/lib/nautilus/extensions-1.0/python
+Note that scripts are loaded from $prefix/lib/nautilus/extensions-2.0/python
 
 Try to copy test.py to that directory for an example
 
 Requirements
 ============
 
-Nautilus 2.6.0
-Python   2.3
-PyGtk    2.4.0
+Nautilus  2.22.0
+Python    2.3
+PyGtk     2.8.0
+PyGObject 2.16.0
 
 Problems
 ========

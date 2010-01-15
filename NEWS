@@ -1,3 +1,17 @@
+0.6.0:
+    - Remove eel dependency (Vincent Untz)
+    - Sanitize python search path (Mark Lee)
+    - Remove gnomevfs dependency and unused code (Daniel Holbach)
+    - Load python from lib64 in 64 bit multilib distributions (Ted Toth)
+    - Fix segfault when a plugin doesn't implement the __init__ method
+    - Added the can_write, get_mount, get_file_type, get_location, 
+        and get_parent_location methods to the NautilusFileInfo object
+    - Added the NautilusMenu.get_items method
+    - Updated some example plugins
+    - Bug fix for some PyThreadState_New segmentation faults
+    - Use the nautilus prefix by default for distfiles, rather than /usr
+    - Require nautilus-2.22 and pygobject-2.16 now that we support GIO
+
 0.5.1:
     - Add support for location widgets (Tim Cole)
 

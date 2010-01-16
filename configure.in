@@ -70,10 +70,10 @@ AC_SUBST(NAUTILUS_EXTENSION_DIR)
 AC_DEFINE_UNQUOTED(NAUTILUS_EXTENSION_DIR, "$NAUTILUS_EXTENSION_DIR", [Nautilus' extensions directory])
 
 AC_OUTPUT([
-  Makefile 
-  nautilus-python.pc
-  nautilus-python.spec
+  Makefile
   examples/Makefile
   src/Makefile
+  nautilus-python.spec
+  nautilus-python.pc
 ])
 

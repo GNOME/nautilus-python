@@ -237,6 +237,7 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 
  beach:
+ 	free_pygobject_data_list(files);
 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
@@ -301,6 +302,7 @@ nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 	
  beach:
+ 	free_pygobject_data(file, NULL);
 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
@@ -392,6 +394,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
 	ret = PyInt_AsLong(py_ret);
 	
  beach:
+ 	free_pygobject_data(file, NULL);
 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;

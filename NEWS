@@ -1,3 +1,11 @@
+0.6.1:
+    - Look for libpython2.6.so.1.0 instead of libpython2.6.so, the latter 
+	is general available from -devel packages only.
+    - Re-added the missing spec and pc files
+    - Free pygobject data directly after using file objects.  Stops seg 
+	faults from occurring when nautilus wants to free pygobject data
+	after Py_Finalize() is called.
+
 0.6.0:
     - Remove eel dependency (Vincent Untz)
     - Sanitize python search path (Mark Lee)

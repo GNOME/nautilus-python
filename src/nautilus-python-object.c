@@ -60,7 +60,7 @@ static GObjectClass *parent_class;
   		g_object_unref (object);									   \
   		goto beach;													   \
   	}																   \
-	
+
 #define CONVERT_LIST(py_files, files)                                  \
 	{                                                                  \
 		GList *l;                                                      \
@@ -107,7 +107,26 @@ static GObjectClass *parent_class;
             Py_DECREF(py_item);                                        \
     	}                                                              \
     }
-    
+
+
+static void
+free_pygobject_data(gpointer data, gpointer user_data)
+{
+	/* Some NautilusFile objects are cached and not freed until nautilus
+		itself is closed.  Since PyGObject stores data that must be freed by
+		the Python interpreter, we must always free it before the interpreter
+		is finalized. */
+	g_object_set_data((GObject *)data, "PyGObject::instance-data", NULL);
+}
+
+static void
+free_pygobject_data_list(GList *list)
+{
+	if (list == NULL)
+		return;
+		
+	g_list_foreach(list, (GFunc)free_pygobject_data, NULL);
+}
 
 #define METHOD_NAME "get_property_pages"
 static GList *
@@ -233,7 +252,7 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
     PyObject *py_ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
+	PyGILState_STATE state = pyg_gil_state_ensure();
 	
   	debug_enter();
 
@@ -244,12 +263,13 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 								 "(NN)",
 								 pygobject_new((GObject *)window),
 								 pygobject_new((GObject *)file));
-								 
+
 	HANDLE_RETVAL(py_ret);
 
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
 	
  beach:
+	free_pygobject_data(file, NULL);
 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;

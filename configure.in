@@ -37,6 +37,7 @@ AM_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 
 PKG_CHECK_MODULES(NAUTILUS_PYTHON, [pygtk-2.0 >= $PYGTK_REQUIRED
                                    gnome-python-2.0 >= $GNOME_PYTHON_REQUIRED
+                                   gnome-vfs-2.0 >= $GNOME_PYTHON_REQUIRED
                                    libnautilus-extension >= $NAUTILUS_REQUIRED])
 
 AC_MSG_CHECKING(for pygtk defs)

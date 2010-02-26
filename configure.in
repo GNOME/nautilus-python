@@ -12,7 +12,6 @@ AM_CONFIG_HEADER(config.h)
 AC_SUBST(ACLOCAL_AMFLAGS, "-I m4 -I .")
 
 NAUTILUS_REQUIRED=2.6.0
-EEL_REQUIRED=2.6.0
 PYGTK_REQUIRED=2.8.0
 GNOME_PYTHON_REQUIRED=2.12.0
 
@@ -38,8 +37,7 @@ AM_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 
 PKG_CHECK_MODULES(NAUTILUS_PYTHON, [pygtk-2.0 >= $PYGTK_REQUIRED
                                    gnome-python-2.0 >= $GNOME_PYTHON_REQUIRED
-                                   libnautilus-extension >= $NAUTILUS_REQUIRED
-                                   eel-2.0 >= $EEL_REQUIRED])
+                                   libnautilus-extension >= $NAUTILUS_REQUIRED])
 
 AC_MSG_CHECKING(for pygtk defs)
 PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`

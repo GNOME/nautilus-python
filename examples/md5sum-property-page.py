@@ -1,4 +1,4 @@
-import md5
+import hashlib
 import urllib
 
 import gtk
@@ -34,7 +34,7 @@ class MD5SumPropertyPage(nautilus.PropertyPageProvider):
         self.value_label = gtk.Label()
         self.hbox.pack_start(self.value_label)
 
-        md5sum = md5.md5(filename).hexdigest()
+        md5sum = hashlib.md5(filename).hexdigest()
         self.value_label.set_text(md5sum)
         self.value_label.show()
         

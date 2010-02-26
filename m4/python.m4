@@ -61,6 +61,50 @@ $2])
 CPPFLAGS="$save_CPPFLAGS"
 ])
 
+# The AC_MULTILIB macro was extracted and modified from
+# gettext-0.15's AC_LIB_PREPARE_MULTILIB macro in the lib-prefix.m4 file
+# so that the correct paths can be used for 64-bit libraries.
+#
+dnl Copyright (C) 2001-2005 Free Software Foundation, Inc.
+dnl This file is free software; the Free Software Foundation
+dnl gives unlimited permission to copy and/or distribute it,
+dnl with or without modifications, as long as this notice is preserved.
+dnl From Bruno Haible.
+
+dnl AC_MULTILIB creates a variable libdirsuffix, containing
+dnl the suffix of the libdir, either "" or "64".
+dnl Only do this if the given enable parameter is "yes".
+AC_DEFUN([AC_MULTILIB],
+[
+  dnl There is no formal standard regarding lib and lib64. The current
+  dnl practice is that on a system supporting 32-bit and 64-bit instruction
+  dnl sets or ABIs, 64-bit libraries go under $prefix/lib64 and 32-bit
+  dnl libraries go under $prefix/lib. We determine the compiler's default
+  dnl mode by looking at the compiler's library search path. If at least
+  dnl of its elements ends in /lib64 or points to a directory whose absolute
+  dnl pathname ends in /lib64, we assume a 64-bit ABI. Otherwise we use the
+  dnl default, namely "lib".
+  enable_lib64="$1"
+  libdirsuffix=""
+  searchpath=`(LC_ALL=C $CC -print-search-dirs) 2>/dev/null | sed -n -e 's,^libraries: ,,p' | sed -e 's,^=,,'`
+  if test "$enable_lib64" = "yes" -a -n "$searchpath"; then
+    save_IFS="${IFS=    }"; IFS=":"
+    for searchdir in $searchpath; do
+      if test -d "$searchdir"; then
+        case "$searchdir" in
+          */lib64/ | */lib64 ) libdirsuffix=64 ;;
+          *) searchdir=`cd "$searchdir" && pwd`
+             case "$searchdir" in
+               */lib64 ) libdirsuffix=64 ;;
+             esac ;;
+        esac
+      fi
+    done
+    IFS="$save_IFS"
+  fi
+  AC_SUBST(libdirsuffix)
+])
+
 dnl a macro to check for ability to embed python
 dnl  AM_CHECK_PYTHON_LIBS([ACTION-IF-POSSIBLE], [ACTION-IF-NOT-POSSIBLE])
 dnl function also defines PYTHON_LIBS
@@ -69,11 +113,14 @@ AC_DEFUN([AM_CHECK_PYTHON_LIBS],
 AC_MSG_CHECKING(for libraries required to embed python)
 dnl deduce PYTHON_LIBS
 py_exec_prefix=`$PYTHON -c "import sys; print sys.exec_prefix"`
+AC_MULTILIB(yes)
+
 if test "x$PYTHON_LIBS" == x; then
-	PYTHON_LIBS="-L${py_prefix}/lib -lpython${PYTHON_VERSION}"
+	PYTHON_LIBS="-L${py_prefix}/lib${libdirsuffix} -lpython${PYTHON_VERSION}"
 fi
+
 if test "x$PYTHON_LIB_LOC" == x; then
-	PYTHON_LIB_LOC="${py_prefix}/lib" 
+	PYTHON_LIB_LOC="${py_prefix}/lib${libdirsuffix}" 
 fi
 AC_SUBST(PYTHON_LIBS)
 AC_SUBST(PYTHON_LIB_LOC)

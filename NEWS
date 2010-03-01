@@ -1,3 +1,13 @@
+0.5.2:
+    - Look for libpython2.6.so.1.0 instead of libpython2.6.so, the latter is 
+        general available from -devel packages only.
+    - Remove eel dependency (Vincent Untz)
+    - Sanitize python search path (Mark Lee)
+    - Load python from lib64 in 64 bit multilib distributions (Ted Toth)
+    - Updated some example plugins
+    - Added explicit gnome-vfs build dependency
+    - Removed obsolete .spec file
+
 0.5.1:
     - Add support for location widgets (Tim Cole)
 

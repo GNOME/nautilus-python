@@ -70,6 +70,14 @@ class InfoProvider:
         as a parameter.
         """
 
+    def cancel_update(self, handle):
+        """
+        @param  handle  unique handle for determining which file update call
+                        has been canceled
+        @type   handle  gpointer
+
+        """
+
     def update_complete_invoke(self, info):
         """
         @param  info    unique data for each update_file_info call

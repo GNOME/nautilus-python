@@ -357,7 +357,20 @@ static void
 nautilus_python_object_cancel_update (NautilusInfoProvider 		*provider,
 									  NautilusOperationHandle 	*handle)
 {
+	NautilusPythonObject *object = (NautilusPythonObject*)provider;
+	PyGILState_STATE state = pyg_gil_state_ensure();
+
   	debug_enter();
+
+	CHECK_OBJECT(object);
+	CHECK_METHOD_NAME(object->instance);
+
+    PyObject_CallMethod(object->instance,
+								 METHOD_PREFIX METHOD_NAME, "(N)",
+								 pyg_pointer_new(G_TYPE_POINTER, handle));
+
+ beach:
+	pyg_gil_state_release(state);
 }
 #undef METHOD_NAME
 
@@ -370,7 +383,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
-    
+
     PyObject *py_ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 	PyObject *info = NULL;

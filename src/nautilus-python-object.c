@@ -396,11 +396,11 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
 		info = PyDict_New();
 		PyDict_SetItem(info, Py_BuildValue("s", "provider"), pygobject_new((GObject*)provider));
 		PyDict_SetItem(info, Py_BuildValue("s", "closure"), pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE));
-		PyDict_SetItem(info, Py_BuildValue("s", "handle"), pyg_pointer_new(G_TYPE_POINTER, *handle));
 
 		py_ret = PyObject_CallMethod(object->instance,
-									 METHOD_PREFIX "update_file_info_async", "(NN)",
+									 METHOD_PREFIX "update_file_info_async", "(NNN)",
 									 pygobject_new((GObject*)file),
+									 pyg_pointer_new(G_TYPE_POINTER, *handle),
 									 info);
 	}
 	else if (PyObject_HasAttrString(object->instance, METHOD_NAME))

@@ -57,10 +57,13 @@ class InfoProvider:
         and use together with the other extensions.
         """
 
-    def update_file_info_async(self, file, info):
+    def update_file_info_async(self, file, handle, info):
         """
         @param file   selected file
         @type  file   list of nautilus.FileInfo
+
+        @param  handle  unique handle for identifying this update_file_info call
+        @type   handle  gpointer
 
         @param info   data that needs to be passed back in a 
                         self.update_complete_invoke(info) call
@@ -76,8 +79,8 @@ class InfoProvider:
         
         In order to use this method asynchronously, you must return the 
         nautilus.OPERATION_IN_PROGRESS enum.  Then, when the operation has
-        completed, call the self.update_complete_invoke method, passing the info variable
-        as a parameter.
+        completed, call the self.update_complete_invoke method, passing the handle and info variables
+        as parameters.
         
         Note: This method exists for backwards compatibility reasons.  If your
         extension used the update_file_info method and you want non-blocking 
@@ -93,17 +96,21 @@ class InfoProvider:
         This method is called by nautilus when an update_file_info call is being
         canceled.  This may happen because the user is moving directories or a file
         has been deleted, etc.  You may use the handle parameter here to match the
-        info["handle"] value passed in update_file_info.
+        handle parameter passed in update_file_info_async.
         """
 
-    def update_complete_invoke(self, info):
+    def update_complete_invoke(self, handle, info):
         """
-        @param  info    unique data for each update_file_info call
+        @param  handle  unique handle for determining which file update call
+                        has been canceled
+        @type   handle  gpointer
+
+        @param  info    data for each update_file_info call
         @type   info    dict
         
         The extension must call this method for each update_file_info method that
         returns the OPERATION_IN_PROGRESS enum.  The method must be called with 
-        the info parameter as passed to the update_file_info method.
+        the handle and info parameters passed to the update_file_info_async method.
         """
 
 class Menu:

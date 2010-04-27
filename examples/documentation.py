@@ -48,13 +48,32 @@ class PropertyPageProvider:
         """
         
 class InfoProvider:
-    def update_file_info(self, file):
+    def update_file_info(self, file, info):
         """
         @param file   selected file
         @type  file   list of nautilus.FileInfo
 
+        @param info   data that needs to be passed back in a 
+                        self.update_complete_invoke(info) call
+        @type  info   dict
+
+        @returns      None, nautilus.OPERATION_COMPLETE, 
+                        nautilus.OPERATION_FAILED, or 
+                        nautilus.OPERATION_IN_PROGRESS
+
         This is used to update data for file, use the set_data method,
-        and use together with the other extensions
+        and use together with the other extensions.
+        
+        In order to use this method asynchronously, you must return the 
+        nautilus.OPERATION_IN_PROGRESS enum.  Then, when the operation has
+        completed, call the self.update_complete_invoke method, passing the info variable
+        as a parameter.
+        """
+
+    def update_complete_invoke(self, info):
+        """
+        @param  info    unique data for each update_file_info call
+        @type   info    dict
         """
 
 class Menu:

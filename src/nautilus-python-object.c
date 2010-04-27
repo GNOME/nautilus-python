@@ -370,19 +370,27 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
+    
     PyObject *py_ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
+	PyObject *info = NULL;
 	
   	debug_enter();
 
 	CHECK_OBJECT(object);
 	CHECK_METHOD_NAME(object->instance);
+	
+	info = PyDict_New();
+	PyDict_SetItem(info, Py_BuildValue("s", "provider"), pygobject_new((GObject*)provider));
+	PyDict_SetItem(info, Py_BuildValue("s", "closure"), pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE));
+	PyDict_SetItem(info, Py_BuildValue("s", "handle"), pyg_pointer_new(G_TYPE_POINTER, *handle));
 
     py_ret = PyObject_CallMethod(object->instance,
-								 METHOD_PREFIX METHOD_NAME, "(N)",
-								 pygobject_new((GObject*)file));
-	HANDLE_RETVAL(py_ret);
+								 METHOD_PREFIX METHOD_NAME, "(NN)",
+								 pygobject_new((GObject*)file),
+								 info);
 
+	HANDLE_RETVAL(py_ret);
 
 	if (!PyInt_Check(py_ret))
 	{

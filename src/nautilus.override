@@ -87,3 +87,39 @@ _wrap_nautilus_menu_get_items(PyGObject *self)
     Py_INCREF(Py_None);
     return Py_None;
 }
+%%
+define NautilusInfoProvider.update_complete_invoke args
+static PyObject *
+_wrap_nautilus_info_provider_update_complete_invoke(PyGObject *self, PyObject *args)
+{
+    PyObject *info;
+    PyObject *py_closure, *py_handle;
+    PyGObject *py_provider;
+    GClosure *closure;
+    NautilusOperationHandle *handle;
+    NautilusOperationResult result = NAUTILUS_OPERATION_COMPLETE;
+
+    if (!PyArg_ParseTuple(args, "O!:NautilusInfoProvider.update_complete_invoke", 
+            &PyDict_Type, &info))
+    {
+        return NULL;
+    }
+
+    py_provider = (PyGObject *)PyDict_GetItem(info, Py_BuildValue("s", "provider"));
+    py_closure = PyDict_GetItem(info, Py_BuildValue("s", "closure"));
+    py_handle = PyDict_GetItem(info, Py_BuildValue("s", "handle"));
+
+    closure = pyg_boxed_get(py_closure, GClosure);
+    handle = pyg_pointer_get(py_handle, NautilusOperationHandle);
+
+    nautilus_info_provider_update_complete_invoke(closure, 
+        NAUTILUS_INFO_PROVIDER(py_provider->obj), handle, result);
+
+    Py_DECREF(py_provider);
+    Py_DECREF(py_closure);
+    Py_DECREF(py_handle);
+    Py_DECREF(info);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}

@@ -55,6 +55,7 @@ class InfoProvider:
 
         @param info   data that needs to be passed back in a 
                         self.update_complete_invoke(info) call
+                        {"handle":<gpointer>, "provider":<gobject>, "closure":<gclosure>}
         @type  info   dict
 
         @returns      None, nautilus.OPERATION_COMPLETE, 
@@ -76,12 +77,20 @@ class InfoProvider:
                         has been canceled
         @type   handle  gpointer
 
+        This method is called by nautilus when an update_file_info call is being
+        canceled.  This may happen because the user is moving directories or a file
+        has been deleted, etc.  You may use the handle parameter here to match the
+        info["handle"] value passed in update_file_info.
         """
 
     def update_complete_invoke(self, info):
         """
         @param  info    unique data for each update_file_info call
         @type   info    dict
+        
+        The extension must call this method for each update_file_info method that
+        returns the OPERATION_IN_PROGRESS enum.  The method must be called with 
+        the info parameter as passed to the update_file_info method.
         """
 
 class Menu:

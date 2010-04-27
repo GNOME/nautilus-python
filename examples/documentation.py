@@ -48,7 +48,16 @@ class PropertyPageProvider:
         """
         
 class InfoProvider:
-    def update_file_info(self, file, info):
+    def update_file_info(self, file):
+        """
+        @param file   selected file
+        @type  file   list of nautilus.FileInfo
+
+        This is used to update data for file, use the set_data method,
+        and use together with the other extensions.
+        """
+
+    def update_file_info_async(self, file, info):
         """
         @param file   selected file
         @type  file   list of nautilus.FileInfo
@@ -69,6 +78,10 @@ class InfoProvider:
         nautilus.OPERATION_IN_PROGRESS enum.  Then, when the operation has
         completed, call the self.update_complete_invoke method, passing the info variable
         as a parameter.
+        
+        Note: This method exists for backwards compatibility reasons.  If your
+        extension used the update_file_info method and you want non-blocking 
+        usage, you must switch to this method.
         """
 
     def cancel_update(self, handle):

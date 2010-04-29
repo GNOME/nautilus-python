@@ -92,21 +92,18 @@ define NautilusInfoProvider.update_complete_invoke args
 static PyObject *
 _wrap_nautilus_info_provider_update_complete_invoke(PyGObject *self, PyObject *args)
 {
-    PyObject *info;
     PyObject *py_closure, *py_handle;
     PyGObject *py_provider;
     GClosure *closure;
     NautilusOperationHandle *handle;
     NautilusOperationResult result = NAUTILUS_OPERATION_COMPLETE;
 
-    if (!PyArg_ParseTuple(args, "OO!:NautilusInfoProvider.update_complete_invoke", 
-            &py_handle, &PyDict_Type, &info))
+    if (!PyArg_ParseTuple(args, "O!OO:NautilusInfoProvider.update_complete_invoke", 
+            &PyNautilusMenuProvider_Type, &py_provider, 
+            &py_handle, &py_closure))
     {
         return NULL;
     }
-
-    py_provider = (PyGObject *)PyDict_GetItem(info, Py_BuildValue("s", "provider"));
-    py_closure = PyDict_GetItem(info, Py_BuildValue("s", "closure"));
 
     closure = pyg_boxed_get(py_closure, GClosure);
     handle = pyg_pointer_get(py_handle, NautilusOperationHandle);

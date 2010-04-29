@@ -128,6 +128,23 @@ free_pygobject_data_list(GList *list)
 	g_list_foreach(list, (GFunc)free_pygobject_data, NULL);
 }
 
+static gboolean
+nautilus_python_provider_api_match(PyObject *instance, gchar *version)
+{
+	PyObject *provider_version;
+	gboolean result = FALSE;
+	
+	provider_version = PyObject_GetAttrString(instance, "NAUTILUS_PYTHON_PROVIDER_API");
+	if(provider_version != NULL && g_strcmp0(PyString_AsString(provider_version), version) == 0)
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
 #define METHOD_NAME "get_property_pages"
 static GList *
 nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provider,
@@ -222,16 +239,34 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
     GList *ret = NULL;
     PyObject *py_ret = NULL, *py_files;
 	PyGILState_STATE state = pyg_gil_state_ensure();
+	PyObject *provider_version = NULL;
 	
   	debug_enter();
 
-	CHECK_OBJECT(object);
-	CHECK_METHOD_NAME(object->instance);
+	CHECK_OBJECT(object);	
 
-	CONVERT_LIST(py_files, files);
+	if (PyObject_HasAttrString(object->instance, "get_file_items_full"))
+	{
+		CONVERT_LIST(py_files, files);
+		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX "get_file_items_full",
+									 "(NNN)",
+									 pygobject_new((GObject *)provider), 
+									 pygobject_new((GObject *)window), 
+									 py_files);
+	}
+	else if (PyObject_HasAttrString(object->instance, "get_file_items"))
+	{
+		CONVERT_LIST(py_files, files);
+		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+									 "(NN)", 
+									 pygobject_new((GObject *)window), 
+									 py_files);
+	}
+	else
+	{
+		goto beach;
+	}
 
-    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(NN)", pygobject_new((GObject *)window), py_files);
 	HANDLE_RETVAL(py_ret);
 
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
@@ -258,12 +293,26 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
   	debug_enter();
 
 	CHECK_OBJECT(object);
-	CHECK_METHOD_NAME(object->instance);
 
-    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(NN)",
-								 pygobject_new((GObject *)window),
-								 pygobject_new((GObject *)file));
+	if (PyObject_HasAttrString(object->instance, "get_background_items_full"))
+	{
+		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX "get_background_items_full",
+									 "(NNN)",
+									 pygobject_new((GObject *)provider),
+									 pygobject_new((GObject *)window),
+									 pygobject_new((GObject *)file));
+	}
+	else if (PyObject_HasAttrString(object->instance, "get_background_items"))
+	{
+		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+									 "(NN)",
+									 pygobject_new((GObject *)window),
+									 pygobject_new((GObject *)file));
+	}
+	else
+	{
+		goto beach;
+	}
 
 	HANDLE_RETVAL(py_ret);
 
@@ -286,17 +335,32 @@ nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
     PyObject *py_ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
+	PyGILState_STATE state = pyg_gil_state_ensure();
 	
   	debug_enter();
   	
 	CHECK_OBJECT(object);
-	CHECK_METHOD_NAME(object->instance);
 
-    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-								 "(NN)",
-								 pygobject_new((GObject *)window),
-								 pygobject_new((GObject *)file));
+	if (PyObject_HasAttrString(object->instance, "get_toolbar_items_full"))
+	{
+		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX "get_toolbar_items_full",
+									 "(NNN)",
+									 pygobject_new((GObject *)provider),
+									 pygobject_new((GObject *)window),
+									 pygobject_new((GObject *)file));
+	}
+	else if (PyObject_HasAttrString(object->instance, "get_toolbar_items"))
+	{
+		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+									 "(NN)",
+									 pygobject_new((GObject *)window),
+									 pygobject_new((GObject *)file));
+	}
+	else
+	{
+		goto beach;
+	}
+	
 	HANDLE_RETVAL(py_ret);
 
 	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
@@ -366,7 +430,8 @@ nautilus_python_object_cancel_update (NautilusInfoProvider 		*provider,
 	CHECK_METHOD_NAME(object->instance);
 
     PyObject_CallMethod(object->instance,
-								 METHOD_PREFIX METHOD_NAME, "(N)",
+								 METHOD_PREFIX METHOD_NAME, "(NN)",
+								 pygobject_new((GObject*)provider),
 								 pyg_pointer_new(G_TYPE_POINTER, handle));
 
  beach:
@@ -389,21 +454,17 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
   	debug_enter();
 
 	CHECK_OBJECT(object);
-	
-	if (PyObject_HasAttrString(object->instance, "update_file_info_async"))
-	{
-		PyObject *info = NULL;
-		info = PyDict_New();
-		PyDict_SetItem(info, Py_BuildValue("s", "provider"), pygobject_new((GObject*)provider));
-		PyDict_SetItem(info, Py_BuildValue("s", "closure"), pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE));
 
+	if (PyObject_HasAttrString(object->instance, "update_file_info_full"))
+	{
 		py_ret = PyObject_CallMethod(object->instance,
-									 METHOD_PREFIX "update_file_info_async", "(NNN)",
-									 pygobject_new((GObject*)file),
+									 METHOD_PREFIX "update_file_info_full", "(NNNN)",
+									 pygobject_new((GObject*)provider),
 									 pyg_pointer_new(G_TYPE_POINTER, *handle),
-									 info);
+									 pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE),
+									 pygobject_new((GObject*)file));
 	}
-	else if (PyObject_HasAttrString(object->instance, METHOD_NAME))
+	else if (PyObject_HasAttrString(object->instance, "update_file_info"))
 	{
 		py_ret = PyObject_CallMethod(object->instance,
 									 METHOD_PREFIX METHOD_NAME, "(N)",

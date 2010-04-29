@@ -6,8 +6,35 @@ class ColumnProvider:
         """
 
 class MenuProvider:
+    """
+    
+    Have your extension sub-class nautilus.MenuProvider and implement the following
+    methods (new code should use the ***_full methods).  Any implemented methods
+    will be called by Nautilus to provide a list of nautilus.MenuItems.
+    
+    Signals:
+        items_updated: Emitting this signal will cause Nautilus to refresh the 
+            menu items returned by a ***_full call.  The ***_full methods were
+            created with the extra provider parameter, which is required to 
+            emit the items_updated signal.  You can emit the signal like so:
+            
+            provider.emit("items_updated")
+            
+    """
     def get_file_items(self, window, files):
         """
+        @param window the window it was sent from
+        @type  window gtk.Window
+        @param files  selected files
+        @type  files  list of nautilus.FileInfo
+        @returns      menu items to show
+        @rtype        a sequence of nautilus.MenuItems
+        """
+
+    def get_file_items_full(self, provider, window, files):
+        """
+        @param provider a NautilusMenuProvider object
+        @type  provider nautilus.MenuProvider
         @param window the window it was sent from
         @type  window gtk.Window
         @param files  selected files
@@ -26,8 +53,32 @@ class MenuProvider:
         @rtype        a sequence of nautilus.MenuItems
         """
 
+    def get_background_full(self, provider, window, file):
+        """
+        @param provider a NautilusMenuProvider object
+        @type  provider nautilus.MenuProvider
+        @param window the window it was sent from
+        @type  window gtk.Window
+        @param file   file that was clicked on
+        @type  file   nautilus.FileInfo
+        @returns      menu items to show
+        @rtype        a sequence of nautilus.MenuItems
+        """
+
     def get_toolbar_items(self, window, file):
         """
+        @param window the window it was sent from
+        @type  window gtk.Window
+        @param file   file that was clicked on
+        @type  file   nautilus.FileInfo
+        @returns      menu items to show
+        @rtype        a sequence of nautilus.MenuItems
+        """
+
+    def get_toolbar_items_full(self, provider, window, file):
+        """
+        @param provider a NautilusMenuProvider object
+        @type  provider nautilus.MenuProvider
         @param window the window it was sent from
         @type  window gtk.Window
         @param file   file that was clicked on
@@ -57,18 +108,19 @@ class InfoProvider:
         and use together with the other extensions.
         """
 
-    def update_file_info_async(self, file, handle, info):
+    def update_file_info_full(self, provider, handle, closure, file):
         """
-        @param file   selected file
-        @type  file   list of nautilus.FileInfo
+        @param  provider a NautilusInfoProvider object
+        @type   provider nautilus.InfoProvider
 
         @param  handle  unique handle for identifying this update_file_info call
         @type   handle  gpointer
 
-        @param info   data that needs to be passed back in a 
-                        self.update_complete_invoke(info) call
-                        {"handle":<gpointer>, "provider":<gobject>, "closure":<gclosure>}
-        @type  info   dict
+        @param  closure a GClosure that is sent to nautilus to report the update is finished
+        @type   closure GClosure
+
+        @param  file    selected file
+        @type   file    list of nautilus.FileInfo
 
         @returns      None, nautilus.OPERATION_COMPLETE, 
                         nautilus.OPERATION_FAILED, or 
@@ -79,7 +131,7 @@ class InfoProvider:
         
         In order to use this method asynchronously, you must return the 
         nautilus.OPERATION_IN_PROGRESS enum.  Then, when the operation has
-        completed, call the self.update_complete_invoke method, passing the handle and info variables
+        completed, call the self.update_complete_invoke method, passing the provider, handle and closure variables
         as parameters.
         
         Note: This method exists for backwards compatibility reasons.  If your
@@ -87,30 +139,36 @@ class InfoProvider:
         usage, you must switch to this method.
         """
 
-    def cancel_update(self, handle):
+    def cancel_update(self, provider, handle):
         """
+        @param  provider a NautilusInfoProvider object
+        @type   provider nautilus.InfoProvider
+
         @param  handle  unique handle for determining which file update call
                         has been canceled
         @type   handle  gpointer
 
-        This method is called by nautilus when an update_file_info call is being
+        This method is called by nautilus when an update_file_info_full call is being
         canceled.  This may happen because the user is moving directories or a file
         has been deleted, etc.  You may use the handle parameter here to match the
         handle parameter passed in update_file_info_async.
         """
 
-    def update_complete_invoke(self, handle, info):
+    def update_complete_invoke(self, provider, handle, closure):
         """
+        @param  provider a NautilusInfoProvider object
+        @type   provider nautilus.InfoProvider
+
         @param  handle  unique handle for determining which file update call
                         has been canceled
         @type   handle  gpointer
 
-        @param  info    data for each update_file_info call
-        @type   info    dict
+        @param  closure a GClosure that is sent to nautilus to report the update is finished
+        @type   closure GClosure
         
-        The extension must call this method for each update_file_info method that
+        The extension must call this method for each update_file_info_full method that
         returns the OPERATION_IN_PROGRESS enum.  The method must be called with 
-        the handle and info parameters passed to the update_file_info_async method.
+        the provider, handle, and closure parameters passed to the update_file_info_full method.
         """
 
 class Menu:

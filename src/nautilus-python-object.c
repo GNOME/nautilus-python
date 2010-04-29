@@ -128,23 +128,6 @@ free_pygobject_data_list(GList *list)
 	g_list_foreach(list, (GFunc)free_pygobject_data, NULL);
 }
 
-static gboolean
-nautilus_python_provider_api_match(PyObject *instance, gchar *version)
-{
-	PyObject *provider_version;
-	gboolean result = FALSE;
-	
-	provider_version = PyObject_GetAttrString(instance, "NAUTILUS_PYTHON_PROVIDER_API");
-	if(provider_version != NULL && g_strcmp0(PyString_AsString(provider_version), version) == 0)
-	{
-		return TRUE;
-	}
-	else
-	{
-		return FALSE;
-	}
-}
-
 #define METHOD_NAME "get_property_pages"
 static GList *
 nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provider,

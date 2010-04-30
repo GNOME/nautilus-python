@@ -88,25 +88,28 @@ _wrap_nautilus_menu_get_items(PyGObject *self)
     return Py_None;
 }
 %%
-define NautilusInfoProvider.update_complete_invoke args
+define NautilusInfoProvider.update_complete_invoke kwargs
 static PyObject *
-_wrap_nautilus_info_provider_update_complete_invoke(PyGObject *self, PyObject *args)
+_wrap_nautilus_info_provider_update_complete_invoke(PyGObject *self, PyObject *args, PyObject *kwargs)
 {
-    PyObject *py_closure, *py_handle;
+    static char *kwlist[] = { "provider", "handle", "closure", "result", NULL };
+    PyObject *py_closure, *py_handle, *py_result;
     PyGObject *py_provider;
     GClosure *closure;
     NautilusOperationHandle *handle;
     NautilusOperationResult result = NAUTILUS_OPERATION_COMPLETE;
 
-    if (!PyArg_ParseTuple(args, "O!OO:NautilusInfoProvider.update_complete_invoke", 
-            &PyNautilusMenuProvider_Type, &py_provider, 
-            &py_handle, &py_closure))
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O!OO|O:NautilusInfoProvider.update_complete_invoke", kwlist,
+            &PyNautilusInfoProvider_Type, &py_provider, 
+            &py_handle, &py_closure, &py_result))
     {
         return NULL;
     }
 
     closure = pyg_boxed_get(py_closure, GClosure);
     handle = pyg_pointer_get(py_handle, NautilusOperationHandle);
+    if (py_result != NULL)
+        result = (NautilusOperationResult)py_result;
 
     nautilus_info_provider_update_complete_invoke(closure, 
         NAUTILUS_INFO_PROVIDER(py_provider->obj), handle, result);

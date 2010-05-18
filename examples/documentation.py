@@ -5,6 +5,17 @@ class ColumnProvider:
         @rtype   a sequence of nautilus.Column
         """
 
+class LocationWidgetProvider:
+    def get_widget(self, uri, window):
+        """
+        @param uri  the current location
+        @type  uri  string
+        @param window the window it was sent from
+        @type  window gtk.Window
+        @returns    a widget to display above the directory listing
+        @rtype      gtk.Widget
+        """
+
 class MenuProvider:
     """
     

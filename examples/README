@@ -1,0 +1,13 @@
+To try any of the examples, copy them over to:
+
+    NAUTILUS_PREFIX/share/nautilus-python/extensions/
+or:
+    ~/.local/share/nautilus-python/extensions/
+
+Then restart nautilus.
+
+Hint: if you're testing an extension that you're developing, it may
+be useful to start a 'private' instance of nautilus, like this:
+ $ mkdir /tmp/testing
+ $ export TMPDIR=/tmp/testing
+ $ nautilus --no-desktop

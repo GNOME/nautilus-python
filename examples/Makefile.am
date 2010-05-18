@@ -6,16 +6,13 @@ docs_DATA = documentation.py README
 examplesdir = $(datadir)/doc/$(PACKAGE)/examples
 examples_DATA =					\
 	background-image.py			\
-	block-size-column.py			\
+	block-size-column.py		\
+	location-widget-provider.py \
 	open-terminal.py			\
-	md5sum-property-page.py			\
-	submenu.py
+	md5sum-property-page.py		\
+	submenu.py                  \
+	update-file-info-async.py
 
 EXTRA_DIST += $(examples_DATA)
 
 CLEANFILES = README
-
-README: README.in
-	sed -e s!\@NAUTILUS_LIBDIR\@!@NAUTILUS_LIBDIR@! < $< > $@
-README: Makefile
-

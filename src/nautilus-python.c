@@ -353,11 +353,22 @@ nautilus_module_initialize(GTypeModule *module)
 
 	all_types = g_array_new(FALSE, FALSE, sizeof(GType));
 
-	nautilus_python_load_dir(module, NAUTILUS_EXTENSION_DIR "/python");
-	user_extensions_dir = g_strdup_printf("%s/.nautilus/python-extensions/",
-										  g_get_home_dir());
+	// Look in the new global path, $DATADIR/nautilus-python/extensions
+	nautilus_python_load_dir(module, DATADIR "/nautilus-python/extensions");
+
+	// Look in XDG_DATA_DIR, ~/.local/share/nautilus-python/extensions
+	user_extensions_dir = g_build_filename(g_get_user_data_dir(), 
+		"nautilus-python", "extensions", NULL);
+	nautilus_python_load_dir(module, user_extensions_dir);
+
+	// Look in the old local path, ~/.nautilus/python-extensions
+	user_extensions_dir = g_build_filename(g_get_home_dir(),
+		".nautilus", "python-extensions", NULL);
 	nautilus_python_load_dir(module, user_extensions_dir);
 	g_free(user_extensions_dir);
+
+	// Look in the old global path, /usr/lib(64)/nautilus/extensions-2.0/python
+	nautilus_python_load_dir(module, NAUTILUS_EXTENSION_DIR "/python");
 }
  
 void

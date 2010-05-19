@@ -14,5 +14,3 @@ examples_DATA =					\
 	update-file-info-async.py
 
 EXTRA_DIST += $(examples_DATA)
-
-CLEANFILES = README

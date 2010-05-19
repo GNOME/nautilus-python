@@ -103,7 +103,8 @@ _wrap_nautilus_info_provider_update_complete_invoke(PyGObject *self, PyObject *a
             &PyNautilusInfoProvider_Type, &py_provider, 
             &py_handle, &py_closure, &py_result))
     {
-        return NULL;
+        Py_INCREF(Py_None);
+        return Py_None;
     }
 
     closure = pyg_boxed_get(py_closure, GClosure);
@@ -113,6 +114,25 @@ _wrap_nautilus_info_provider_update_complete_invoke(PyGObject *self, PyObject *a
 
     nautilus_info_provider_update_complete_invoke(closure, 
         NAUTILUS_INFO_PROVIDER(py_provider->obj), handle, result);
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+define NautilusMenuProvider.emit_items_updated_signal args
+static PyObject *
+_wrap_nautilus_menu_provider_emit_items_updated_signal(PyGObject *self, PyObject *args)
+{
+    PyGObject *py_provider;
+    
+    if (!PyArg_ParseTuple(args, "O!:NautilusMenuProvider.emit_items_updated_signal",
+            &PyNautilusMenuProvider_Type, &py_provider))
+    {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+    
+    nautilus_menu_provider_emit_items_updated_signal(NAUTILUS_MENU_PROVIDER(py_provider->obj));
 
     Py_INCREF(Py_None);
     return Py_None;

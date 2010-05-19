@@ -24,12 +24,12 @@ class MenuProvider:
     will be called by Nautilus to provide a list of nautilus.MenuItems.
     
     Signals:
-        items_updated: Emitting this signal will cause Nautilus to refresh the 
+        items-updated: Emitting this signal will cause Nautilus to refresh the 
             menu items returned by a ***_full call.  The ***_full methods were
             created with the extra provider parameter, which is required to 
             emit the items_updated signal.  You can emit the signal like so:
             
-            provider.emit("items_updated")
+            provider.emit("items-updated")
             
     """
     def get_file_items(self, window, files):
@@ -96,6 +96,14 @@ class MenuProvider:
         @type  file   nautilus.FileInfo
         @returns      menu items to show
         @rtype        a sequence of nautilus.MenuItems
+        """
+
+    def emit_items_updated_signal(provider):
+        """
+        @param provider a NautilusMenuProvider object
+        @type  provider nautilus.MenuProvider
+        
+        Emits the items-updated signal
         """
 
 class PropertyPageProvider:

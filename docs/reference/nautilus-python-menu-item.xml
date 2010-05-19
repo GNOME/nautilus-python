@@ -1,0 +1,434 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-nautilus-python-menu-item">
+  <refnamediv>
+    <refname>nautilus.MenuItem</refname>
+    <refpurpose>nautilus.MenuItem Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF NAUTILUS-PYTHON SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+        <ooclass><classname>nautilus.MenuItem</classname></ooclass>
+        <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
+
+        <constructorsynopsis language="python">
+            <methodname><link linkend="constructor-nautilus-menu-item">nautilus.MenuItem</link></methodname>
+            <methodparam><parameter role="keyword">name</parameter></methodparam>
+            <methodparam><parameter role="keyword">label</parameter></methodparam>
+            <methodparam><parameter role="keyword">tooltip</parameter></methodparam>
+            <methodparam><parameter role="keyword">icon</parameter></methodparam>
+        </constructorsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-nautilus-python-menu-item--activate">activate</link></methodname>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-nautilus-python-menu-item--set_submenu">set_submenu</link></methodname>
+            <methodparam><parameter role="keyword">menu</parameter></methodparam>
+        </methodsynopsis>
+
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************* -->
+<!-- BEGIN OF ANCESTRY -->
+<!-- ********************************* -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
+    +-- <link linkend="class-nautilus-python-menu-item">nautilus.MenuItem</link>
+</synopsis>
+</refsect1>
+
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-menu-item">
+    <title>Description</title>
+
+      <para>
+        <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> objects are appended to lists to create menus and submenus.
+      </para>
+
+  </refsect1>
+
+
+<!-- *********************************** -->
+<!-- BEGIN OF PROPERTIES -->
+<!-- *********************************** -->
+
+<refsect1>
+    <title>Properties</title>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+      <tgroup cols="3">
+        <colspec menu="1" colwidth="1in"/>
+        <colspec menu="2" colwidth="1in"/>
+        <colspec menu="3" colwidth="4in"/>
+          <tbody>
+      
+            <row valign="top">
+              <entry>"<link linkend="property-nautilus-python-menu-item--icon">icon</link>"</entry>
+              <entry>string</entry>
+              <entry>Read / Write</entry>
+            </row>
+      
+            <row valign="top">
+              <entry>"<link linkend="property-nautilus-python-menu-item--label">label</link>"</entry>
+              <entry>string</entry>
+              <entry>Read / Write</entry>
+            </row>
+      
+            <row valign="top">
+              <entry>"<link linkend="property-nautilus-python-menu-item--menu">menu</link>"</entry>
+              <entry><link linkend="class-nautilus-python-menu">nautilus.Menu</link></entry>
+              <entry>Read / Write</entry>
+            </row>
+
+            <row valign="top">
+              <entry>"<link linkend="property-nautilus-python-menu-item--name">name</link>"</entry>
+              <entry>string</entry>
+              <entry>Read / Write / Construct Only</entry>
+            </row>
+      
+            <row valign="top">
+              <entry>"<link linkend="property-nautilus-python-menu-item--priority">priority</link>"</entry>
+              <entry>boolean</entry>
+              <entry>Read / Write</entry>
+            </row>
+      
+            <row valign="top">
+              <entry>"<link linkend="property-nautilus-python-menu-item--sensitive">sensitive</link>"</entry>
+              <entry>boolean</entry>
+              <entry>Read / Write</entry>
+            </row>
+
+            <row valign="top">
+              <entry>"<link linkend="property-nautilus-python-menu-item--tip">tip</link>"</entry>
+              <entry>string</entry>
+              <entry>Read / Write</entry>
+            </row>
+
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+</refsect1>
+
+
+<!-- ****************************************** -->
+<!-- BEGIN OF SIGNAL PROTOTYPES -->
+<!-- ****************************************** -->
+
+<refsect1>
+    <title>Signals</title>
+    <variablelist>
+      <varlistentry>
+        <term><link linkend="signal-nautilus-python-menu-item--activate">"activate"</link></term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>item</parameter></methodparam>
+            <methodparam><parameter>user_param1</parameter></methodparam>
+            <methodparam><parameter>user_param2</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+</refsect1>
+
+
+
+
+<!-- ************************************ -->
+<!-- BEGIN OF CONSTRUCTOR -->
+<!-- ************************************ -->
+
+<refsect1 id="constructor-nautilus-menu-item">
+  <title>Constructor</title>
+
+  <programlisting><constructorsynopsis language="python">
+        <methodname>nautilus.MenuItem</methodname>
+        <methodparam><parameter role="keyword">name</parameter></methodparam>
+        <methodparam><parameter role="keyword">label</parameter></methodparam>
+        <methodparam><parameter role="keyword">tooltip</parameter></methodparam>
+        <methodparam><parameter role="keyword">icon</parameter></methodparam>
+  </constructorsynopsis></programlisting>
+    
+  <variablelist>
+    <varlistentry>
+	    <term><parameter role="keyword">name</parameter>&nbsp;:</term>
+	    <listitem><simpara>identifier of the item</simpara></listitem>
+    </varlistentry>
+    <varlistentry>
+	    <term><parameter role="keyword">label</parameter>&nbsp;:</term>
+	    <listitem><simpara>the user-visible label for the item</simpara></listitem>
+    </varlistentry>
+    <varlistentry>
+	    <term><parameter role="keyword">tooltip</parameter>&nbsp;:</term>
+	    <listitem><simpara>the user-visible tooltip for the item</simpara></listitem>
+    </varlistentry>
+    <varlistentry>
+	    <term><parameter role="keyword">icon</parameter>&nbsp;:</term>
+	    <listitem><simpara>Name of the icon to display in the item</simpara></listitem>
+    </varlistentry>
+  </variablelist>
+
+  <para>
+    Creates a new <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> object.
+  </para>
+</refsect1>
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ******************************** -->
+
+<refsect1>
+    <title>Public Methods</title>
+
+  <refsect2 id="method-nautilus-python-menu-item--activate">
+    <title>nautilus.MenuItem.activate</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>activate</methodname>
+    </methodsynopsis></programlisting>
+
+    <para>
+     Generates the "<link linkend="signal-nautilus-python-menu-item--activate">activate</link>" signal for this <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link>.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-nautilus-python-menu-item--set_submenu">
+    <title>nautilus.MenuItem.set_submenu</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>set_submenu</methodname>
+      <methodparam><parameter role="keyword">menu</parameter></methodparam>
+    </methodsynopsis></programlisting>
+    <variablelist>
+      <varlistentry>
+        <term><parameter role="keyword">menu</parameter>&nbsp;:</term>
+        <listitem><simpara>a <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link></simpara></listitem>
+      </varlistentry>
+    </variablelist>
+    <para>
+        Attaches a <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link> as the submenu for this <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link>.
+    </para>
+  </refsect2>
+</refsect1>
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF PROPERTY DETAILS -->
+<!-- ******************************** --> 
+<refsect1>
+  <title>Property Details</title>
+
+    <refsect2 id="property-nautilus-python-menu-item--icon">
+        <title>The "name" property</title>
+         <blockquote role="properties">
+          <informaltable pgwide="1" frame="none">
+          <tgroup cols="3">
+            <colspec menu="1" colwidth="1in"/>
+            <colspec menu="2" colwidth="1in"/>
+            <colspec menu="3" colwidth="4in"/>
+              <tbody>
+                <row valign="top">
+                  <entry>"icon"</entry>
+                  <entry>string</entry>
+                  <entry>Read / Write</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </blockquote>          
+          <para>Name of the icon to display in the menu item.</para>
+          <para>Default value: None</para>
+    </refsect2>
+
+    <refsect2 id="property-nautilus-python-menu-item--label">
+        <title>The "label" property</title>
+         <blockquote role="properties">
+          <informaltable pgwide="1" frame="none">
+          <tgroup cols="3">
+            <colspec menu="1" colwidth="1in"/>
+            <colspec menu="2" colwidth="1in"/>
+            <colspec menu="3" colwidth="4in"/>
+              <tbody>
+                <row valign="top">
+                  <entry>"label"</entry>
+                  <entry>string</entry>
+                  <entry>Read / Write</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </blockquote>          
+          <para>Label to display to the user.</para>
+          <para>Default value: None</para>
+    </refsect2>
+
+    <refsect2 id="property-nautilus-python-menu-item--menu">
+        <title>The "menu" property</title>
+         <blockquote role="properties">
+          <informaltable pgwide="1" frame="none">
+          <tgroup cols="3">
+            <colspec menu="1" colwidth="1in"/>
+            <colspec menu="2" colwidth="1in"/>
+            <colspec menu="3" colwidth="4in"/>
+              <tbody>
+                <row valign="top">
+                  <entry>"menu"</entry>
+                  <entry><link linkend="class-nautilus-python-menu-item">nautilus.Menu</link></entry>
+                  <entry>Read / Write</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </blockquote>          
+          <para>The menu belonging to this item. May be null.</para>
+    </refsect2>
+
+    <refsect2 id="property-nautilus-python-menu-item--name">
+        <title>The "name" property</title>
+         <blockquote role="properties">
+          <informaltable pgwide="1" frame="none">
+          <tgroup cols="3">
+            <colspec menu="1" colwidth="1in"/>
+            <colspec menu="2" colwidth="1in"/>
+            <colspec menu="3" colwidth="4in"/>
+              <tbody>
+                <row valign="top">
+                  <entry>"name"</entry>
+                  <entry>string</entry>
+                  <entry>Read / Write / Construct Only</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </blockquote>          
+          <para>Name of the item.</para>
+          <para>Default value: None</para>
+    </refsect2>
+
+    <refsect2 id="property-nautilus-python-menu-item--priority">
+        <title>The "priority" property</title>
+         <blockquote role="properties">
+          <informaltable pgwide="1" frame="none">
+          <tgroup cols="3">
+            <colspec menu="1" colwidth="1in"/>
+            <colspec menu="2" colwidth="1in"/>
+            <colspec menu="3" colwidth="4in"/>
+              <tbody>
+                <row valign="top">
+                  <entry>"priority"</entry>
+                  <entry>boolean</entry>
+                  <entry>Read / Write</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </blockquote>          
+          <para>Show priority text in toolbars.</para>
+          <para>Default value: True</para>
+    </refsect2>
+
+    <refsect2 id="property-nautilus-python-menu-item--sensitive">
+        <title>The "sensitive" property</title>
+         <blockquote role="properties">
+          <informaltable pgwide="1" frame="none">
+          <tgroup cols="3">
+            <colspec menu="1" colwidth="1in"/>
+            <colspec menu="2" colwidth="1in"/>
+            <colspec menu="3" colwidth="4in"/>
+              <tbody>
+                <row valign="top">
+                  <entry>"sensitive"</entry>
+                  <entry>boolean</entry>
+                  <entry>Read / Write</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </blockquote>          
+          <para>Whether the menu item is sensitive.</para>
+          <para>Default value: True</para>
+    </refsect2>
+
+    <refsect2 id="property-nautilus-python-menu-item--tip">
+        <title>The "tip" property</title>
+         <blockquote role="properties">
+          <informaltable pgwide="1" frame="none">
+          <tgroup cols="3">
+            <colspec menu="1" colwidth="1in"/>
+            <colspec menu="2" colwidth="1in"/>
+            <colspec menu="3" colwidth="4in"/>
+              <tbody>
+                <row valign="top">
+                  <entry>"tip"</entry>
+                  <entry>string</entry>
+                  <entry>Read / Write</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </informaltable>
+        </blockquote>          
+          <para>Tooltip for the menu item.</para>
+          <para>Default value: None</para>
+    </refsect2>
+</refsect1>
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF SIGNAL DETAILS -->
+<!-- ******************************** --> 
+ 
+<refsect1>
+    <title>Signal Details</title>
+
+  <refsect2 id="signal-nautilus-python-menu-item--activate">
+    <title>The "activate" nautilus.MenuItem Signal</title>
+
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>item</parameter></methodparam>
+        <methodparam><parameter>user_param1</parameter></methodparam>
+        <methodparam><parameter>user_param2</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>item</parameter>&nbsp;:</term>
+	      <listitem><simpara>the <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> being activated</simpara></listitem>
+	    </varlistentry>
+      <varlistentry>
+	      <term><parameter>user_param1[,2,3...]</parameter>&nbsp;:</term>
+          <listitem><simpara>Additional parameter(s) the user attaches to the signal connector</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      Emits the "<link linkend="signal-nautilus-python-menu-item--activate">activate</link>" signal.
+    </para>
+
+  </refsect2>
+</refsect1>
+
+
+
+</refentry>
+

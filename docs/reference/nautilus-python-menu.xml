@@ -1,0 +1,123 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-nautilus-python-menu">
+  <refnamediv>
+    <refname>nautilus.Menu</refname>
+    <refpurpose>nautilus.Menu Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF NAUTILUS-PYTHON SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+        <ooclass><classname>nautilus.Menu</classname></ooclass>
+        <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
+
+        <constructorsynopsis language="python">
+            <methodname><link linkend="constructor-nautilus-menu">nautilus.Menu</link></methodname>
+        </constructorsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-nautilus-python-menu--append_item">append_item</link></methodname>
+            <methodparam><parameter role="keyword">item</parameter></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-nautilus-python-menu--get_items">get_items</link></methodname>
+        </methodsynopsis>
+
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************* -->
+<!-- BEGIN OF ANCESTRY -->
+<!-- ********************************* -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
+    +-- <link linkend="class-nautilus-python-menu">nautilus.Menu</link>
+</synopsis>
+</refsect1>
+
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-menu">
+    <title>Description</title>
+
+      <para>
+      A nautilus.Menu object allows an extension to create sub-menus.
+      </para>
+
+  </refsect1>
+
+
+
+<!-- ************************************ -->
+<!-- BEGIN OF CONSTRUCTOR -->
+<!-- ************************************ -->
+
+<refsect1 id="constructor-nautilus-menu">
+  <title>Constructor</title>
+
+  <programlisting><constructorsynopsis language="python">
+        <methodname>nautilus.Menu</methodname>
+  </constructorsynopsis></programlisting>
+    
+  <para>
+    Creates a new <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link> object.
+  </para>
+</refsect1>
+
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ******************************** -->
+
+<refsect1>
+    <title>Public Methods</title>
+
+  <refsect2 id="method-nautilus-python-menu--append_item">
+    <title>nautilus.Menu.append_item</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>append_item</methodname>
+      <methodparam><parameter role="keyword">item</parameter></methodparam>
+    </methodsynopsis></programlisting>
+    <variablelist>
+      <varlistentry>
+        <term><parameter role="keyword">item</parameter>&nbsp;:</term>
+        <listitem><simpara>a <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link></simpara></listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para>
+      Append a <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> to a <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link>.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-nautilus-python-menu--get_items">
+    <title>nautilus.Menu.get_items</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>get_items</methodname>
+    </methodsynopsis></programlisting>
+    <para>
+      Returns a list of <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> objects attached to the <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link>.
+    </para>
+  </refsect2>
+</refsect1>
+
+
+
+</refentry>
+

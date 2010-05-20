@@ -12,7 +12,8 @@ XMLFILES = 							\
 	reference/nautilus-python-column-provider.xml   \
 	reference/nautilus-python-menu.xml  \
 	reference/nautilus-python-menu-item.xml \
-	reference/nautilus-python-menu-provider.xml 
+	reference/nautilus-python-menu-provider.xml \
+	reference/nautilus-python-property-page.xml 
 
 HTMLdir = $(datadir)/gtk-doc/html/nautilus-python
 HTML_DATA =						\
@@ -23,6 +24,7 @@ HTML_DATA =						\
 	html/class-nautilus-python-menu.html  \
 	html/class-nautilus-python-menu-item.html  \
 	html/class-nautilus-python-menu-provider.html  \
+	html/class-nautilus-python-property-page.html  \
 	html/nautilus-python.devhelp
 
 CSS_FILES = $(PYGOBJECT_PYGDOCS)/style.css

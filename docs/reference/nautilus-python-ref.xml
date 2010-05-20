@@ -32,5 +32,6 @@
     <xi:include href="nautilus-python-menu.xml"/>
     <xi:include href="nautilus-python-menu-item.xml"/>
     <xi:include href="nautilus-python-menu-provider.xml"/>
+    <xi:include href="nautilus-python-property-page.xml"/>
 </book>
 

@@ -1,0 +1,135 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-nautilus-python-property-page">
+  <refnamediv>
+    <refname>nautilus.PropertyPage</refname>
+    <refpurpose>nautilus.PropertyPage Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF NAUTILUS-PYTHON SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+        <ooclass><classname>nautilus.PropertyPage</classname></ooclass>
+        <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
+
+        <constructorsynopsis language="python">
+            <methodname><link linkend="constructor-nautilus-property-page">nautilus.PropertyPage</link></methodname>
+            <methodparam><parameter role="keyword">name</parameter></methodparam>
+            <methodparam><parameter role="keyword">label</parameter></methodparam>
+            <methodparam><parameter role="keyword">page</parameter></methodparam>
+        </constructorsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************* -->
+<!-- BEGIN OF ANCESTRY -->
+<!-- ********************************* -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
+    +-- <link linkend="class-nautilus-python-property-page">nautilus.PropertyPage</link>
+</synopsis>
+</refsect1>
+
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-property-page">
+    <title>Description</title>
+
+      <para>
+        A <link linkend="class-nautilus-python-property-page"><classname>nautilus.PropertyPage</classname></link> object is returned by <link linkend="class-nautilus-python-property-page-provider"><classname>nautilus.PropertyPageProvider</classname></link> extensions.
+      </para>
+
+  </refsect1>
+
+
+<!-- *********************************** -->
+<!-- BEGIN OF PROPERTIES -->
+<!-- *********************************** -->
+
+<refsect1>
+    <title>Properties</title>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+      <tgroup cols="3">
+        <colspec property-page="1" colwidth="1in"/>
+        <colspec property-page="2" colwidth="1in"/>
+        <colspec property-page="3" colwidth="4in"/>
+          <tbody>
+      
+            <row valign="top">
+              <entry>"label"</entry>
+              <entry>Read / Write</entry>
+              <entry>The label widget displayed in the notebook tab.</entry>
+            </row>
+      
+            <row valign="top">
+              <entry>"name"</entry>
+              <entry>Read / Write / Construct Only</entry>
+              <entry>The name of the page.  Default value: None</entry>
+            </row>
+      
+            <row valign="top">
+              <entry>"page"</entry>
+              <entry>Read / Write</entry>
+              <entry>The property page widget</entry>
+            </row>
+
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+</refsect1>
+
+
+<!-- ************************************ -->
+<!-- BEGIN OF CONSTRUCTOR -->
+<!-- ************************************ -->
+
+<refsect1 id="constructor-nautilus-property-page">
+  <title>Constructor</title>
+
+  <programlisting><constructorsynopsis language="python">
+        <methodname>nautilus.PropertyPage</methodname>
+        <methodparam><parameter role="keyword">name</parameter></methodparam>
+        <methodparam><parameter role="keyword">label</parameter></methodparam>
+        <methodparam><parameter role="keyword">page</parameter></methodparam>
+  </constructorsynopsis></programlisting>
+    
+  <variablelist>
+    <varlistentry>
+	    <term><parameter role="keyword">name</parameter>&nbsp;:</term>
+	    <listitem><simpara>identifier of the property page</simpara></listitem>
+    </varlistentry>
+    <varlistentry>
+	    <term><parameter role="keyword">label</parameter>&nbsp;:</term>
+	    <listitem><simpara>the user-visible label for the property page</simpara></listitem>
+    </varlistentry>
+    <varlistentry>
+	    <term><parameter role="keyword">page</parameter>&nbsp;:</term>
+	    <listitem><simpara>the property page widget</simpara></listitem>
+    </varlistentry>
+  </variablelist>
+
+  <para>
+    Creates a new <link linkend="class-nautilus-python-property-page"><classname>nautilus.PropertyPage</classname></link> object.
+  </para>
+</refsect1>
+
+
+
+</refentry>
+

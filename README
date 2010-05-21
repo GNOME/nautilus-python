@@ -6,7 +6,11 @@ introduced in Gnome 2.6.
 
 For examples and documentation check the examples sub directory.
 
-Note that scripts are loaded from $prefix/lib/nautilus/extensions-2.0/python
+Note that scripts are loaded from $prefix/lib/nautilus/extensions-2.0/python.
+
+As of nautilus-python 0.7.0, scripts are also loaded from $XDG_DATA_DIR/nautilus-python/extensions,
+which includes ~/.local/share and /usr/share (or whatever your $XDG_DATA_DIR is 
+set to).
 
 Try to copy test.py to that directory for an example
 

@@ -27,7 +27,7 @@
 <para>The install path for individual users is ~/.nautilus/python-extensions. </para>
 <para>The system-wide install path is $PREFIX/lib/nautilus/extensions-2.0/python. However, some 64 bit distributions, 
 such as Fedora, put Nautilus-Python extensions in $PREFIX/lib64/nautilus/extensions-2.0/python. </para>
-<para>As of Nautilus 2.32 (due out Fall 2010), nautilus-python will look in ~/.local/share/nautilus-python/extensions 
+<para>As of nautilus-python 0.7.0, nautilus-python looks in ~/.local/share/nautilus-python/extensions 
 for local extensions and $PREFIX/share/nautilus-python/extensions for global extensions.</para>
     </note>
 

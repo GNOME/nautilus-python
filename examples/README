@@ -1,8 +1,10 @@
 To try any of the examples, copy them over to:
 
-    NAUTILUS_PREFIX/share/nautilus-python/extensions/
+    $XDG_DATA_DIR/share/nautilus-python/extensions/
 or:
     ~/.local/share/nautilus-python/extensions/
+
+FYI, it is still possible to load plugins from the old locations.
 
 Then restart nautilus.
 

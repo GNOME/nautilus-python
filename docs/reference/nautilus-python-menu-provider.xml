@@ -72,9 +72,10 @@
     <title>Description</title>
 
       <para>
-        An extension that sub-classes <link linkend="class-nautilus-python-menu-provider"><classname>nautilus.MenuProvider</classname></link>
-        will be asked to provide a list of menu items back to Nautilus, which are then attached to various menus.  Nautilus expects at least one of
-        the following methods to be defined (or their *_full variants): get_file_items, get_background_items, or get_toolbar_items.
+        If subclassed, Nautilus will request a list of <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> objects, 
+        which are then attached to various menus.  Nautilus expects at least one of
+        the following methods to be defined (or their *_full variants): get_file_items, 
+        get_background_items, or get_toolbar_items.
         </para>
 
 <example>
@@ -155,7 +156,7 @@ class OpenTerminalExtension(nautilus.MenuProvider):
 <!-- ****************************** -->
 
   <refsect1>
-        <title>Expected Methods</title>
+        <title>Passive Methods</title>
 
         <refsect2 id="method-nautilus-python-menu-provider--get-file-items">
           <title>nautilus.MenuProvider.get_file_items</title>
@@ -225,6 +226,9 @@ class OpenTerminalExtension(nautilus.MenuProvider):
             <link linkend="method-nautilus-menu-provider--emit_items_updated_signal">nautilus.MenuProvider.emit_items_updated_signal</link>, which must
             be passed the current provider instance.
           </para>
+          <note>
+            This method was introduced in nautilus-python 0.7.0.
+          </note>
         </refsect2>
 
 
@@ -296,6 +300,9 @@ class OpenTerminalExtension(nautilus.MenuProvider):
             <link linkend="method-nautilus-menu-provider--emit_items_updated_signal">nautilus.MenuProvider.emit_items_updated_signal</link>, which must
             be passed the current provider instance.
           </para>
+          <note>
+            This method was introduced in nautilus-python 0.7.0.
+          </note>
         </refsect2>
 
 
@@ -367,11 +374,14 @@ class OpenTerminalExtension(nautilus.MenuProvider):
             <link linkend="method-nautilus-menu-provider--emit_items_updated_signal">nautilus.MenuProvider.emit_items_updated_signal</link>, which must
             be passed the current provider instance.
           </para>
+          <note>
+            This method was introduced in nautilus-python 0.7.0.
+          </note>
         </refsect2>
     </refsect1>
 
     <refsect1>
-        <title>Public Methods</title>
+        <title>Active Methods</title>
 
         <refsect2 id="method-nautilus-python-menu-provider--emit-items-updated-signal">
           <title>nautilus.MenuProvider.emit_items_updated_signal</title>
@@ -391,6 +401,9 @@ class OpenTerminalExtension(nautilus.MenuProvider):
           <para>
             Emits the "<link linkend="signal-nautilus-python-menu-provider--items-updated">items-updated</link>" signal.
           </para>
+          <note>
+            This method was introduced in nautilus-python 0.7.0.
+          </note>
         </refsect2>        
     </refsect1>
 

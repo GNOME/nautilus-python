@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<chapter id="nautilus-python-provider-reference"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+    <title>Provider Interfaces</title>
+    <xi:include href="nautilus-python-column-provider.xml"/>
+    <xi:include href="nautilus-python-info-provider.xml"/>
+    <xi:include href="nautilus-python-location-widget-provider.xml"/>
+    <xi:include href="nautilus-python-menu-provider.xml"/>
+    <xi:include href="nautilus-python-property-page-provider.xml"/>
+</chapter>
+

@@ -27,11 +27,9 @@
 
 <!-- the reference page chapters for the nautilus-python classes -->
 
-    <xi:include href="nautilus-python-column.xml"/>
-    <xi:include href="nautilus-python-column-provider.xml"/>
-    <xi:include href="nautilus-python-menu.xml"/>
-    <xi:include href="nautilus-python-menu-item.xml"/>
-    <xi:include href="nautilus-python-menu-provider.xml"/>
-    <xi:include href="nautilus-python-property-page.xml"/>
+    <xi:include href="nautilus-python-overview.xml"/>
+    <xi:include href="nautilus-python-class-reference.xml"/>
+    <xi:include href="nautilus-python-provider-reference.xml"/>
+    <xi:include href="nautilus-python-enum-reference.xml"/>
 </book>
 

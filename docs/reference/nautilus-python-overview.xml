@@ -1,0 +1,38 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<chapter id="nautilus-python-overview"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+
+    <title>Overview</title>
+
+    <para>Writing a Nautilus-Python extension is a fairly straight-forward process. 
+    One simply imports the nautilus module and creates a class which is derived from a number 
+    of the nautilus module's classes. When an extension derives a class, it becomes a "provider", 
+    telling Nautilus to ask it for information. There are several types of providers 
+    available for extensions to use: there is MenuProvider, LocationWidgetProvider, 
+    ColumnProvider, PropertyPageProvider, and InfoProvider, all of which will be explained 
+    in more detail below. Your class can be derived from multiple providers.</para>
+    
+    <para>Here are the basic steps:</para>
+    
+    <para>1. A script is written and installed to the standard python extensions install path</para>
+    <para>2. Nautilus is (re)started and loads the Nautilus-Python C extension, which in turn loads all python extensions</para>
+    <para>3. Any python script in the standard python extensions install path that imports the nautilus module and derives 
+    the main class from a nautilus module class will be loaded</para>
+    
+    <note>
+<title>A note about the standard python extensions install path</title>
+
+<para>The install path for individual users is ~/.nautilus/python-extensions. </para>
+<para>The system-wide install path is $PREFIX/lib/nautilus/extensions-2.0/python. However, some 64 bit distributions, 
+such as Fedora, put Nautilus-Python extensions in $PREFIX/lib64/nautilus/extensions-2.0/python. </para>
+<para>As of Nautilus 2.32 (due out Fall 2010), nautilus-python will look in ~/.local/share/nautilus-python/extensions 
+for local extensions and $PREFIX/share/nautilus-python/extensions for global extensions.</para>
+    </note>
+
+    <xi:include href="nautilus-python-overview-example.xml"/>
+    <xi:include href="nautilus-python-overview-methods.xml"/>
+
+</chapter>
+

@@ -76,51 +76,51 @@
     <blockquote role="properties">
       <informaltable pgwide="1" frame="none">
       <tgroup cols="3">
-        <colspec menu="1" colwidth="1in"/>
-        <colspec menu="2" colwidth="1in"/>
-        <colspec menu="3" colwidth="4in"/>
+        <colspec column="1" colwidth="1in"/>
+        <colspec column="2" colwidth="1in"/>
+        <colspec column="3" colwidth="4in"/>
           <tbody>
       
             <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--icon">icon</link>"</entry>
-              <entry>Read / Write</entry>
               <entry>Name of the icon to display in the menu item.  Default value: None</entry>
+              <entry>Read-Write</entry>
             </row>
       
             <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--label">label</link>"</entry>
-              <entry>Read / Write</entry>
               <entry>The label to display to the user.  Default value: None</entry>
+              <entry>Read-Write</entry>
             </row>
       
             <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--menu">menu</link>"</entry>
-              <entry>Read / Write</entry>
               <entry>The <link linkend="class-nautilus-python-menu">nautilus.Menu</link> menu object belonging to this item.  May be None.</entry>
+              <entry>Read-Write</entry>
             </row>
 
             <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--name">name</link>"</entry>
-              <entry>Read / Write</entry>
               <entry>The name of the item.  Default value: None</entry>
+              <entry>Read-Write-ConstructOnly</entry>
             </row>
       
             <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--priority">priority</link>"</entry>
-              <entry>Read / Write</entry>
               <entry>Whether or not to show priority text in toolbars.  Default value: True</entry>
+              <entry>Read-Write</entry>
             </row>
       
             <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--sensitive">sensitive</link>"</entry>
-              <entry>Read / Write</entry>
               <entry>Whether or not the menu item is sensitive.  Default value: True</entry>
+              <entry>Read-Write</entry>
             </row>
 
             <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--tip">tip</link>"</entry>
-              <entry>Read / Write</entry>
               <entry>The tooltip for the menu item.  Default value: None</entry>
+              <entry>Read-Write</entry>
             </row>
 
           </tbody>

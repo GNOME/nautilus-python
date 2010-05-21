@@ -65,27 +65,27 @@
     <blockquote role="properties">
       <informaltable pgwide="1" frame="none">
       <tgroup cols="3">
-        <colspec property-page="1" colwidth="1in"/>
-        <colspec property-page="2" colwidth="1in"/>
-        <colspec property-page="3" colwidth="4in"/>
+        <colspec column="1" colwidth="1in"/>
+        <colspec column="2" colwidth="1in"/>
+        <colspec column="3" colwidth="4in"/>
           <tbody>
       
             <row valign="top">
               <entry>"label"</entry>
-              <entry>Read / Write</entry>
               <entry>The label widget displayed in the notebook tab.</entry>
+              <entry>Read-Write</entry>
             </row>
       
             <row valign="top">
               <entry>"name"</entry>
-              <entry>Read / Write / Construct Only</entry>
               <entry>The name of the page.  Default value: None</entry>
+              <entry>Read-Write-ConstructOnly</entry>
             </row>
       
             <row valign="top">
               <entry>"page"</entry>
-              <entry>Read / Write</entry>
               <entry>The property page widget</entry>
+              <entry>Read-Write</entry>
             </row>
 
           </tbody>

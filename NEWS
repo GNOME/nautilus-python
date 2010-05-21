@@ -1,3 +1,24 @@
+0.7.0:
+    - Added methods:
+        nautilus.InfoProvider.update_file_info_full
+        nautilus.InfoProvider.update_complete_invoke
+        nautilus.InfoProvider.cancel_update
+        nautilus.MenuProvider.get_file_items_full
+        nautilus.MenuProvider.get_background_items_full
+        nautilus.MenuProvider.get_toolbar_items_full
+        nautilus.MenuProvider.emit_items_updated_signal
+    - Added complete gtk-doc documentation: tutorial and reference.  Enable
+        by adding the --enable-gtk-doc argument to ./configure or ./autogen.sh
+    - Updated the autogen.sh file so it is not a copied-over obsolete version
+        of gnome-autogen.sh, but a shell that calls the user's installed
+        gnome-autogen.sh.
+    - Removed obsolete .spec file
+    - Removed obsolete examples/documentation.py file
+    - Added an example plugin for the LocationWidgetProvider
+    - Look for python plugins in $XDG_DATA_DIR/nautilus-python/extensions.  This
+        includes ~/.local/share and /usr/share (or whatever $XDG_DATA_DIR is set
+        to)
+
 0.6.1:
     - Look for libpython2.6.so.1.0 instead of libpython2.6.so, the latter 
 	is general available from -devel packages only.

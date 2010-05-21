@@ -73,7 +73,7 @@ REFERENCE_DEPS = 	\
 
 $(HTML_DATA): build_stamp
 
-if ENABLE_DOCS
+if ENABLE_GTK_DOC
 
 reference/builddate.xml: $(REFERENCE_DEPS)
 	$(PYTHON) -c 'import datetime; print datetime.date.today()' > $@

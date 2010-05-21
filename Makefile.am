@@ -1,6 +1,6 @@
 SUBDIRS = src examples
 
-if ENABLE_DOCS
+if ENABLE_GTK_DOC
 SUBDIRS += docs
 endif
 
@@ -9,4 +9,6 @@ pkgconfig_DATA = nautilus-python.pc
 
 EXTRA_DIST = nautilus-python.pc.in
 
+if ENABLE_GTK_DOC
 DISTCHECK_CONFIGURE_FLAGS=--enable-gtk-doc
+endif

@@ -107,7 +107,6 @@ AC_OUTPUT([
   Makefile
   examples/Makefile
   src/Makefile
-  nautilus-python.spec
   nautilus-python.pc
   docs/Makefile
   docs/reference/entities.docbook

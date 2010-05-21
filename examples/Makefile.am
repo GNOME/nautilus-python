@@ -1,7 +1,5 @@
-EXTRA_DIST = documentation.py README.in
-
 docsdir = $(datadir)/doc/$(PACKAGE)
-docs_DATA = documentation.py README
+docs_DATA = README
 
 examplesdir = $(datadir)/doc/$(PACKAGE)/examples
 examples_DATA =					\
@@ -13,4 +11,4 @@ examples_DATA =					\
 	submenu.py                  \
 	update-file-info-async.py
 
-EXTRA_DIST += $(examples_DATA)
+EXTRA_DIST = README $(examples_DATA)

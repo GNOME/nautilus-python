@@ -115,11 +115,11 @@ dnl deduce PYTHON_LIBS
 py_exec_prefix=`$PYTHON -c "import sys; print sys.exec_prefix"`
 AC_MULTILIB(yes)
 
-if test "x$PYTHON_LIBS" == x; then
+if test "x$PYTHON_LIBS" = x; then
 	PYTHON_LIBS="-L${py_prefix}/lib${libdirsuffix} -lpython${PYTHON_VERSION}"
 fi
 
-if test "x$PYTHON_LIB_LOC" == x; then
+if test "x$PYTHON_LIB_LOC" = x; then
 	PYTHON_LIB_LOC="${py_prefix}/lib${libdirsuffix}" 
 fi
 AC_SUBST(PYTHON_LIBS)

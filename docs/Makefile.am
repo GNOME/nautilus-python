@@ -23,11 +23,11 @@ XMLFILES = 							\
 	reference/nautilus-python-location-widget-provider.xml \
 	reference/nautilus-python-file-info.xml \
 	reference/nautilus-python-info-provider.xml \
-    reference/nautilus-python-enum-reference.xml \
+	reference/nautilus-python-enum-reference.xml \
 	reference/nautilus-python-operation-result.xml
 
 HTMLdir = $(datadir)/gtk-doc/html/nautilus-python
-HTML_DATA =						\
+HTMLFILES =						\
 	html/index.html					\
 	html/index.sgml					\
 	html/nautilus-python-overview.html \
@@ -54,15 +54,13 @@ CSSdir = $(HTMLdir)
 CSS_DATA = $(CSS_FILES)
 
 BUILT_SOURCES = 		\
-	build_stamp 		\
 	reference/builddate.xml	\
-	$(HTML_DATA)
+	$(HTMLFILES)
 
 CLEANFILES = 			\
-	build_stamp 		\
 	nautilus-python-ref.*	\
 	reference/builddate.xml	\
-	$(HTML_DATA)
+	$(HTMLFILES)
 
 EXTRA_DIST = 		\
 	$(XMLFILES)
@@ -71,14 +69,12 @@ REFERENCE_DEPS = 	\
 	reference 	\
 	$(XMLFILES)
 
-$(HTML_DATA): build_stamp
-
 if ENABLE_GTK_DOC
 
 reference/builddate.xml: $(REFERENCE_DEPS)
 	$(PYTHON) -c 'import datetime; print datetime.date.today()' > $@
 
-build_stamp: $(REFERENCE_DEPS) reference/builddate.xml
+$(HTMLFILES): $(REFERENCE_DEPS)
 	xsltproc --nonet --xinclude -o $(BUILDDIR)/html/ \
 		 --path $(BUILDDIR)/reference:$(srcdir)/reference \
 		 --stringparam gtkdoc.bookname "nautilus-python" \
@@ -87,9 +83,4 @@ build_stamp: $(REFERENCE_DEPS) reference/builddate.xml
 	$(PYGOBJECT_FIXXREF) -i $(PYGOBJECT_PYGDOCS) $(BUILDDIR)/html 
 	touch $@
 
-pdf: $(REFERENCE_DEPS) reference/builddate.xml
-	xsltproc --nonet --xinclude -o nautilus-python-ref.fo \
-		$(PDF_STYLE) reference/nautilus-python-ref.xml
-	pdfxmltex nautilus-python-ref.fo >output </dev/null
 endif
-

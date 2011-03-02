@@ -1,3 +1,9 @@
+0.7.1:
+    - Fixed AM_CHECK_PYTHON_LIBS usage of test (GNOME bug #619440)
+    - Cleaned up the docs Makefile.am to make it more consistent
+    - Fix some python3 syntax issues in the python.m4 script
+    - Add python 2.7 support (GNOME bug #633171)
+
 0.7.0:
     - Added methods:
         nautilus.InfoProvider.update_file_info_full

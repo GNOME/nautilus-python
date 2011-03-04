@@ -82,23 +82,23 @@ np_init_pygtk(void)
 		{
 			_PyGtk_API = (struct _PyGtk_FunctionStruct*)capsule;
 		}
-		else
-		{
-#else
-		PyObject *module_dict = PyModule_GetDict(pygtk);
-		PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
-		if (PyCObject_Check(cobject))
-		{
-			_PyGtk_API = (struct _PyGtk_FunctionStruct*)
-				PyCObject_AsVoidPtr(cobject);
-		}
-		else
-		{
 #endif
-		    PyErr_SetString(PyExc_RuntimeError,
-		                    "could not find _PyGtk_API object");
-			PyErr_Print();
-			return FALSE;
+		if (!_PyGtk_API)
+		{
+			PyObject *module_dict = PyModule_GetDict(pygtk);
+			PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
+			if (PyCObject_Check(cobject))
+			{
+				_PyGtk_API = (struct _PyGtk_FunctionStruct*)
+					PyCObject_AsVoidPtr(cobject);
+			}
+			else
+			{
+				PyErr_SetString(PyExc_RuntimeError,
+				                "could not find _PyGtk_API object");
+				PyErr_Print();
+				return FALSE;
+			}
 		}
     }
     else

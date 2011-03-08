@@ -12,10 +12,8 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AC_SUBST(ACLOCAL_AMFLAGS, "-I m4 -I .")
 
-NAUTILUS_REQUIRED=2.22.0
-PYGTK_REQUIRED=2.8.0
+NAUTILUS_REQUIRED=2.91
 PYGOBJECT_REQUIRED=2.16.0
-GNOME_PYTHON_REQUIRED=2.12.0
 
 AC_PROG_CC
 AC_DISABLE_STATIC
@@ -42,25 +40,8 @@ AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
 AM_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 
 
-PKG_CHECK_MODULES(NAUTILUS_PYTHON, [pygtk-2.0 >= $PYGTK_REQUIRED
-                                   pygobject-2.0 >= $PYGOBJECT_REQUIRED
-                                   gnome-python-2.0 >= $GNOME_PYTHON_REQUIRED
+PKG_CHECK_MODULES(NAUTILUS_PYTHON, [pygobject-2.0 >= $PYGOBJECT_REQUIRED
                                    libnautilus-extension >= $NAUTILUS_REQUIRED])
-
-AC_MSG_CHECKING(for pygtk defs)
-PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
-AC_SUBST(PYGTK_DEFSDIR)
-AC_MSG_RESULT($PYGTK_DEFSDIR)
-
-AC_MSG_CHECKING(for pygtk codegen)
-PYGTK_CODEGEN="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/codegen.py"
-AC_SUBST(PYGTK_CODEGEN)
-AC_MSG_RESULT($PYGTK_CODEGEN)
-
-AC_MSG_CHECKING(for pygobject defs)
-PYGOBJECT_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygobject-2.0`
-AC_SUBST(PYGOBJECT_DEFSDIR)
-AC_MSG_RESULT($PYGOBJECT_DEFSDIR)
 
 PYGOBJECT_DATADIR=`$PKG_CONFIG --variable=datadir pygobject-2.0`
 AC_SUBST(PYGOBJECT_DATADIR)

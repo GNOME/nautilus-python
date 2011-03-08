@@ -2,13 +2,14 @@
 import os
 import urllib
 
-import gtk
-import nautilus
 import gconf
+
+import gobject
+from gi.repository import Nautilus
 
 TERMINAL_KEY = '/desktop/gnome/applications/terminal/exec'
 
-class OpenTerminalExtension(nautilus.MenuProvider):
+class OpenTerminalExtension(gobject.GObject, Nautilus.MenuProvider):
     def __init__(self):
         self.client = gconf.client_get_default()
         
@@ -33,15 +34,15 @@ class OpenTerminalExtension(nautilus.MenuProvider):
         if not file.is_directory() or file.get_uri_scheme() != 'file':
             return
         
-        item = nautilus.MenuItem('NautilusPython::openterminal_file_item',
-                                 'Open Terminal' ,
-                                 'Open Terminal In %s' % file.get_name())
+        item = Nautilus.MenuItem(name='NautilusPython::openterminal_file_item',
+                                 label='Open Terminal' ,
+                                 tip='Open Terminal In %s' % file.get_name())
         item.connect('activate', self.menu_activate_cb, file)
         return item,
 
     def get_background_items(self, window, file):
-        item = nautilus.MenuItem('NautilusPython::openterminal_item',
-                                 'Open Terminal Here',
-                                 'Open Terminal In This Directory')
+        item = Nautilus.MenuItem(name='NautilusPython::openterminal_item',
+                                 label='Open Terminal Here',
+                                 tip='Open Terminal In This Directory')
         item.connect('activate', self.menu_background_activate_cb, file)
         return item,

@@ -70,46 +70,21 @@ np_init_pygobject(void)
 	return TRUE;
 }
 
-static inline gboolean 
-np_init_pygtk(void)
+static inline gboolean
+np_init_pygi(void)
 {
-    PyObject *pygtk = PyImport_ImportModule("gtk._gtk");
-    if (pygtk != NULL)
-    {
-#ifdef Py_CAPSULE_H
-		void *capsule = PyCapsule_Import("gtk._gtk._PyGtk_API", 0);
-		if (capsule)
-		{
-			_PyGtk_API = (struct _PyGtk_FunctionStruct*)capsule;
-		}
-#endif
-		if (!_PyGtk_API)
-		{
-			PyObject *module_dict = PyModule_GetDict(pygtk);
-			PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
-			if (PyCObject_Check(cobject))
-			{
-				_PyGtk_API = (struct _PyGtk_FunctionStruct*)
-					PyCObject_AsVoidPtr(cobject);
-			}
-			else
-			{
-				PyErr_SetString(PyExc_RuntimeError,
-				                "could not find _PyGtk_API object");
-				PyErr_Print();
-				return FALSE;
-			}
-		}
-    }
-    else
-    {
+	PyObject *gi;
+	
+	gi = PyImport_ImportModule ("gi");
+	if (gi == NULL)
+	{
         PyErr_Print();
-        g_warning("could not import gtk._gtk");
+        g_warning("could not import gi");
         return FALSE;
-    }
+	}
+	
 	return TRUE;
 }
-
 
 static void
 nautilus_python_load_file(GTypeModule *type_module, 
@@ -209,8 +184,7 @@ nautilus_python_load_dir (GTypeModule *module,
 static gboolean
 nautilus_python_init_python (void)
 {
-	PyObject *pygtk, *mdict, *require;
-	PyObject *sys_path, *tmp, *nautilus, *gtk, *pygtk_version, *pygtk_required_version;
+	PyObject *sys_path, *nautilus;
 	GModule *libpython;
 	char *argv[] = { "nautilus", NULL };
 
@@ -246,23 +220,6 @@ nautilus_python_init_python (void)
 		return FALSE;
 	}
 
-	/* pygtk.require("2.0") */
-	debug("pygtk.require(\"2.0\")");
-	pygtk = PyImport_ImportModule("pygtk");
-	if (!pygtk)
-	{
-		PyErr_Print();
-		return FALSE;
-	}
-	mdict = PyModule_GetDict(pygtk);
-	require = PyDict_GetItemString(mdict, "require");
-	PyObject_CallObject(require, Py_BuildValue("(S)", PyString_FromString("2.0")));
-	if (PyErr_Occurred())
-	{
-		PyErr_Print();
-		return FALSE;
-	}
-
 	/* import gobject */
   	debug("init_pygobject");
 	if (!np_init_pygobject())
@@ -271,59 +228,29 @@ nautilus_python_init_python (void)
 		return FALSE;
 	}
 	
-	/* import gtk */
-	debug("init_pygtk");
-	if (!np_init_pygtk())
+	/* import gi */
+  	debug("init_pygi");
+	if (!np_init_pygi())
 	{
-		g_warning("pygtk initialization failed");
+		g_warning("pygi initialization failed");
 		return FALSE;
 	}
-	
-	/* gobject.threads_init() */
-    debug("pyg_enable_threads");
-	setenv("PYGTK_USE_GIL_STATE_API", "", 0);
-	pyg_enable_threads();
-
-	/* gtk.pygtk_version < (2, 4, 0) */
-	gtk = PyImport_ImportModule("gtk");
-	mdict = PyModule_GetDict(gtk);
-	pygtk_version = PyDict_GetItemString(mdict, "pygtk_version");
-	pygtk_required_version = Py_BuildValue("(iii)", 2, 4, 0);
-	if (PyObject_Compare(pygtk_version, pygtk_required_version) == -1)
-	{
-		g_warning("PyGTK %s required, but %s found.",
-				  PyString_AsString(PyObject_Repr(pygtk_required_version)),
-				  PyString_AsString(PyObject_Repr(pygtk_version)));
-		Py_DECREF(pygtk_required_version);
-		return FALSE;
-	}
-	Py_DECREF(pygtk_required_version);
-	
-	/* sys.path.insert(., ...) */
-	debug("sys.path.insert(0, ...)");
-	sys_path = PySys_GetObject("path");
-	PyList_Insert(sys_path, 0,
-				  (tmp = PyString_FromString(NAUTILUS_LIBDIR "/nautilus-python")));
-	Py_DECREF(tmp);
 	
 	/* import nautilus */
 	g_setenv("INSIDE_NAUTILUS_PYTHON", "", FALSE);
 	debug("import nautilus");
-	nautilus = PyImport_ImportModule("nautilus");
+	nautilus = PyImport_ImportModule("gi.repository.Nautilus");
 	if (!nautilus)
 	{
 		PyErr_Print();
 		return FALSE;
 	}
 
-	/* Extract types and interfaces from nautilus */
-	mdict = PyModule_GetDict(nautilus);
-	
 	_PyGtkWidget_Type = pygobject_lookup_class(GTK_TYPE_WIDGET);
 	g_assert(_PyGtkWidget_Type != NULL);
 
 #define IMPORT(x, y) \
-    _PyNautilus##x##_Type = (PyTypeObject *)PyDict_GetItemString(mdict, y); \
+    _PyNautilus##x##_Type = (PyTypeObject *)PyObject_GetAttrString(nautilus, y); \
 	if (_PyNautilus##x##_Type == NULL) { \
 		PyErr_Print(); \
 		return FALSE; \

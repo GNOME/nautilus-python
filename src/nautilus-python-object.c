@@ -149,7 +149,7 @@ nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provide
 								 "(N)", py_files);
 	HANDLE_RETVAL(py_ret);
 
-	HANDLE_LIST(py_ret, NautilusPropertyPage, "nautilus.PropertyPage");
+	HANDLE_LIST(py_ret, NautilusPropertyPage, "Nautilus.PropertyPage");
 	
  beach:
 	Py_XDECREF(py_ret);
@@ -252,7 +252,7 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
 
 	HANDLE_RETVAL(py_ret);
 
-	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
+	HANDLE_LIST(py_ret, NautilusMenuItem, "Nautilus.MenuItem");
 
  beach:
  	free_pygobject_data_list(files);
@@ -299,57 +299,10 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 
 	HANDLE_RETVAL(py_ret);
 
-	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
+	HANDLE_LIST(py_ret, NautilusMenuItem, "Nautilus.MenuItem");
 	
  beach:
 	free_pygobject_data(file, NULL);
-	Py_XDECREF(py_ret);
-	pyg_gil_state_release(state);
-    return ret;
-}
-#undef METHOD_NAME
-
-#define METHOD_NAME "get_toolbar_items"
-static GList *
-nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
-										  GtkWidget 		   *window,
-										  NautilusFileInfo 	   *file)
-{
-	NautilusPythonObject *object = (NautilusPythonObject*)provider;
-    GList *ret = NULL;
-    PyObject *py_ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();
-	
-  	debug_enter();
-  	
-	CHECK_OBJECT(object);
-
-	if (PyObject_HasAttrString(object->instance, "get_toolbar_items_full"))
-	{
-		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX "get_toolbar_items_full",
-									 "(NNN)",
-									 pygobject_new((GObject *)provider),
-									 pygobject_new((GObject *)window),
-									 pygobject_new((GObject *)file));
-	}
-	else if (PyObject_HasAttrString(object->instance, "get_toolbar_items"))
-	{
-		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-									 "(NN)",
-									 pygobject_new((GObject *)window),
-									 pygobject_new((GObject *)file));
-	}
-	else
-	{
-		goto beach;
-	}
-	
-	HANDLE_RETVAL(py_ret);
-
-	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
-	
- beach:
- 	free_pygobject_data(file, NULL);
 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
@@ -360,7 +313,6 @@ static void
 nautilus_python_object_menu_provider_iface_init (NautilusMenuProviderIface *iface)
 {
 	iface->get_background_items = nautilus_python_object_get_background_items;
-	iface->get_toolbar_items = nautilus_python_object_get_toolbar_items;
 	iface->get_file_items = nautilus_python_object_get_file_items;
 }
 
@@ -383,7 +335,7 @@ nautilus_python_object_get_columns (NautilusColumnProvider *provider)
 
 	HANDLE_RETVAL(py_ret);
 
-	HANDLE_LIST(py_ret, NautilusColumn, "nautilus.Column");
+	HANDLE_LIST(py_ret, NautilusColumn, "Nautilus.Column");
 	
  beach:
  	Py_XDECREF(py_ret);

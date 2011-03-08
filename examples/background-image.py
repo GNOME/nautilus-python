@@ -1,12 +1,14 @@
 import urllib
 
 import gconf
-import nautilus
+
+import gobject
+from gi.repository import Nautilus
 
 SUPPORTED_FORMATS = 'image/jpeg', 'image/png'
 BACKGROUND_KEY = '/desktop/gnome/background/picture_filename'
 
-class BackgroundImageExtension(nautilus.MenuProvider):
+class BackgroundImageExtension(gobject.GObject, Nautilus.MenuProvider):
     def __init__(self):
         self.gconf = gconf.client_get_default()
     
@@ -33,8 +35,8 @@ class BackgroundImageExtension(nautilus.MenuProvider):
         if file.get_uri_scheme() != 'file':
             return
 
-        item = nautilus.MenuItem('Nautilus::set_background_image',
-                                 'Use as background image',
-                                 'Set the current image as a background image')
+        item = Nautilus.MenuItem(name='Nautilus::set_background_image',
+                                 label='Use as background image',
+                                 tip='Set the current image as a background image')
         item.connect('activate', self.menu_activate_cb, file)
         return item,

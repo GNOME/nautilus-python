@@ -73,7 +73,7 @@ np_init_pygobject(void)
 static inline gboolean
 np_init_pygi(void)
 {
-	PyObject *gi;
+	PyObject *gi, *gobject;
 	
 	gi = PyImport_ImportModule ("gi");
 	if (gi == NULL)
@@ -82,6 +82,23 @@ np_init_pygi(void)
         g_warning("could not import gi");
         return FALSE;
 	}
+
+	gobject = PyImport_ImportModule("gi.repository.GObject");
+	if (gobject)
+	{
+		_PyGClosure_Type = (PyTypeObject *) PyObject_GetAttrString(gobject, "Closure");
+		if (_PyGClosure_Type == NULL)
+		{
+			PyErr_Print();
+			return FALSE;
+		}
+	}
+	else
+	{
+		PyErr_Print();
+		return FALSE;
+	}	
+
 	
 	return TRUE;
 }

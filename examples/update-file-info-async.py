@@ -12,4 +12,4 @@ class UpdateFileInfoAsync(nautilus.InfoProvider):
         
     def update_cb(self, provider, handle, closure):
         print "update_cb"
-        self.update_complete_invoke(provider, handle, closure, result=nautilus.OPERATION_FAILED)
+        self.update_complete_invoke(closure, provider, handle, result=nautilus.OPERATION_FAILED)

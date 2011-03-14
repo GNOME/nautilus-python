@@ -75,4 +75,7 @@ PyTypeObject *_PyNautilusPropertyPage_Type;
 PyTypeObject *_PyNautilusPropertyPageProvider_Type;
 #define PyNautilusPropertyPageProvider_Type (*_PyNautilusPropertyPageProvider_Type)
 
+PyTypeObject *_PyNautilusOperationHandle_Type;
+#define PyNautilusOperationHandle_Type (*_PyNautilusOperationHandle_Type)
+
 #endif /* NAUTILUS_PYTHON_H */

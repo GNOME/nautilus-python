@@ -128,6 +128,17 @@ free_pygobject_data_list(GList *list)
 	g_list_foreach(list, (GFunc)free_pygobject_data, NULL);
 }
 
+static PyObject *
+nautilus_python_boxed_new (PyTypeObject *type, gpointer boxed, gboolean free_on_dealloc)
+{
+	PyGBoxed *self = (PyGBoxed *) type->tp_alloc (type, 0);
+	self->gtype = pyg_type_from_object ( (PyObject *) type);
+	self->boxed = boxed;
+	self->free_on_dealloc = free_on_dealloc;
+	
+	return (PyObject *) self;
+}
+
 #define METHOD_NAME "get_property_pages"
 static GList *
 nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provider,
@@ -358,6 +369,7 @@ nautilus_python_object_cancel_update (NautilusInfoProvider 		*provider,
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
 	PyGILState_STATE state = pyg_gil_state_ensure();
+	PyObject *py_handle = nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, handle, FALSE);
 
   	debug_enter();
 
@@ -367,7 +379,7 @@ nautilus_python_object_cancel_update (NautilusInfoProvider 		*provider,
     PyObject_CallMethod(object->instance,
 								 METHOD_PREFIX METHOD_NAME, "(NN)",
 								 pygobject_new((GObject*)provider),
-								 pyg_pointer_new(G_TYPE_POINTER, handle));
+								 py_handle);
 
  beach:
 	pyg_gil_state_release(state);
@@ -384,7 +396,8 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
     PyObject *py_ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
+	PyGILState_STATE state = pyg_gil_state_ensure();
+	PyObject *py_handle = nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, *handle, FALSE);
 
   	debug_enter();
 
@@ -395,7 +408,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
 		py_ret = PyObject_CallMethod(object->instance,
 									 METHOD_PREFIX "update_file_info_full", "(NNNN)",
 									 pygobject_new((GObject*)provider),
-									 pyg_pointer_new(G_TYPE_POINTER, *handle),
+									 py_handle,
 									 pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE),
 									 pygobject_new((GObject*)file));
 	}

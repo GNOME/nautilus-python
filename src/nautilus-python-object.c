@@ -398,7 +398,6 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
     PyObject *py_ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();
 	PyObject *py_handle = nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, *handle, FALSE);
-	PyObject *py_update_complete = nautilus_python_boxed_new (_PyGClosure_Type, update_complete, FALSE);
 
   	debug_enter();
 
@@ -410,7 +409,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
 									 METHOD_PREFIX "update_file_info_full", "(NNNN)",
 									 pygobject_new((GObject*)provider),
 									 py_handle,
-									 py_update_complete,
+									 pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE),
 									 pygobject_new((GObject*)file));
 	}
 	else if (PyObject_HasAttrString(object->instance, "update_file_info"))

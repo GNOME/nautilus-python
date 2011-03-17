@@ -48,9 +48,6 @@ extern NautilusPythonDebug nautilus_python_debug;
 PyTypeObject *_PyGtkWidget_Type;
 #define PyGtkWidget_Type (*_PyGtkWidget_Type)
 
-PyTypeObject *_PyGClosure_Type;
-#define PyGClosure_Type (*_PyGClosure_Type)
-
 PyTypeObject *_PyNautilusColumn_Type;
 #define PyNautilusColumn_Type (*_PyNautilusColumn_Type)
 

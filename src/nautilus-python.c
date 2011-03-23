@@ -45,6 +45,14 @@ static GArray *all_types = NULL;
 static inline gboolean 
 np_init_pygobject(void)
 {
+#ifdef Py_CAPSULE_H
+		void *capsule = PyCapsule_Import("gobject._PyGObject_API", 0);
+		if (capsule)
+		{
+			_PyGObject_API = (struct _PyGObject_Functions*)capsule;
+			return TRUE;
+		}
+#endif
     PyObject *gobject = PyImport_ImportModule("gobject");
     if (gobject != NULL)
     {

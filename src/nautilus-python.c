@@ -44,6 +44,13 @@ static GArray *all_types = NULL;
 static inline gboolean 
 np_init_pygobject(void)
 {
+#ifdef Py_CAPSULE_H
+	void *capsule = PyCapsule_Import("gobject._PyGObject_API", 0);
+	if (capsule)
+	{
+		_PyGObject_API = (struct _PyGObject_Functions*)capsule;
+	}
+#endif
     PyObject *gobject = PyImport_ImportModule("gobject");
     if (gobject != NULL)
     {
@@ -73,32 +80,29 @@ np_init_pygobject(void)
 static inline gboolean 
 np_init_pygtk(void)
 {
+#ifdef Py_CAPSULE_H
+	void *capsule = PyCapsule_Import("gtk._gtk._PyGtk_API", 0);
+	if (capsule)
+	{
+		_PyGtk_API = (struct _PyGtk_FunctionStruct*)capsule;
+	}
+#endif
     PyObject *pygtk = PyImport_ImportModule("gtk._gtk");
     if (pygtk != NULL)
     {
-#ifdef Py_CAPSULE_H
-		void *capsule = PyCapsule_Import("gtk._gtk._PyGtk_API", 0);
-		if (capsule)
+		PyObject *module_dict = PyModule_GetDict(pygtk);
+		PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
+		if (PyCObject_Check(cobject))
 		{
-			_PyGtk_API = (struct _PyGtk_FunctionStruct*)capsule;
+			_PyGtk_API = (struct _PyGtk_FunctionStruct*)
+				PyCObject_AsVoidPtr(cobject);
 		}
-#endif
-		if (!_PyGtk_API)
+		else
 		{
-			PyObject *module_dict = PyModule_GetDict(pygtk);
-			PyObject *cobject = PyDict_GetItemString(module_dict, "_PyGtk_API");
-			if (PyCObject_Check(cobject))
-			{
-				_PyGtk_API = (struct _PyGtk_FunctionStruct*)
-					PyCObject_AsVoidPtr(cobject);
-			}
-			else
-			{
-				PyErr_SetString(PyExc_RuntimeError,
-				                "could not find _PyGtk_API object");
-				PyErr_Print();
-				return FALSE;
-			}
+			PyErr_SetString(PyExc_RuntimeError,
+			                "could not find _PyGtk_API object");
+			PyErr_Print();
+			return FALSE;
 		}
     }
     else

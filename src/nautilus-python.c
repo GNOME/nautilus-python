@@ -79,22 +79,6 @@ np_init_pygobject(void)
 	return TRUE;
 }
 
-static inline gboolean
-np_init_pygi(void)
-{
-	PyObject *gi;
-	
-	gi = PyImport_ImportModule ("gi");
-	if (gi == NULL)
-	{
-        PyErr_Print();
-        g_warning("could not import gi");
-        return FALSE;
-	}
-	
-	return TRUE;
-}
-
 static void
 nautilus_python_load_file(GTypeModule *type_module, 
 						  const gchar *filename)
@@ -234,14 +218,6 @@ nautilus_python_init_python (void)
 	if (!np_init_pygobject())
 	{
 		g_warning("pygobject initialization failed");
-		return FALSE;
-	}
-	
-	/* import gi */
-  	debug("init_pygi");
-	if (!np_init_pygi())
-	{
-		g_warning("pygi initialization failed");
 		return FALSE;
 	}
 	

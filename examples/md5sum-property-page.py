@@ -34,8 +34,13 @@ class MD5SumPropertyPage(nautilus.PropertyPageProvider):
         self.value_label = gtk.Label()
         self.hbox.pack_start(self.value_label)
 
-        md5sum = hashlib.md5(filename).hexdigest()
-        self.value_label.set_text(md5sum)
+        md5sum = hashlib.md5()
+        with open(filename,'rb') as f: 
+            for chunk in iter(lambda: f.read(8192), ''): 
+                md5sum.update(chunk)
+        f.close()       
+
+        self.value_label.set_text(md5sum.hexdigest())
         self.value_label.show()
         
         return nautilus.PropertyPage("NautilusPython::md5_sum",

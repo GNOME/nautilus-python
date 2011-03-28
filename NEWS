@@ -1,3 +1,10 @@
+0.7.3:
+    - Use PyCapsule_Import for pygobject as well as pygtk
+    - Fixed bug #644399, in the property page example plugin, get the md5sum
+        of the file contents, not the file name
+    - Removed extraneous .cvsignore files
+    - Fixed the update-file-info-async example plugin
+
 0.7.2:
     - Fix to get the PyCapsule patch to work even if there is no PyCapsule 
         object set up for pygtk.

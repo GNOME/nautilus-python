@@ -4,8 +4,8 @@
 
 <refentry id="class-nautilus-python-column-provider">
   <refnamediv>
-    <refname>nautilus.ColumnProvider</refname>
-    <refpurpose>nautilus.ColumnProvider Reference</refpurpose>
+    <refname>Nautilus.ColumnProvider</refname>
+    <refpurpose>Nautilus.ColumnProvider Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,7 +16,7 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-      <ooclass><classname>nautilus.ColumnProvider</classname></ooclass>
+      <ooclass><classname>Nautilus.ColumnProvider</classname></ooclass>
 
       <methodsynopsis language="python">
         <methodname><link linkend="method-nautilus-column-provider--get-columns">get_columns</link></methodname>
@@ -33,32 +33,33 @@
     <title>Description</title>
 
       <para>
-        If subclassed, Nautilus will request a list of <link linkend="class-nautilus-python-column"><classname>nautilus.Column</classname></link> 
+        If subclassed, Nautilus will request a list of <link linkend="class-nautilus-python-column"><classname>Nautilus.Column</classname></link> 
         objects, which are then displayed when the user is in <literal>List</literal> mode.
         
-        <note>An extension sub-classing <link linkend="class-nautilus-python-column-provider"><classname>nautilus.ColumnProvider</classname></link> 
-        will almost always want to sub-class <link linkend="class-info-provider"><classname>nautilus.InfoProvider</classname></link> 
+        <note>An extension sub-classing <link linkend="class-nautilus-python-column-provider"><classname>Nautilus.ColumnProvider</classname></link> 
+        will almost always want to sub-class <link linkend="class-info-provider"><classname>Nautilus.InfoProvider</classname></link> 
         as well, since that is how an extension provides information for each item in a directory listing.
         </note>
         </para>
 
 <example>
-    <title>nautilus.ColumnProvider Example</title>
+    <title>Nautilus.ColumnProvider Example</title>
     <programlisting>
 import os
 import urllib
 
-import nautilus
+import gobject
+from gi.repository import Nautilus
 
-class ColumnExtension(nautilus.ColumnProvider, nautilus.InfoProvider):
+class ColumnExtension(gobject.GObject, Nautilus.ColumnProvider, Nautilus.InfoProvider):
     def __init__(self):
         pass
     
     def get_columns(self):
-        return nautilus.Column("NautilusPython::block_size_column",
-                               "block_size",
-                               "Block size",
-                               "Get the block size"),
+        return Nautilus.Column(name="NautilusPython::block_size_column",
+                               attribute="block_size",
+                               label="Block size",
+                               description="Get the block size"),
 
     def update_file_info(self, file):
         if file.get_uri_scheme() != 'file':
@@ -80,7 +81,7 @@ class ColumnExtension(nautilus.ColumnProvider, nautilus.InfoProvider):
         <title>Passive Methods</title>
 
         <refsect2 id="method-nautilus-column-provider--get-columns">
-          <title>nautilus.ColumnProvider.get_columns</title>
+          <title>Nautilus.ColumnProvider.get_columns</title>
 
           <programlisting><methodsynopsis language="python">
             <methodname>get_columns</methodname>
@@ -90,13 +91,13 @@ class ColumnExtension(nautilus.ColumnProvider, nautilus.InfoProvider):
           <variablelist>
             <varlistentry>
               <term><emphasis>Returns</emphasis>&nbsp;:</term>
-              <listitem><simpara>a list of <literal>nautilus.Column</literal></simpara></listitem>
+              <listitem><simpara>a list of <literal>Nautilus.Column</literal></simpara></listitem>
             </varlistentry>
           </variablelist>
 
           <para>
             The <methodname>get_columns</methodname>() method returns a list of
-            <link linkend="class-nautilus-python-column"><classname>nautilus.Column</classname></link>.
+            <link linkend="class-nautilus-python-column"><classname>Nautilus.Column</classname></link>.
           </para>
         </refsect2>
     </refsect1>

@@ -4,8 +4,8 @@
 
 <refentry id="enum-nautilus-python-operation-result">
   <refnamediv>
-    <refname>nautilus.OperationResult</refname>
-    <refpurpose>nautilus.OperationResult Reference</refpurpose>
+    <refname>Nautilus.OperationResult</refname>
+    <refpurpose>Nautilus.OperationResult Reference</refpurpose>
   </refnamediv>
 
 
@@ -18,8 +18,8 @@
     <title>Description</title>
 
       <para>
-        The <link linkend="enum-nautilus-python-operation-result"><classname>nautilus.OperationResult</classname></link> constants are
-        used by the <link linkend="class-nautilus-python-info-provider"><classname>nautilus.InfoProvider</classname></link> provider to
+        The <link linkend="enum-nautilus-python-operation-result"><classname>Nautilus.OperationResult</classname></link> constants are
+        used by the <link linkend="class-nautilus-python-info-provider"><classname>Nautilus.InfoProvider</classname></link> provider to
         notify Nautilus what the extension intends to do when Nautilus calls the extension's <link linkend="method-nautilus-python-info-provider--update-file-info-full">update_file_info_full</link>
         method.  The possible values are as follows:
       </para>
@@ -27,20 +27,20 @@
 
       <variablelist>
 	    <varlistentry>
-	      <term><literal>nautilus.OPERATION_COMPLETE</literal></term>
+	      <term><literal>Nautilus.OperationResult.COMPLETE</literal></term>
 	      <listitem>
 	        <simpara>The operation is complete and Nautilus can move on to the next <link linkend="method-nautilus-python-info-provider--update-file-info-full">update_file_info_full</link> call.</simpara>
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term><literal>nautilus.OPERATION_IN_PROGRESS</literal></term>
+	      <term><literal>Nautilus.OperationResult.IN_PROGRESS</literal></term>
 	      <listitem>
-	        <simpara>The operation is in progress and running asynchronously and Nautilus should wait until the <link linkend="method-nautilus-python-info-provider--update-complete-invoke">update_complete_invoke</link> method
+	        <simpara>The operation is in progress and running asynchronously and Nautilus should wait until the <link linkend="method-nautilus-python-info-provider--update-complete-invoke">Nautilus.info_provider_update_complete_invoke</link> method
 	        is called before moving on to the next <link linkend="method-nautilus-python-info-provider--update-file-info-full">update_file_info_full</link> call.</simpara>
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>
-	      <term><literal>nautilus.OPERATION_FAILED</literal></term>
+	      <term><literal>Nautilus.OperationResult.FAILED</literal></term>
 	      <listitem>
 	        <simpara>The operation has failed.</simpara>
 	      </listitem>

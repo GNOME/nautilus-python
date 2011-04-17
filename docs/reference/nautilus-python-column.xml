@@ -4,8 +4,8 @@
 
 <refentry id="class-nautilus-python-column">
   <refnamediv>
-    <refname>nautilus.Column</refname>
-    <refpurpose>nautilus.Column Reference</refpurpose>
+    <refname>Nautilus.Column</refname>
+    <refpurpose>Nautilus.Column Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,11 +16,11 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-        <ooclass><classname>nautilus.Column</classname></ooclass>
+        <ooclass><classname>Nautilus.Column</classname></ooclass>
         <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
 
         <constructorsynopsis language="python">
-            <methodname><link linkend="constructor-nautilus-column">nautilus.Column</link></methodname>
+            <methodname><link linkend="constructor-nautilus-column">Nautilus.Column</link></methodname>
             <methodparam><parameter role="keyword">name</parameter></methodparam>
             <methodparam><parameter role="keyword">attribute</parameter></methodparam>
             <methodparam><parameter role="keyword">label</parameter></methodparam>
@@ -37,7 +37,7 @@
     <title>Ancestry</title>
 
 <synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
-    +-- <link linkend="class-nautilus-python-column">nautilus.Column</link>
+    +-- <link linkend="class-nautilus-python-column">Nautilus.Column</link>
 </synopsis>
 </refsect1>
 
@@ -50,7 +50,7 @@
     <title>Description</title>
 
       <para>
-        A list of <link linkend="class-nautilus-python-column"><classname>nautilus.Column</classname></link> objects is returned by <link linkend="class-nautilus-python-column-provider"><classname>nautilus.ColumnProvider</classname></link> extensions.
+        A list of <link linkend="class-nautilus-python-column"><classname>Nautilus.Column</classname></link> objects is returned by <link linkend="class-nautilus-python-column-provider"><classname>Nautilus.ColumnProvider</classname></link> extensions.
       </para>
 
   </refsect1>
@@ -122,7 +122,7 @@
   <title>Constructor</title>
 
   <programlisting><constructorsynopsis language="python">
-        <methodname>nautilus.Column</methodname>
+        <methodname>Nautilus.Column</methodname>
         <methodparam><parameter role="keyword">name</parameter></methodparam>
         <methodparam><parameter role="keyword">attribute</parameter></methodparam>
         <methodparam><parameter role="keyword">label</parameter></methodparam>
@@ -149,7 +149,7 @@
   </variablelist>
 
   <para>
-    Creates a new <link linkend="class-nautilus-python-column"><classname>nautilus.Column</classname></link> object.
+    Creates a new <link linkend="class-nautilus-python-column"><classname>Nautilus.Column</classname></link> object.
   </para>
 </refsect1>
 

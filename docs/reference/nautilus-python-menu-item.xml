@@ -4,8 +4,8 @@
 
 <refentry id="class-nautilus-python-menu-item">
   <refnamediv>
-    <refname>nautilus.MenuItem</refname>
-    <refpurpose>nautilus.MenuItem Reference</refpurpose>
+    <refname>Nautilus.MenuItem</refname>
+    <refpurpose>Nautilus.MenuItem Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,11 +16,11 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-        <ooclass><classname>nautilus.MenuItem</classname></ooclass>
+        <ooclass><classname>Nautilus.MenuItem</classname></ooclass>
         <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
 
         <constructorsynopsis language="python">
-            <methodname><link linkend="constructor-nautilus-menu-item">nautilus.MenuItem</link></methodname>
+            <methodname><link linkend="constructor-nautilus-menu-item">Nautilus.MenuItem</link></methodname>
             <methodparam><parameter role="keyword">name</parameter></methodparam>
             <methodparam><parameter role="keyword">label</parameter></methodparam>
             <methodparam><parameter role="keyword">tooltip</parameter></methodparam>
@@ -47,7 +47,7 @@
     <title>Ancestry</title>
 
 <synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
-    +-- <link linkend="class-nautilus-python-menu-item">nautilus.MenuItem</link>
+    +-- <link linkend="class-nautilus-python-menu-item">Nautilus.MenuItem</link>
 </synopsis>
 </refsect1>
 
@@ -60,7 +60,7 @@
     <title>Description</title>
 
       <para>
-        <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> objects are appended to lists to create menus and submenus.
+        <link linkend="class-nautilus-python-menu-item"><classname>Nautilus.MenuItem</classname></link> objects are appended to lists to create menus and submenus.
       </para>
 
   </refsect1>
@@ -95,7 +95,7 @@
       
             <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--menu">menu</link>"</entry>
-              <entry>The <link linkend="class-nautilus-python-menu">nautilus.Menu</link> menu object belonging to this item.  May be None.</entry>
+              <entry>The <link linkend="class-nautilus-python-menu">Nautilus.Menu</link> menu object belonging to this item.  May be None.</entry>
               <entry>Read-Write</entry>
             </row>
 
@@ -161,7 +161,7 @@
   <title>Constructor</title>
 
   <programlisting><constructorsynopsis language="python">
-        <methodname>nautilus.MenuItem</methodname>
+        <methodname>Nautilus.MenuItem</methodname>
         <methodparam><parameter role="keyword">name</parameter></methodparam>
         <methodparam><parameter role="keyword">label</parameter></methodparam>
         <methodparam><parameter role="keyword">tooltip</parameter></methodparam>
@@ -188,7 +188,7 @@
   </variablelist>
 
   <para>
-    Creates a new <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> object.
+    Creates a new <link linkend="class-nautilus-python-menu-item"><classname>Nautilus.MenuItem</classname></link> object.
   </para>
 </refsect1>
 
@@ -201,18 +201,18 @@
     <title>Public Methods</title>
 
   <refsect2 id="method-nautilus-python-menu-item--activate">
-    <title>nautilus.MenuItem.activate</title>
+    <title>Nautilus.MenuItem.activate</title>
     <programlisting><methodsynopsis language="python">
 	  <methodname>activate</methodname>
     </methodsynopsis></programlisting>
 
     <para>
-     Generates the "<link linkend="signal-nautilus-python-menu-item--activate">activate</link>" signal for this <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link>.
+     Generates the "<link linkend="signal-nautilus-python-menu-item--activate">activate</link>" signal for this <link linkend="class-nautilus-python-menu-item"><classname>Nautilus.MenuItem</classname></link>.
     </para>
   </refsect2>
 
   <refsect2 id="method-nautilus-python-menu-item--set_submenu">
-    <title>nautilus.MenuItem.set_submenu</title>
+    <title>Nautilus.MenuItem.set_submenu</title>
     <programlisting><methodsynopsis language="python">
 	  <methodname>set_submenu</methodname>
       <methodparam><parameter role="keyword">menu</parameter></methodparam>
@@ -220,11 +220,11 @@
     <variablelist>
       <varlistentry>
         <term><parameter role="keyword">menu</parameter>&nbsp;:</term>
-        <listitem><simpara>a <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link></simpara></listitem>
+        <listitem><simpara>a <link linkend="class-nautilus-python-menu"><classname>Nautilus.Menu</classname></link></simpara></listitem>
       </varlistentry>
     </variablelist>
     <para>
-        Attaches a <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link> as the submenu for this <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link>.
+        Attaches a <link linkend="class-nautilus-python-menu"><classname>Nautilus.Menu</classname></link> as the submenu for this <link linkend="class-nautilus-python-menu-item"><classname>Nautilus.MenuItem</classname></link>.
     </para>
   </refsect2>
 </refsect1>
@@ -238,7 +238,7 @@
     <title>Signal Details</title>
 
   <refsect2 id="signal-nautilus-python-menu-item--activate">
-    <title>The "activate" nautilus.MenuItem Signal</title>
+    <title>The "activate" Nautilus.MenuItem Signal</title>
 
     <programlisting><methodsynopsis language="python">
 	  <methodname>callback</methodname>
@@ -250,7 +250,7 @@
     <variablelist>
 	    <varlistentry>
 	      <term><parameter>item</parameter>&nbsp;:</term>
-	      <listitem><simpara>the <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> being activated</simpara></listitem>
+	      <listitem><simpara>the <link linkend="class-nautilus-python-menu-item"><classname>Nautilus.MenuItem</classname></link> being activated</simpara></listitem>
 	    </varlistentry>
       <varlistentry>
 	      <term><parameter>user_param1</parameter>&nbsp;:</term>

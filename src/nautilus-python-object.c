@@ -230,7 +230,6 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
     GList *ret = NULL;
     PyObject *py_ret = NULL, *py_files;
 	PyGILState_STATE state = pyg_gil_state_ensure();
-	PyObject *provider_version = NULL;
 	
   	debug_enter();
 
@@ -330,7 +329,7 @@ nautilus_python_object_get_columns (NautilusColumnProvider *provider)
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
-    PyObject *py_ret;
+    PyObject *py_ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 
 	debug_enter();
@@ -346,7 +345,8 @@ nautilus_python_object_get_columns (NautilusColumnProvider *provider)
 	HANDLE_LIST(py_ret, NautilusColumn, "Nautilus.Column");
 	
  beach:
- 	Py_XDECREF(py_ret);
+	if (py_ret != NULL)
+		Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
 }

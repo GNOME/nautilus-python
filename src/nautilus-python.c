@@ -137,6 +137,7 @@ nautilus_python_load_dir (GTypeModule *module,
 				{
 					g_warning("nautilus_python_init_python failed");
 					g_dir_close(dir);
+					break;
 				}
 				
 				/* sys.path.insert(0, dirname) */
@@ -153,7 +154,7 @@ nautilus_python_load_dir (GTypeModule *module,
 static gboolean
 nautilus_python_init_python (void)
 {
-	PyObject *sys_path, *nautilus;
+	PyObject *nautilus;
 	GModule *libpython;
 	char *argv[] = { "nautilus", NULL };
 

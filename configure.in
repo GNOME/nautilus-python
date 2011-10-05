@@ -40,16 +40,16 @@ AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
 AM_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 
 
-PKG_CHECK_MODULES(NAUTILUS_PYTHON, [pygobject-2.0 >= $PYGOBJECT_REQUIRED
+PKG_CHECK_MODULES(NAUTILUS_PYTHON, [pygobject-3.0 >= $PYGOBJECT_REQUIRED
                                    libnautilus-extension >= $NAUTILUS_REQUIRED])
 
-PYGOBJECT_DATADIR=`$PKG_CONFIG --variable=datadir pygobject-2.0`
+PYGOBJECT_DATADIR=`$PKG_CONFIG --variable=datadir pygobject-3.0`
 AC_SUBST(PYGOBJECT_DATADIR)
 
-PYGOBJECT_PYGDOCS="`$PKG_CONFIG --variable=pygdocs pygobject-2.0`"
+PYGOBJECT_PYGDOCS="`$PKG_CONFIG --variable=pygdocs pygobject-3.0`"
 AC_SUBST(PYGOBJECT_PYGDOCS)
 
-PYGOBJECT_FIXXREF="$PYTHON `$PKG_CONFIG --variable=fixxref pygobject-2.0`"
+PYGOBJECT_FIXXREF="$PYTHON `$PKG_CONFIG --variable=fixxref pygobject-3.0`"
 AC_SUBST(PYGOBJECT_FIXXREF)
 
 NAUTILUS_LIBDIR=`$PKG_CONFIG --variable=libdir libnautilus-extension`

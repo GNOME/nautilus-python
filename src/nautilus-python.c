@@ -45,37 +45,13 @@ static GArray *all_types = NULL;
 static inline gboolean 
 np_init_pygobject(void)
 {
-#ifdef Py_CAPSULE_H
-		void *capsule = PyCapsule_Import("gobject._PyGObject_API", 0);
-		if (capsule)
-		{
-			_PyGObject_API = (struct _PyGObject_Functions*)capsule;
-			return TRUE;
-		}
-#endif
-    PyObject *gobject = PyImport_ImportModule("gobject");
-    if (gobject != NULL)
-    {
-        PyObject *mdict = PyModule_GetDict(gobject);
-        PyObject *cobject = PyDict_GetItemString(mdict, "_PyGObject_API");
-        if (PyCObject_Check(cobject))
-        {
-            _PyGObject_API = (struct _PyGObject_Functions *)PyCObject_AsVoidPtr(cobject);
-        }
-        else
-        {
-            PyErr_SetString(PyExc_RuntimeError,
-                            "could not find _PyGObject_API object");
-			PyErr_Print();
-			return FALSE;
-        }
-    }
-    else
-    {
-        PyErr_Print();
-        g_warning("could not import gobject");
+    PyObject *gobject = pygobject_init (3, 0, 0);
+
+    if (gobject == NULL) {
+        PyErr_Print ();
         return FALSE;
     }
+
 	return TRUE;
 }
 

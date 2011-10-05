@@ -48,6 +48,7 @@ HTMLFILES =						\
 	html/nautilus-python-enum-reference.html \
 	html/enum-nautilus-python-operation-result.html  \
 	html/nautilus-python.devhelp
+HTML_DATA = $(HTMLFILES)
 
 CSS_FILES = $(PYGOBJECT_PYGDOCS)/style.css
 CSSdir = $(HTMLdir)

@@ -1,3 +1,5 @@
+ACLOCAL_AMFLAGS = -I m4
+
 SUBDIRS = src examples
 
 if ENABLE_GTK_DOC

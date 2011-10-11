@@ -1,7 +1,6 @@
-import gobject
-from gi.repository import Nautilus
+from gi.repository import Nautilus, GObject
 
-class ExampleMenuProvider(gobject.GObject, Nautilus.MenuProvider):
+class ExampleMenuProvider(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
         pass
         

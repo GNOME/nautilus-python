@@ -4,12 +4,11 @@ import urllib
 
 import gconf
 
-import gobject
-from gi.repository import Nautilus
+from gi.repository import Nautilus, GObject
 
 TERMINAL_KEY = '/desktop/gnome/applications/terminal/exec'
 
-class OpenTerminalExtension(gobject.GObject, Nautilus.MenuProvider):
+class OpenTerminalExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
         self.client = gconf.client_get_default()
         

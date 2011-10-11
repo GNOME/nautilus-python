@@ -2,13 +2,12 @@ import urllib
 
 import gconf
 
-import gobject
-from gi.repository import Nautilus
+from gi.repository import Nautilus, GObject
 
 SUPPORTED_FORMATS = 'image/jpeg', 'image/png'
 BACKGROUND_KEY = '/desktop/gnome/background/picture_filename'
 
-class BackgroundImageExtension(gobject.GObject, Nautilus.MenuProvider):
+class BackgroundImageExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
         self.gconf = gconf.client_get_default()
     

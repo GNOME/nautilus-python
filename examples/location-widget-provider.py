@@ -1,7 +1,6 @@
-import gobject
-from gi.repository import Nautilus, Gtk
+from gi.repository import Nautilus, Gtk, GObject
 
-class LocationProviderExample(gobject.GObject, Nautilus.LocationWidgetProvider):
+class LocationProviderExample(GObject.GObject, Nautilus.LocationWidgetProvider):
     def __init__(self):
         pass
     

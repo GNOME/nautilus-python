@@ -1,10 +1,9 @@
 import hashlib
 import urllib
 
-import gobject
-from gi.repository import Nautilus, Gtk
+from gi.repository import Nautilus, Gtk, GObject
 
-class MD5SumPropertyPage(gobject.GObject, Nautilus.PropertyPageProvider):
+class MD5SumPropertyPage(GObject.GObject, Nautilus.PropertyPageProvider):
     def __init__(self):
         pass
     

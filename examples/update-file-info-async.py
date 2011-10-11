@@ -1,7 +1,6 @@
-import gobject
-from gi.repository import Nautilus
+from gi.repository import Nautilus, GObject
 
-class UpdateFileInfoAsync(gobject.GObject, Nautilus.InfoProvider):
+class UpdateFileInfoAsync(GObject.GObject, Nautilus.InfoProvider):
     def __init__(self):
         pass
     

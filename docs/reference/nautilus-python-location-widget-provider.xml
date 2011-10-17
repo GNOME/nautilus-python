@@ -40,10 +40,9 @@
 <example>
     <title>Nautilus.LocationWidgetProvider Example</title>
     <programlisting>
-import gobject
-from gi.repository import Nautilus, Gtk
+from gi.repository import Nautilus, GObject, Gtk
 
-class LocationProviderExample(gobject.GObject, Nautilus.LocationWidgetProvider):
+class ColumnExtension(GObject.GObject, Nautilus.LocationWidgetProvider):
     def __init__(self):
         pass
     

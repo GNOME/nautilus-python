@@ -71,10 +71,9 @@
 <example>
     <title>Nautilus.MenuProvider Example</title>
     <programlisting>
-import gobject
-from gi.repository import Nautilus
+from gi.repository import Nautilus, GObject
 
-class ExampleMenuProvider(gobject.GObject, Nautilus.MenuProvider):
+class ColumnExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
         pass
         

@@ -1,3 +1,13 @@
+1.1:
+    - Added pygobject3 compatibility.  Retained pygobject 2.28.x compatibility.
+        Updated extension examples to support pygobject3.
+    - Fixed bug #660290. Updated the FSF address
+    - Fixed bug #660288. Fix autogen warnings with additional macro ACLOCAL_AMFLAGS
+    - Fixed bug #660287. Make the docdir not hard-coded
+    - Fixed bug #660286. Fixes m4 underquoting warning
+    - Fixed bug #660283. Fixes html docs installation issue
+    - Fixed bug #653169. Upated the COPYING file with the most recent GPLv2 license
+
 1.0.0:
     - Use the gobject instrospection dynamic bindings, breaks compatibility
         for existing extensions.

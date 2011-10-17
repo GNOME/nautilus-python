@@ -45,7 +45,7 @@ static GArray *all_types = NULL;
 static inline gboolean 
 np_init_pygobject(void)
 {
-    PyObject *gobject = pygobject_init (3, 0, 0);
+    PyObject *gobject = pygobject_init (PYGOBJECT_MAJOR_VERSION, PYGOBJECT_MINOR_VERSION, PYGOBJECT_MICRO_VERSION);
 
     if (gobject == NULL) {
         PyErr_Print ();

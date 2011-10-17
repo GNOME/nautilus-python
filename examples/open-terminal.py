@@ -2,15 +2,13 @@
 import os
 import urllib
 
-import gconf
-
-from gi.repository import Nautilus, GObject
+from gi.repository import Nautilus, GObject, GConf
 
 TERMINAL_KEY = '/desktop/gnome/applications/terminal/exec'
 
-class OpenTerminalExtension(GObject.GObject, Nautilus.MenuProvider):
+class OpenTerminalExtension(Nautilus.MenuProvider, GObject.GObject):
     def __init__(self):
-        self.client = gconf.client_get_default()
+        self.client = GConf.Client.get_default()
         
     def _open_terminal(self, file):
         filename = urllib.unquote(file.get_uri()[7:])

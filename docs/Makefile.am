@@ -3,8 +3,7 @@ BUILDDIR = $(top_builddir)/docs
 REF_VERSION = $(VERSION)
 FULL_VERSION = $(VERSION)
 
-HTML_STYLE = $(PYGOBJECT_DATADIR)/pygobject/xsl/ref-html-style.xsl
-PDF_STYLE = $(PYGOBJECT_DATADIR)/pygobject/xsl/pdf-style.xsl
+HTML_STYLE = $(PYGOBJECT_PYGDOCS)/ref-html-style.xsl
 
 XMLFILES = 							\
 	reference/nautilus-python-ref.xml			\

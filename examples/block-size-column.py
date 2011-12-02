@@ -1,10 +1,9 @@
 import os
 import urllib
 
-import gobject
-from gi.repository import Nautilus
+from gi.repository import GObject, Nautilus
 
-class ColumnExtension(gobject.GObject, Nautilus.ColumnProvider, Nautilus.InfoProvider):
+class ColumnExtension(GObject.GObject, Nautilus.ColumnProvider, Nautilus.InfoProvider):
     def __init__(self):
         pass
     

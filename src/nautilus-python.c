@@ -55,9 +55,6 @@ np_init_pygobject(void)
     return TRUE;
 }
 
-	return TRUE;
-}
-
 static void
 nautilus_python_load_file(GTypeModule *type_module, 
 						  const gchar *filename)

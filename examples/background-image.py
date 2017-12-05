@@ -1,22 +1,18 @@
-import urllib
-
-import gconf
-import nautilus
+from gi.repository import Nautilus, GObject, Gio
 
 SUPPORTED_FORMATS = 'image/jpeg', 'image/png'
-BACKGROUND_KEY = '/desktop/gnome/background/picture_filename'
+BACKGROUND_SCHEMA = 'org.gnome.desktop.background'
+BACKGROUND_KEY = 'picture-uri'
 
-class BackgroundImageExtension(nautilus.MenuProvider):
+class BackgroundImageExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
-        self.gconf = gconf.client_get_default()
+        self.bgsettings = Gio.Settings.new(BACKGROUND_SCHEMA)
     
     def menu_activate_cb(self, menu, file):
         if file.is_gone():
             return
         
-        # Strip leading file://
-        filename = urllib.unquote(file.get_uri()[7:])
-        self.gconf.set_string(BACKGROUND_KEY, filename)
+        self.bgsettings[BACKGROUND_KEY] = file.get_uri()
         
     def get_file_items(self, window, files):
         if len(files) != 1:
@@ -33,8 +29,8 @@ class BackgroundImageExtension(nautilus.MenuProvider):
         if file.get_uri_scheme() != 'file':
             return
 
-        item = nautilus.MenuItem('Nautilus::set_background_image',
-                                 'Use as background image',
-                                 'Set the current image as a background image')
+        item = Nautilus.MenuItem(name='Nautilus::set_background_image',
+                                 label='Use as background image',
+                                 tip='Set the current image as a background image')
         item.connect('activate', self.menu_activate_cb, file)
         return item,

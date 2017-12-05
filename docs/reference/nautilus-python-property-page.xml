@@ -4,8 +4,8 @@
 
 <refentry id="class-nautilus-python-property-page">
   <refnamediv>
-    <refname>nautilus.PropertyPage</refname>
-    <refpurpose>nautilus.PropertyPage Reference</refpurpose>
+    <refname>Nautilus.PropertyPage</refname>
+    <refpurpose>Nautilus.PropertyPage Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,11 +16,11 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-        <ooclass><classname>nautilus.PropertyPage</classname></ooclass>
+        <ooclass><classname>Nautilus.PropertyPage</classname></ooclass>
         <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
 
         <constructorsynopsis language="python">
-            <methodname><link linkend="constructor-nautilus-property-page">nautilus.PropertyPage</link></methodname>
+            <methodname><link linkend="constructor-nautilus-property-page">Nautilus.PropertyPage</link></methodname>
             <methodparam><parameter role="keyword">name</parameter></methodparam>
             <methodparam><parameter role="keyword">label</parameter></methodparam>
             <methodparam><parameter role="keyword">page</parameter></methodparam>
@@ -36,7 +36,7 @@
     <title>Ancestry</title>
 
 <synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
-    +-- <link linkend="class-nautilus-python-property-page">nautilus.PropertyPage</link>
+    +-- <link linkend="class-nautilus-python-property-page">Nautilus.PropertyPage</link>
 </synopsis>
 </refsect1>
 
@@ -49,7 +49,7 @@
     <title>Description</title>
 
       <para>
-        A <link linkend="class-nautilus-python-property-page"><classname>nautilus.PropertyPage</classname></link> object is returned by <link linkend="class-nautilus-python-property-page-provider"><classname>nautilus.PropertyPageProvider</classname></link> extensions.
+        A <link linkend="class-nautilus-python-property-page"><classname>Nautilus.PropertyPage</classname></link> object is returned by <link linkend="class-nautilus-python-property-page-provider"><classname>Nautilus.PropertyPageProvider</classname></link> extensions.
       </para>
 
   </refsect1>
@@ -103,7 +103,7 @@
   <title>Constructor</title>
 
   <programlisting><constructorsynopsis language="python">
-        <methodname>nautilus.PropertyPage</methodname>
+        <methodname>Nautilus.PropertyPage</methodname>
         <methodparam><parameter role="keyword">name</parameter></methodparam>
         <methodparam><parameter role="keyword">label</parameter></methodparam>
         <methodparam><parameter role="keyword">page</parameter></methodparam>
@@ -125,7 +125,7 @@
   </variablelist>
 
   <para>
-    Creates a new <link linkend="class-nautilus-python-property-page"><classname>nautilus.PropertyPage</classname></link> object.
+    Creates a new <link linkend="class-nautilus-python-property-page"><classname>Nautilus.PropertyPage</classname></link> object.
   </para>
 </refsect1>
 

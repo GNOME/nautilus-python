@@ -1,23 +1,20 @@
 /* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
- *  Copyright (C) 2004 Novell, Inc.
+ *  Copyright (C) 2004,2005 Johan Dahlin
  *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public
- *  License as published by the Free Software Foundation; either
- *  version 2 of the License, or (at your option) any later version.
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2, or (at your option)
+ *  any later version.
  *
- *  This library is distributed in the hope that it will be useful,
+ *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Library General Public License for more details.
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public
- *  License along with this library; if not, write to the Free
- *  Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  Author: Dave Camp <dave@ximian.com>
- * 
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
 #include <config.h>
@@ -128,6 +125,17 @@ free_pygobject_data_list(GList *list)
 	g_list_foreach(list, (GFunc)free_pygobject_data, NULL);
 }
 
+static PyObject *
+nautilus_python_boxed_new (PyTypeObject *type, gpointer boxed, gboolean free_on_dealloc)
+{
+	PyGBoxed *self = (PyGBoxed *) type->tp_alloc (type, 0);
+	self->gtype = pyg_type_from_object ( (PyObject *) type);
+	self->boxed = boxed;
+	self->free_on_dealloc = free_on_dealloc;
+	
+	return (PyObject *) self;
+}
+
 #define METHOD_NAME "get_property_pages"
 static GList *
 nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provider,
@@ -149,7 +157,7 @@ nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provide
 								 "(N)", py_files);
 	HANDLE_RETVAL(py_ret);
 
-	HANDLE_LIST(py_ret, NautilusPropertyPage, "nautilus.PropertyPage");
+	HANDLE_LIST(py_ret, NautilusPropertyPage, "Nautilus.PropertyPage");
 	
  beach:
 	Py_XDECREF(py_ret);
@@ -222,7 +230,6 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
     GList *ret = NULL;
     PyObject *py_ret = NULL, *py_files;
 	PyGILState_STATE state = pyg_gil_state_ensure();
-	PyObject *provider_version = NULL;
 	
   	debug_enter();
 
@@ -252,7 +259,7 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
 
 	HANDLE_RETVAL(py_ret);
 
-	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
+	HANDLE_LIST(py_ret, NautilusMenuItem, "Nautilus.MenuItem");
 
  beach:
  	free_pygobject_data_list(files);
@@ -299,57 +306,10 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 
 	HANDLE_RETVAL(py_ret);
 
-	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
+	HANDLE_LIST(py_ret, NautilusMenuItem, "Nautilus.MenuItem");
 	
  beach:
 	free_pygobject_data(file, NULL);
-	Py_XDECREF(py_ret);
-	pyg_gil_state_release(state);
-    return ret;
-}
-#undef METHOD_NAME
-
-#define METHOD_NAME "get_toolbar_items"
-static GList *
-nautilus_python_object_get_toolbar_items (NautilusMenuProvider *provider,
-										  GtkWidget 		   *window,
-										  NautilusFileInfo 	   *file)
-{
-	NautilusPythonObject *object = (NautilusPythonObject*)provider;
-    GList *ret = NULL;
-    PyObject *py_ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();
-	
-  	debug_enter();
-  	
-	CHECK_OBJECT(object);
-
-	if (PyObject_HasAttrString(object->instance, "get_toolbar_items_full"))
-	{
-		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX "get_toolbar_items_full",
-									 "(NNN)",
-									 pygobject_new((GObject *)provider),
-									 pygobject_new((GObject *)window),
-									 pygobject_new((GObject *)file));
-	}
-	else if (PyObject_HasAttrString(object->instance, "get_toolbar_items"))
-	{
-		py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-									 "(NN)",
-									 pygobject_new((GObject *)window),
-									 pygobject_new((GObject *)file));
-	}
-	else
-	{
-		goto beach;
-	}
-	
-	HANDLE_RETVAL(py_ret);
-
-	HANDLE_LIST(py_ret, NautilusMenuItem, "nautilus.MenuItem");
-	
- beach:
- 	free_pygobject_data(file, NULL);
 	Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
@@ -360,7 +320,6 @@ static void
 nautilus_python_object_menu_provider_iface_init (NautilusMenuProviderIface *iface)
 {
 	iface->get_background_items = nautilus_python_object_get_background_items;
-	iface->get_toolbar_items = nautilus_python_object_get_toolbar_items;
 	iface->get_file_items = nautilus_python_object_get_file_items;
 }
 
@@ -370,7 +329,7 @@ nautilus_python_object_get_columns (NautilusColumnProvider *provider)
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
-    PyObject *py_ret;
+    PyObject *py_ret = NULL;
 	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
 
 	debug_enter();
@@ -383,10 +342,11 @@ nautilus_python_object_get_columns (NautilusColumnProvider *provider)
 
 	HANDLE_RETVAL(py_ret);
 
-	HANDLE_LIST(py_ret, NautilusColumn, "nautilus.Column");
+	HANDLE_LIST(py_ret, NautilusColumn, "Nautilus.Column");
 	
  beach:
- 	Py_XDECREF(py_ret);
+	if (py_ret != NULL)
+		Py_XDECREF(py_ret);
 	pyg_gil_state_release(state);
     return ret;
 }
@@ -406,6 +366,7 @@ nautilus_python_object_cancel_update (NautilusInfoProvider 		*provider,
 {
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
 	PyGILState_STATE state = pyg_gil_state_ensure();
+	PyObject *py_handle = nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, handle, FALSE);
 
   	debug_enter();
 
@@ -415,7 +376,7 @@ nautilus_python_object_cancel_update (NautilusInfoProvider 		*provider,
     PyObject_CallMethod(object->instance,
 								 METHOD_PREFIX METHOD_NAME, "(NN)",
 								 pygobject_new((GObject*)provider),
-								 pyg_pointer_new(G_TYPE_POINTER, handle));
+								 py_handle);
 
  beach:
 	pyg_gil_state_release(state);
@@ -432,7 +393,8 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
 	NautilusPythonObject *object = (NautilusPythonObject*)provider;
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
     PyObject *py_ret = NULL;
-	PyGILState_STATE state = pyg_gil_state_ensure();                                    \
+	PyGILState_STATE state = pyg_gil_state_ensure();
+	PyObject *py_handle = nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, *handle, FALSE);
 
   	debug_enter();
 
@@ -443,7 +405,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider 		*provider,
 		py_ret = PyObject_CallMethod(object->instance,
 									 METHOD_PREFIX "update_file_info_full", "(NNNN)",
 									 pygobject_new((GObject*)provider),
-									 pyg_pointer_new(G_TYPE_POINTER, *handle),
+									 py_handle,
 									 pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE),
 									 pygobject_new((GObject*)file));
 	}

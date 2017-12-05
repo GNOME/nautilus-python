@@ -1,7 +1,7 @@
 AC_INIT
 
 PACKAGE=nautilus-python
-VERSION=0.7.3
+VERSION=1.1
 
 AC_SUBST(PACKAGE)
 AC_SUBST(VERSION)
@@ -12,10 +12,7 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AC_SUBST(ACLOCAL_AMFLAGS, "-I m4 -I .")
 
-NAUTILUS_REQUIRED=2.22.0
-PYGTK_REQUIRED=2.8.0
-PYGOBJECT_REQUIRED=2.16.0
-GNOME_PYTHON_REQUIRED=2.12.0
+NAUTILUS_REQUIRED=2.32
 
 AC_PROG_CC
 AC_DISABLE_STATIC
@@ -41,35 +38,28 @@ dnl **************************************************
 AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
 AM_CHECK_PYTHON_LIBS(,[AC_MSG_ERROR(could not find Python lib)])
 
+if test "`pkg-config --variable=datadir pygobject-3.0`" != "" ; then
+    PYGOBJECT_VERSION=pygobject-3.0
+    PYGOBJECT_MAJOR_VERSION=3
+    PYGOBJECT_MINOR_VERSION=0
+    PYGOBJECT_MICRO_VERSION=0
+else
+    PYGOBJECT_VERSION=pygobject-2.0
+    PYGOBJECT_MAJOR_VERSION=2
+    PYGOBJECT_MINOR_VERSION=28
+    PYGOBJECT_MICRO_VERSION=2
+fi
 
-PKG_CHECK_MODULES(NAUTILUS_PYTHON, [pygtk-2.0 >= $PYGTK_REQUIRED
-                                   pygobject-2.0 >= $PYGOBJECT_REQUIRED
-                                   gnome-python-2.0 >= $GNOME_PYTHON_REQUIRED
+PYGOBJECT_REQUIRED=$PYGOBJECT_MAJOR_VERSION.$PYGOBJECT_MINOR_VERSION.$PYGOBJECT_MICRO_VERSION
+AC_DEFINE_UNQUOTED(PYGOBJECT_MAJOR_VERSION,[$PYGOBJECT_MAJOR_VERSION], [PyGObject major version.])
+AC_DEFINE_UNQUOTED(PYGOBJECT_MINOR_VERSION,[$PYGOBJECT_MINOR_VERSION], [PyGObject minor version.])
+AC_DEFINE_UNQUOTED(PYGOBJECT_MICRO_VERSION,[$PYGOBJECT_MICRO_VERSION], [PyGObject micro version.])
+
+PKG_CHECK_MODULES(NAUTILUS_PYTHON, [$PYGOBJECT_VERSION >= $PYGOBJECT_REQUIRED
                                    libnautilus-extension >= $NAUTILUS_REQUIRED])
 
-AC_MSG_CHECKING(for pygtk defs)
-PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
-AC_SUBST(PYGTK_DEFSDIR)
-AC_MSG_RESULT($PYGTK_DEFSDIR)
-
-AC_MSG_CHECKING(for pygtk codegen)
-PYGTK_CODEGEN="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/codegen.py"
-AC_SUBST(PYGTK_CODEGEN)
-AC_MSG_RESULT($PYGTK_CODEGEN)
-
-AC_MSG_CHECKING(for pygobject defs)
-PYGOBJECT_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygobject-2.0`
-AC_SUBST(PYGOBJECT_DEFSDIR)
-AC_MSG_RESULT($PYGOBJECT_DEFSDIR)
-
-PYGOBJECT_DATADIR=`$PKG_CONFIG --variable=datadir pygobject-2.0`
+PYGOBJECT_DATADIR=`$PKG_CONFIG --variable=datadir $PYGOBJECT_VERSION`
 AC_SUBST(PYGOBJECT_DATADIR)
-
-PYGOBJECT_PYGDOCS="`$PKG_CONFIG --variable=pygdocs pygobject-2.0`"
-AC_SUBST(PYGOBJECT_PYGDOCS)
-
-PYGOBJECT_FIXXREF="$PYTHON `$PKG_CONFIG --variable=fixxref pygobject-2.0`"
-AC_SUBST(PYGOBJECT_FIXXREF)
 
 NAUTILUS_LIBDIR=`$PKG_CONFIG --variable=libdir libnautilus-extension`
 AC_SUBST(NAUTILUS_LIBDIR)
@@ -107,5 +97,6 @@ echo
 echo " nautilus-python $VERSION"
 echo
 echo "    Nautilus Prefix: ${prefix}"
+echo "  PyGObject Version: ${PYGOBJECT_VERSION}"
 echo "      Documentation: ${enable_gtk_doc}"
 echo

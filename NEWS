@@ -1,9 +1,32 @@
+<<<<<<< HEAD
 0.7.3:
     - Use PyCapsule_Import for pygobject as well as pygtk
     - Fixed bug #644399, in the property page example plugin, get the md5sum
         of the file contents, not the file name
     - Removed extraneous .cvsignore files
     - Fixed the update-file-info-async example plugin
+=======
+1.1:
+    - Added pygobject3 compatibility.  Retained pygobject 2.28.x compatibility.
+        Updated extension examples to support pygobject3.
+    - Fixed bug #660290. Updated the FSF address
+    - Fixed bug #660288. Fix autogen warnings with additional macro ACLOCAL_AMFLAGS
+    - Fixed bug #660287. Make the docdir not hard-coded
+    - Fixed bug #660286. Fixes m4 underquoting warning
+    - Fixed bug #660283. Fixes html docs installation issue
+    - Fixed bug #653169. Upated the COPYING file with the most recent GPLv2 license
+
+1.0.0:
+    - Use the gobject instrospection dynamic bindings, breaks compatibility
+        for existing extensions.
+    - For Nautilus3, the get_toolbar_items methods have been removed. (Only reporting
+        that change, it isn't up to us).  Should still work with Nautilus 2.x annotations.
+    - No longer look in the old ~/.nautilus/python-extensions or /usr/lib/nautilus/extensions2.0/python
+        folders for extensions.  Now look in ~/.local/share/nautilus-python/extensions or
+        $XDG_DATA_DIR/nautilus-python/extensions.  Extensions should be arch-independent now.
+    - General clean up of the repository, removed old .cvsignore files
+    - Updated the gtk-doc documentation and examples to work with new dynamic bindings.
+>>>>>>> nautilus-3.0
 
 0.7.2:
     - Fix to get the PyCapsule patch to work even if there is no PyCapsule 

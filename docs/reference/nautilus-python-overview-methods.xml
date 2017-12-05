@@ -10,8 +10,8 @@
     <para>Because nautilus-python is an interface to a Nautilus' extension interface rather than a true library, it is
     rather quirky in how it works.  One example of this is that several providers have additional public methods
     that an extension actively calls, rather than the extension defining and the method in their class that is called by
-    Nautilus.  You can see this with the <link linkend="method-nautilus-python-menu-provider--emit-items-updated-signal">nautilus.MenuProvider.emit_items_updated_signal</link>
-    and <link linkend="method-nautilus-python-info-provider--update-complete-invoke">nautilus.InfoProvider.update_complete_invoke</link> methods, which
+    Nautilus.  You can see this with the <link linkend="method-nautilus--menu-provider-emit-items-updated-signal">Nautilus.menu_provider_emit_items_updated_signal</link>
+    and <link linkend="method-nautilus--info-provider-update-complete-invoke">Nautilus.info_provider_update_complete_invoke</link> methods, which
     the extension actively calls, passing the provider instance as a parameter.
     </para>
     

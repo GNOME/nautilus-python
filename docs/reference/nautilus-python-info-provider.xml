@@ -4,8 +4,8 @@
 
 <refentry id="class-nautilus-python-info-provider">
   <refnamediv>
-    <refname>nautilus.InfoProvider</refname>
-    <refpurpose>nautilus.InfoProvider Reference</refpurpose>
+    <refname>Nautilus.InfoProvider</refname>
+    <refpurpose>Nautilus.InfoProvider Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,7 +16,7 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-      <ooclass><classname>nautilus.InfoProvider</classname></ooclass>
+      <ooclass><classname>Nautilus.InfoProvider</classname></ooclass>
 
       <methodsynopsis language="python">
         <methodname><link linkend="method-nautilus-python-info-provider--update-file-info">update_file_info</link></methodname>
@@ -38,11 +38,11 @@
       </methodsynopsis>
 
       <methodsynopsis language="python">
-        <methodname><link linkend="method-nautilus-python-info-provider--update-complete-invoke">update_complete_invoke</link></methodname>
+        <methodname><link linkend="method-nautilus-python-info-provider--update-complete-invoke">Nautilus.info_provider_update_complete_invoke</link></methodname>
         <methodparam><parameter role="keyword">provider</parameter></methodparam>
         <methodparam><parameter role="keyword">handle</parameter></methodparam>
         <methodparam><parameter role="keyword">closure</parameter></methodparam>
-        <methodparam><parameter role="keyword">result</parameter><initializer>nautilus.OPERATION_COMPLETE</initializer></methodparam>
+        <methodparam><parameter role="keyword">result</parameter><initializer>Nautilus.OperationResult.COMPLETE</initializer></methodparam>
       </methodsynopsis>
     </classsynopsis>
   </refsect1>
@@ -61,18 +61,20 @@
       </para>
 
 <example>
-    <title>nautilus.InfoProvider Example</title>
+    <title>Nautilus.InfoProvider Example</title>
     <programlisting>
-import os.path
-import nautilus
+from gi.repository import Nautilus, GObject
 
-class SimpleInfoProviderExample(nautilus.InfoProvider):
+class ColumnExtension(GObject.GObject, Nautilus.InfoProvider):
     def __init__(self):
         pass
     
-    def update_file_info(self, file):
-        if os.path.splitext(file.get_name())[1] == ".mp3":
-            file.add_emblem("multimedia")
+    def update_file_info_full(self, provider, handle, closure, file):
+        gobject.timeout_add_seconds(3, self.update_cb, provider, handle, closure)
+        return Nautilus.OperationResult.IN_PROGRESS
+        
+    def update_cb(self, provider, handle, closure):
+        Nautilus.info_provider_update_complete_invoke(closure, provider, handle, Nautilus.OperationResult.FAILED)
     </programlisting>
 </example>
         
@@ -86,7 +88,7 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
         <title>Passive Methods</title>
 
         <refsect2 id="method-nautilus-python-info-provider--update-file-info">
-          <title>nautilus.InfoProvider.update_file_info</title>
+          <title>Nautilus.InfoProvider.update_file_info</title>
 
           <programlisting><methodsynopsis language="python">
             <methodname>update_file_info</methodname>
@@ -96,7 +98,7 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
           <variablelist>
             <varlistentry>
 	            <term><parameter role="keyword">file</parameter>&nbsp;:</term>
-	            <listitem><simpara>a <link linkend="class-nautilus-python-file-info"><classname>nautilus.FileInfo</classname></link> object</simpara></listitem>
+	            <listitem><simpara>a <link linkend="class-nautilus-python-file-info"><classname>Nautilus.FileInfo</classname></link> object</simpara></listitem>
             </varlistentry>
           </variablelist>
 
@@ -108,7 +110,7 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
 
 
         <refsect2 id="method-nautilus-python-info-provider--update-file-info-full">
-          <title>nautilus.InfoProvider.update_file_info_full</title>
+          <title>Nautilus.InfoProvider.update_file_info_full</title>
 
           <programlisting><methodsynopsis language="python">
             <methodname>update_file_info_full</methodname>
@@ -121,7 +123,7 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
           <variablelist>
             <varlistentry>
 	            <term><parameter role="keyword">provider</parameter>&nbsp;:</term>
-	            <listitem><simpara>the current <link linkend="class-nautilus-python-info-provider"><classname>nautilus.InfoProvider</classname></link> instance</simpara></listitem>
+	            <listitem><simpara>the current <link linkend="class-nautilus-python-info-provider"><classname>Nautilus.InfoProvider</classname></link> instance</simpara></listitem>
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">handle</parameter>&nbsp;:</term>
@@ -129,21 +131,21 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">closure</parameter>&nbsp;:</term>
-	            <listitem><simpara>a C Closure that must be passed to <link linkend="method-nautilus-python-info-provider--update-complete-invoke">update_complete_invoke</link> if that method is called</simpara></listitem>
+	            <listitem><simpara>a C Closure that must be passed to <link linkend="method-nautilus-python-info-provider--update-complete-invoke">Nautilus.info_provider_update_complete_invoke</link> if that method is called</simpara></listitem>
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">file</parameter>&nbsp;:</term>
-	            <listitem><simpara>a <link linkend="class-nautilus-python-file-info"><classname>nautilus.FileInfo</classname></link> object</simpara></listitem>
+	            <listitem><simpara>a <link linkend="class-nautilus-python-file-info"><classname>Nautilus.FileInfo</classname></link> object</simpara></listitem>
             </varlistentry>
             <varlistentry>
                 <term><emphasis>Returns</emphasis>&nbsp;:</term>
-                <listitem><simpara>None or a <link linkend="enum-nautilus-python-operation-result"><classname>nautilus.OperationResult</classname></link> enum</simpara></listitem>
+                <listitem><simpara>None or a <link linkend="enum-nautilus-python-operation-result"><classname>Nautilus.OperationResult</classname></link> enum</simpara></listitem>
             </varlistentry>
           </variablelist>
 
           <para>
                 This method is called by Nautilus for each file or folder that exists under the
-                current directory listing.  Originally, <link linkend="class-nautilus-python-info-provider"><classname>nautilus.InfoProvider</classname></link>
+                current directory listing.  Originally, <link linkend="class-nautilus-python-info-provider"><classname>Nautilus.InfoProvider</classname></link>
                 only provided the update_file_info
                 method, which blocked Nautilus when the method required a lot of computation time.  This method was 
                 created to allow an extension to tell Nautilus that it will be spending time on an operation and that
@@ -151,8 +153,8 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
           </para>
           <para>
                 In order to notify Nautilus of your extension's intentions, you must return a 
-                <link linkend="enum-nautilus-python-operation-result"><classname>nautilus.OperationResult</classname></link> enum.  
-                Then, when the operation has completed, call the self.update_complete_invoke method, passing the provider, 
+                <link linkend="enum-nautilus-python-operation-result"><classname>Nautilus.OperationResult</classname></link> enum.  
+                Then, when the operation has completed, call the Nautilus.info_provider_update_complete_invoke method, passing the provider, 
                 handle and closure variables as parameters.
           </para>
           <para>
@@ -167,7 +169,7 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
 
 
         <refsect2 id="method-nautilus-python-info-provider--cancel-update">
-          <title>nautilus.InfoProvider.cancel_update</title>
+          <title>Nautilus.InfoProvider.cancel_update</title>
 
           <programlisting><methodsynopsis language="python">
             <methodname>cancel_update</methodname>
@@ -178,7 +180,7 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
           <variablelist>
             <varlistentry>
 	            <term><parameter role="keyword">provider</parameter>&nbsp;:</term>
-	            <listitem><simpara>the current <link linkend="class-nautilus-python-info-provider"><classname>nautilus.InfoProvider</classname></link> instance</simpara></listitem>
+	            <listitem><simpara>the current <link linkend="class-nautilus-python-info-provider"><classname>Nautilus.InfoProvider</classname></link> instance</simpara></listitem>
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">handle</parameter>&nbsp;:</term>
@@ -202,20 +204,20 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
         <title>Active Methods</title>
 
         <refsect2 id="method-nautilus-python-info-provider--update-complete-invoke">
-          <title>nautilus.InfoProvider.update_complete_invoke</title>
+          <title>Nautilus.info_provider_update_complete_invoke</title>
 
           <programlisting><methodsynopsis language="python">
-            <methodname>update_complete_invoke</methodname>
+            <methodname>info_provider_update_complete_invoke</methodname>
             <methodparam><parameter role="keyword">provider</parameter></methodparam>
             <methodparam><parameter role="keyword">handle</parameter></methodparam>
             <methodparam><parameter role="keyword">closure</parameter></methodparam>
-            <methodparam><parameter role="keyword">result</parameter><initializer>nautilus.OPERATION_COMEPLETE</initializer></methodparam>
+            <methodparam><parameter role="keyword">result</parameter><initializer>Nautilus.OperationResult.COMPLETE</initializer></methodparam>
           </methodsynopsis></programlisting>
 
           <variablelist>
             <varlistentry>
 	            <term><parameter role="keyword">provider</parameter>&nbsp;:</term>
-	            <listitem><simpara>the current <link linkend="class-nautilus-python-info-provider"><classname>nautilus.InfoProvider</classname></link> instance</simpara></listitem>
+	            <listitem><simpara>the current <link linkend="class-nautilus-python-info-provider"><classname>Nautilus.InfoProvider</classname></link> instance</simpara></listitem>
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">handle</parameter>&nbsp;:</term>
@@ -223,18 +225,18 @@ class SimpleInfoProviderExample(nautilus.InfoProvider):
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">closure</parameter>&nbsp;:</term>
-	            <listitem><simpara>a C Closure that must be passed to <link linkend="method-nautilus-python-info-provider--update-complete-invoke">update_complete_invoke</link> if that method is called</simpara></listitem>
+	            <listitem><simpara>a C Closure that must be passed to <link linkend="method-nautilus-python-info-provider--update-complete-invoke">Nautilus.info_provider_update_complete_invoke</link> if that method is called</simpara></listitem>
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">result</parameter>&nbsp;:</term>
-	            <listitem><simpara>an optional parameter.  If left out, <link linkend="enum-nautilus-python-operation-result--OPERATION_COMPLETE"><classname>nautilus.OPERATION_COMPLETE</classname></link> is assumed.  
-	            Otherwise, you may pass any any of the <link linkend="enum-nautilus-python-operation-result"><classname>nautilus.OperationResult</classname></link> enums.</simpara></listitem>
+	            <listitem><simpara>an optional parameter.  If left out, <link linkend="enum-nautilus-python-operation-result--OPERATION_COMPLETE"><classname>Nautilus.OperationResult.COMPLETE</classname></link> is assumed.  
+	            Otherwise, you may pass any any of the <link linkend="enum-nautilus-python-operation-result"><classname>Nautilus.OperationResult</classname></link> enums.</simpara></listitem>
             </varlistentry>
           </variablelist>
 
           <para>
             An extension must call this method for each update_file_info_full method that
-            returns the <link linkend="enum-nautilus-python-operation-result--OPERATION_IN_PROGRESS"><classname>nautilus.OPERATION_IN_PROGRESS</classname></link> enum.  
+            returns the <link linkend="enum-nautilus-python-operation-result--OPERATION_IN_PROGRESS"><classname>Nautilus.OperationResult.IN_PROGRESS</classname></link> enum.  
             The method must be called with the provider, handle, and closure parameters which were passed to the earlier <link linkend="method-nautilus-python-info-provider--update-file-info-full"><function>update_file_info_full</function></link> method.
           </para>
           <note>

@@ -4,8 +4,8 @@
 
 <refentry id="class-nautilus-python-menu">
   <refnamediv>
-    <refname>nautilus.Menu</refname>
-    <refpurpose>nautilus.Menu Reference</refpurpose>
+    <refname>Nautilus.Menu</refname>
+    <refpurpose>Nautilus.Menu Reference</refpurpose>
   </refnamediv>
 
 <!-- ******************************* -->
@@ -16,11 +16,11 @@
     <title>Synopsis</title>
 
     <classsynopsis language="python">
-        <ooclass><classname>nautilus.Menu</classname></ooclass>
+        <ooclass><classname>Nautilus.Menu</classname></ooclass>
         <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
 
         <constructorsynopsis language="python">
-            <methodname><link linkend="constructor-nautilus-menu">nautilus.Menu</link></methodname>
+            <methodname><link linkend="constructor-nautilus-menu">Nautilus.Menu</link></methodname>
         </constructorsynopsis>
 
         <methodsynopsis language="python">
@@ -43,7 +43,7 @@
     <title>Ancestry</title>
 
 <synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
-    +-- <link linkend="class-nautilus-python-menu">nautilus.Menu</link>
+    +-- <link linkend="class-nautilus-python-menu">Nautilus.Menu</link>
 </synopsis>
 </refsect1>
 
@@ -56,7 +56,7 @@
     <title>Description</title>
 
       <para>
-      A nautilus.Menu object allows an extension to create sub-menus.
+      A Nautilus.Menu object allows an extension to create sub-menus.
       </para>
 
   </refsect1>
@@ -71,11 +71,11 @@
   <title>Constructor</title>
 
   <programlisting><constructorsynopsis language="python">
-        <methodname>nautilus.Menu</methodname>
+        <methodname>Nautilus.Menu</methodname>
   </constructorsynopsis></programlisting>
     
   <para>
-    Creates a new <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link> object.
+    Creates a new <link linkend="class-nautilus-python-menu"><classname>Nautilus.Menu</classname></link> object.
   </para>
 </refsect1>
 
@@ -89,7 +89,7 @@
     <title>Public Methods</title>
 
   <refsect2 id="method-nautilus-python-menu--append_item">
-    <title>nautilus.Menu.append_item</title>
+    <title>Nautilus.Menu.append_item</title>
     <programlisting><methodsynopsis language="python">
 	  <methodname>append_item</methodname>
       <methodparam><parameter role="keyword">item</parameter></methodparam>
@@ -97,22 +97,22 @@
     <variablelist>
       <varlistentry>
         <term><parameter role="keyword">item</parameter>&nbsp;:</term>
-        <listitem><simpara>a <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link></simpara></listitem>
+        <listitem><simpara>a <link linkend="class-nautilus-python-menu-item"><classname>Nautilus.MenuItem</classname></link></simpara></listitem>
       </varlistentry>
     </variablelist>
 
     <para>
-      Append a <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> to a <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link>.
+      Append a <link linkend="class-nautilus-python-menu-item"><classname>Nautilus.MenuItem</classname></link> to a <link linkend="class-nautilus-python-menu"><classname>Nautilus.Menu</classname></link>.
     </para>
   </refsect2>
 
   <refsect2 id="method-nautilus-python-menu--get_items">
-    <title>nautilus.Menu.get_items</title>
+    <title>Nautilus.Menu.get_items</title>
     <programlisting><methodsynopsis language="python">
 	  <methodname>get_items</methodname>
     </methodsynopsis></programlisting>
     <para>
-      Returns a list of <link linkend="class-nautilus-python-menu-item"><classname>nautilus.MenuItem</classname></link> objects attached to the <link linkend="class-nautilus-python-menu"><classname>nautilus.Menu</classname></link>.
+      Returns a list of <link linkend="class-nautilus-python-menu-item"><classname>Nautilus.MenuItem</classname></link> objects attached to the <link linkend="class-nautilus-python-menu"><classname>Nautilus.Menu</classname></link>.
     </para>
   </refsect2>
 </refsect1>

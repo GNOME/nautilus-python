@@ -1,17 +1,17 @@
 import os
 import urllib
 
-import nautilus
+from gi.repository import GObject, Nautilus
 
-class ColumnExtension(nautilus.ColumnProvider, nautilus.InfoProvider):
+class ColumnExtension(GObject.GObject, Nautilus.ColumnProvider, Nautilus.InfoProvider):
     def __init__(self):
         pass
     
     def get_columns(self):
-        return nautilus.Column("NautilusPython::block_size_column",
-                               "block_size",
-                               "Block size",
-                               "Get the block size"),
+        return Nautilus.Column(name="NautilusPython::block_size_column",
+                               attribute="block_size",
+                               label="Block size",
+                               description="Get the block size"),
 
     def update_file_info(self, file):
         if file.get_uri_scheme() != 'file':

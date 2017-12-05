@@ -1,7 +1,7 @@
-docsdir = $(datadir)/doc/$(PACKAGE)
+docsdir = $(docdir)
 docs_DATA = README
 
-examplesdir = $(datadir)/doc/$(PACKAGE)/examples
+examplesdir = $(docdir)/examples
 examples_DATA =					\
 	background-image.py			\
 	block-size-column.py		\

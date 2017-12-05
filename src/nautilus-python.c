@@ -201,6 +201,7 @@ nautilus_python_init_python (void)
 	/* import nautilus */
 	g_setenv("INSIDE_NAUTILUS_PYTHON", "", FALSE);
 	debug("import nautilus");
+    PyRun_SimpleString("import gi; gi.require_version('Nautilus', '3.0')");
 	nautilus = PyImport_ImportModule("gi.repository.Nautilus");
 	if (!nautilus)
 	{

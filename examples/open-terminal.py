@@ -2,6 +2,8 @@
 import os
 import urllib
 
+import gi
+gi.require_version('GConf', '2.0')
 from gi.repository import Nautilus, GObject, GConf
 
 TERMINAL_KEY = '/desktop/gnome/applications/terminal/exec'
@@ -32,14 +34,14 @@ class OpenTerminalExtension(Nautilus.MenuProvider, GObject.GObject):
             return
         
         item = Nautilus.MenuItem(name='NautilusPython::openterminal_file_item',
-                                 label='Open Terminal' ,
+                                 label='Open Terminal 2' ,
                                  tip='Open Terminal In %s' % file.get_name())
         item.connect('activate', self.menu_activate_cb, file)
         return item,
 
     def get_background_items(self, window, file):
-        item = Nautilus.MenuItem(name='NautilusPython::openterminal_item',
-                                 label='Open Terminal Here',
-                                 tip='Open Terminal In This Directory')
+        item = Nautilus.MenuItem(name='NautilusPython::openterminal_file_item2',
+                                 label='Open Terminal BG' ,
+                                 tip='Open Terminal In %s' % file.get_name())
         item.connect('activate', self.menu_background_activate_cb, file)
         return item,

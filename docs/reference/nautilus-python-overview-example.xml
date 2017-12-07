@@ -33,7 +33,12 @@ class ColumnExtension(GObject.GObject, Nautilus.MenuProvider):
         )
         item.connect('activate', self.menu_activate_cb, file)
         
-        return [item]</programlisting>
+        return [item]
+        
+    # Even though we're not using background items, Nautilus will generate
+    # a warning if the method isn't present
+    def get_background_items(self, window, file):
+        return None</programlisting>
     </example>
     
     <para>Save this file as TestExtension.py in the ~/.local/share/nautilus-python/extensions folder. 

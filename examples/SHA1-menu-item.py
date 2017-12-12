@@ -5,7 +5,7 @@ import hashlib
 import urllib
 
 class Sha1MenuDisplay(GObject.GObject, Nautilus.MenuProvider):
-    """ This places an MD5 sum in the context menu in Nautilus.
+    """ This places a SHA-1 sum in the context menu in Nautilus.
     To use it, nautilus-python is required.  This script then goes in
     ~/.local/share/nautilus-python/extensions and should work after a restart
     of Nautilus

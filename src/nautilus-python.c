@@ -219,6 +219,44 @@ nautilus_python_init_python (void) {
     return TRUE;
 }
 
+
+static void
+nautilus_python_check_all_directories(GTypeModule *module) {
+    gchar *extensions_dir = NULL;
+
+    GList *dirs = NULL;
+
+    // Check ~/.local/share first
+    dirs = g_list_append(dirs, g_build_filename(g_get_user_data_dir(), 
+        "nautilus-python", "extensions", NULL));
+
+    // If nautilus is built in a non-standard prefix
+    // Check nautilus prefix's DATADIR
+    gchar *prefix_extension_dir = DATADIR "/nautilus-python/extensions";
+    dirs = g_list_append(dirs, prefix_extension_dir);
+
+    // Check all system data dirs 
+    const gchar *const *temp = g_get_system_data_dirs();
+    while (*temp != NULL) {
+        gchar *dir = g_build_filename(*temp,
+            "nautilus-python", "extensions", NULL);
+        if (dir != prefix_extension_dir) {
+            dirs = g_list_append(dirs, dir);
+        }
+
+        temp++;
+    }
+
+    dirs = g_list_first(dirs);
+    while (dirs != NULL) {
+        gchar *dir = dirs->data;
+        nautilus_python_load_dir(module, dir);
+        dirs = dirs->next;
+    }
+
+    g_list_free(dirs);
+}
+
 void
 nautilus_module_initialize(GTypeModule *module) {
     gchar *user_extensions_dir;
@@ -236,13 +274,7 @@ nautilus_module_initialize(GTypeModule *module) {
 
     all_types = g_array_new(FALSE, FALSE, sizeof(GType));
 
-    // Look in the new global path, $DATADIR/nautilus-python/extensions
-    nautilus_python_load_dir(module, DATADIR "/nautilus-python/extensions");
-
-    // Look in XDG_DATA_DIR, ~/.local/share/nautilus-python/extensions
-    user_extensions_dir = g_build_filename(g_get_user_data_dir(), 
-        "nautilus-python", "extensions", NULL);
-    nautilus_python_load_dir(module, user_extensions_dir);
+	nautilus_python_check_all_directories(module);
 }
  
 void

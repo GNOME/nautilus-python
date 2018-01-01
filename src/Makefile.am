@@ -8,6 +8,7 @@ INCLUDES =                        \
     $(NAUTILUS_PYTHON_CFLAGS)            \
     -DPYTHON_VERSION=\"$(PYTHON_VERSION)\"        \
     -DPY_LIB_LOC="\"$(PYTHON_LIB_LOC)\""        \
+    -DPY_LIB_NAME="\"$(PYTHON_LIB_NAME)\""        \
     $(PYTHON_INCLUDES)
 
 nautilus_extensiondir=$(NAUTILUS_EXTENSION_DIR)

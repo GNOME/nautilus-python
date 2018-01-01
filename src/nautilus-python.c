@@ -131,7 +131,11 @@ nautilus_python_load_dir (GTypeModule *module,
                 
                 /* sys.path.insert(0, dirname) */
                 sys_path = PySys_GetObject("path");
+#if PY_MAJOR_VERSION >= 3
+                py_path = PyUnicode_FromString(dirname);
+#else
                 py_path = PyString_FromString(dirname);
+#endif
                 PyList_Insert(sys_path, 0, py_path);
                 Py_DECREF(py_path);
             }
@@ -145,13 +149,12 @@ static gboolean
 nautilus_python_init_python (void) {
     PyObject *nautilus;
     GModule *libpython;
-    char *argv[] = { "nautilus", NULL };
 
     if (Py_IsInitialized())
         return TRUE;
 
-    debug("g_module_open " PY_LIB_LOC "/libpython" PYTHON_VERSION "." G_MODULE_SUFFIX ".1.0");
-    libpython = g_module_open(PY_LIB_LOC "/libpython" PYTHON_VERSION "." G_MODULE_SUFFIX ".1.0", 0);
+    debug("g_module_open " PY_LIB_LOC "/lib" PY_LIB_NAME "." G_MODULE_SUFFIX ".1.0");  
+    libpython = g_module_open (PY_LIB_LOC "/lib" PY_LIB_NAME "." G_MODULE_SUFFIX ".1.0", 0);
     if (!libpython)
         g_warning("g_module_open libpython failed: %s", g_module_error());
 
@@ -163,6 +166,11 @@ nautilus_python_init_python (void) {
     }
     
     debug("PySys_SetArgv");
+#if PY_MAJOR_VERSION >= 3
+    wchar_t *argv[] = { L"thunar", NULL };
+#else
+    char *argv[] = { "thunar", NULL };
+#endif
     PySys_SetArgv(1, argv);
     if (PyErr_Occurred()) {
         PyErr_Print();
@@ -170,7 +178,7 @@ nautilus_python_init_python (void) {
     }
     
     debug("Sanitize the python search path");
-    PyRun_SimpleString("import sys; sys.path = filter(None, sys.path)");
+    PyRun_SimpleString("import sys; sys.path = [path for path in sys.path if path]");
     if (PyErr_Occurred()) {
         PyErr_Print();
         return FALSE;

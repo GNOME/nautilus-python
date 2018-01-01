@@ -32,9 +32,9 @@ class OpenTerminalExtension(Nautilus.MenuProvider, GObject.GObject):
         file = files[0]
         if not file.is_directory() or file.get_uri_scheme() != 'file':
             return
-        
+       
         item = Nautilus.MenuItem(name='NautilusPython::openterminal_file_item',
-                                 label='Open Terminal 2' ,
+                                 label='Open Terminal' ,
                                  tip='Open Terminal In %s' % file.get_name())
         item.connect('activate', self.menu_activate_cb, file)
         return item,

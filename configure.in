@@ -76,9 +76,9 @@ dnl ---------------------------------
 dnl Check for gtk-doc dependencies
 dnl ---------------------------------
 if test "${enable_gtk_doc}" != no; then
-    dnl Check for xsltproc
-    AC_PATH_PROG([XSLTPROC], [xsltproc])
-    if test -z "$XSLTPROC"; then
+    dnl Check for gtkdoc-mkhtml
+    AC_PATH_PROG([GTKDOC_MKHTML], [gtkdoc-mkhtml])
+    if test -z "$GTKDOC_MKHTML"; then
         echo " disabling generation of docs"
         enable_gtk_doc=no
     fi

@@ -2,6 +2,7 @@
     - Added capability to compile with python 3 support using PYTHON environment variable
     - Fix #781232, Improve extension path loading semantics to follow XDG recommendations
     - Fix #791208, require Nautilus 3.0 before importing extensions to prevent warnings
+    - Switch to using gtkdoc mkhtml for generating devhelp2 documentation
 
 1.1:
     - Added pygobject3 compatibility.  Retained pygobject 2.28.x compatibility.

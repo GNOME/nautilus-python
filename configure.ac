@@ -18,7 +18,7 @@ AC_CHECK_PROG(HAVE_PKGCONFIG, pkg-config, yes, no)
 AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 
 dnl Check for gtk-doc
-GTK_DOC_CHECK(1.9)
+GTK_DOC_CHECK(1.14)
 
 dnl Give error and exit if we don't have pkgconfig
 if test "x$HAVE_PKGCONFIG" = "xno"; then

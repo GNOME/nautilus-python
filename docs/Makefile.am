@@ -1,9 +1,12 @@
+docsdir = $(docdir)
+
 BUILDDIR = $(top_builddir)/docs
 
 REF_VERSION = $(VERSION)
 FULL_VERSION = $(VERSION)
 
-XML_FILES = 							\
+XMLdir = $(docsdir)/reference
+XML_DATA = 							\
 	reference/nautilus-python-ref.xml			\
 	reference/nautilus-python-overview.xml			\
 	reference/nautilus-python-overview-example.xml			\
@@ -23,7 +26,7 @@ XML_FILES = 							\
 	reference/nautilus-python-enum-reference.xml \
 	reference/nautilus-python-operation-result.xml
 
-HTMLdir = $(datadir)/gtk-doc/html/nautilus-python
+HTMLdir = $(HTML_DIR)/nautilus-python
 HTML_DATA =						\
 	index.html					\
 	index.sgml					\
@@ -52,7 +55,8 @@ HTML_DATA =						\
 
 BUILT_SOURCES = 		\
 	reference/builddate.xml	\
-	$(HTML_DATA)
+	$(HTML_DATA) \
+	$(XML_DATA)
 
 CLEANFILES = 			\
 	nautilus-python-ref.*	\
@@ -60,12 +64,12 @@ CLEANFILES = 			\
 	$(HTML_DATA)
 
 EXTRA_DIST = 		\
-	$(XML_FILES)     \
+	$(XML_DATA)     \
 	$(HTML_DATA)
 
 REFERENCE_DEPS = 	\
 	reference 	\
-	$(XML_FILES) 
+	$(XML_DATA) 
 
 if ENABLE_GTK_DOC
 

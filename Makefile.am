@@ -4,6 +4,7 @@ SUBDIRS = src examples
 
 if ENABLE_GTK_DOC
 SUBDIRS += docs
+CLEANFILES = html.stamp
 endif
 
 pkgconfigdir = $(libdir)/pkgconfig

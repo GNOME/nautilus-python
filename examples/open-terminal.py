@@ -41,7 +41,7 @@ class OpenTerminalExtension(Nautilus.MenuProvider, GObject.GObject):
 
     def get_background_items(self, window, file):
         item = Nautilus.MenuItem(name='NautilusPython::openterminal_file_item2',
-                                 label='Open Terminal BG' ,
+                                 label='Open Terminal' ,
                                  tip='Open Terminal In %s' % file.get_name())
         item.connect('activate', self.menu_background_activate_cb, file)
         return item,

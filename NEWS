@@ -1,3 +1,6 @@
+1.2.1:
+    - Fixed bug #792348, Fix syntax error when building docs using python3
+
 1.2:
     - Added capability to compile with python 3 support using PYTHON environment variable
     - Fix #781232, Improve extension path loading semantics to follow XDG recommendations

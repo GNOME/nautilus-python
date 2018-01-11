@@ -248,7 +248,7 @@ nautilus_python_check_all_directories(GTypeModule *module) {
     while (*temp != NULL) {
         gchar *dir = g_build_filename(*temp,
             "nautilus-python", "extensions", NULL);
-        if (dir != prefix_extension_dir) {
+        if (g_strcmp0(dir, prefix_extension_dir) != 0) {
             dirs = g_list_append(dirs, dir);
         }
 

@@ -1,3 +1,6 @@
+1.2.2:
+    - Fixed bug #792427, Fix folder string comparison to prevent duplicate extension loading
+
 1.2.1:
     - Fixed bug #792348, Fix syntax error when building docs using python3
 

@@ -306,6 +306,10 @@ beach:
 }
 #undef METHOD_NAME
 
+typedef struct {
+  gpointer ptr;
+} DummyStruct;
+
 #define METHOD_NAME "update_file_info"
 static NautilusOperationResult
 nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
@@ -316,7 +320,17 @@ nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
     PyObject *py_ret = NULL;
     PyGILState_STATE state = pyg_gil_state_ensure();
-    PyObject *py_handle = nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, *handle, FALSE);
+
+    /* For Python extensions, we can't do assignment on the handle within Python itself,
+     * so we make a dummy struct to fill it.  Nautilus relies on the handle pointer for
+     * async flow control on info provider extensions, so it's crucial this does not remain
+     * NULL.  This also allows a nice hash table key for Python extensions to track idle
+     * ids, and handle cancel_update calls correctly.
+     */
+
+    *handle = (NautilusOperationHandle *) g_new0 (DummyStruct, 1);
+
+    PyObject *py_handle = nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, *handle, TRUE);
 
     debug_enter();
 

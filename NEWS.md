@@ -1,6 +1,7 @@
 ## 4.0.1 (unreleased)
 
 - Fixed build failure due to underlinking. (https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/13)
+- Ensure uniqueness of `InfoProvider` handle. (https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/14)
 
 ## 4.0 (2022-09-17)
 

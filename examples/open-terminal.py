@@ -1,6 +1,11 @@
 # This example is contributed by Martin Enlund
 import os
-import urllib.parse
+
+# Import unquote, moved to 'urllib.parse' in Python 3
+try:
+    from urllib.parse import unquote
+except ImportError:
+    from urllib import unquote
 
 import gi
 gi.require_version('GConf', '2.0')
@@ -12,7 +17,7 @@ class OpenTerminalExtension(Nautilus.MenuProvider, GObject.GObject):
         self.client = GConf.Client.get_default()
         
     def _open_terminal(self, file):
-        filename = urllib.parse.unquote(file.get_uri()[7:])
+        filename = unquote(file.get_uri()[7:])
 
         os.chdir(filename)
         os.system('gnome-terminal')

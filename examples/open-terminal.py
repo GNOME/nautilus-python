@@ -1,23 +1,21 @@
 # This example is contributed by Martin Enlund
 import os
-import urllib
+import urllib.parse
 
 import gi
 gi.require_version('GConf', '2.0')
 from gi.repository import Nautilus, GObject, GConf
 
-TERMINAL_KEY = '/desktop/gnome/applications/terminal/exec'
 
 class OpenTerminalExtension(Nautilus.MenuProvider, GObject.GObject):
     def __init__(self):
         self.client = GConf.Client.get_default()
         
     def _open_terminal(self, file):
-        filename = urllib.unquote(file.get_uri()[7:])
-        terminal = self.client.get_string(TERMINAL_KEY)
+        filename = urllib.parse.unquote(file.get_uri()[7:])
 
         os.chdir(filename)
-        os.system('%s &' % terminal)
+        os.system('gnome-terminal')
         
     def menu_activate_cb(self, menu, file):
         self._open_terminal(file)

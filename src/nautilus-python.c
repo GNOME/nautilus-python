@@ -167,9 +167,9 @@ nautilus_python_init_python (void) {
     
     debug("PySys_SetArgv");
 #if PY_MAJOR_VERSION >= 3
-    wchar_t *argv[] = { L"thunar", NULL };
+    wchar_t *argv[] = { L"nautilus", NULL };
 #else
-    char *argv[] = { "thunar", NULL };
+    char *argv[] = { "nautilus", NULL };
 #endif
     PySys_SetArgv(1, argv);
     if (PyErr_Occurred()) {

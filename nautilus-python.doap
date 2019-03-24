@@ -7,7 +7,7 @@
   <name xml:lang="en">nautilus-python</name>
   <shortdesc xml:lang="en">Python bindings for the Nautilus extension framework</shortdesc>
   <mailing-list rdf:resource="http://mail.gnome.org/archives/nautilus-list" />
-  <category rdf:resource="http://api.gnome.org/doap-extensions#bindings" />
+  <!-- <category rdf:resource="http://api.gnome.org/doap-extensions#bindings" /> -->
 
   <maintainer>
     <foaf:Person>

@@ -22,18 +22,9 @@
 #include "nautilus-python-object.h"
 #include "nautilus-python.h"
 
-#include <libnautilus-extension/nautilus-extension-types.h>
+#include <nautilus-extension.h>
 
 #include <pygobject.h>
-
-/* Nautilus extension headers */
-#include <libnautilus-extension/nautilus-file-info.h>
-#include <libnautilus-extension/nautilus-info-provider.h>
-#include <libnautilus-extension/nautilus-column-provider.h>
-#include <libnautilus-extension/nautilus-location-widget-provider.h>
-#include <libnautilus-extension/nautilus-menu-item.h>
-#include <libnautilus-extension/nautilus-menu-provider.h>
-#include <libnautilus-extension/nautilus-property-page-provider.h>
 
 #include <string.h>
 

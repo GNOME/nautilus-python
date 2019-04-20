@@ -29,7 +29,7 @@
 #include "nautilus-python.h"
 #include "nautilus-python-object.h"
 
-#include <libnautilus-extension/nautilus-extension-types.h>
+#include <nautilus-extension.h>
 
 static const GDebugKey nautilus_python_debug_keys[] = {
     {"misc", NAUTILUS_PYTHON_DEBUG_MISC},

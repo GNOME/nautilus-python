@@ -140,7 +140,7 @@ py_lib_name=`basename $py_include_path`
 if test "x$PYTHON_LIBS" = x; then
   PYTHON_CONFIG=`which $PYTHON`-config
   if test -x "$PYTHON_CONFIG"; then
-    PYTHON_LIBS=`$PYTHON_CONFIG --ldflags 2>/dev/null`
+    PYTHON_LIBS=`$PYTHON_CONFIG --libs --embed 2>/dev/null` || PYTHON_LIBS=`$PYTHON_CONFIG --libs  2>/dev/null`
   else
     PYTHON_LIBS="-L${py_prefix}/lib -lpython${PYTHON_VERSION}"
   fi

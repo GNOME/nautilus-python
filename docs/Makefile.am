@@ -74,7 +74,7 @@ REFERENCE_DEPS = 	\
 if ENABLE_GTK_DOC
 
 reference/builddate.xml: $(REFERENCE_DEPS)
-	$(PYTHON) -c 'import datetime; print(datetime.date.today())' > $@
+	$(PYTHON) -c "import datetime; import os; import time; print(datetime.datetime.utcfromtimestamp(int(os.environ.get('SOURCE_DATE_EPOCH', time.time()))).date())" > $@
 
 $(HTML_DATA): $(REFERENCE_DEPS) reference/builddate.xml
 	$(GTKDOC_MKHTML) \

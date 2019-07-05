@@ -448,6 +448,7 @@ nautilus_python_object_class_init (NautilusPythonObjectClass *class,
 GType 
 nautilus_python_object_get_type (GTypeModule *module, 
                                  PyObject     *type) {
+    PyObject *name_str = NULL;
     g_autofree GTypeInfo *info = NULL;
     g_autofree gchar *type_name = NULL;
     GType gtype;
@@ -482,7 +483,8 @@ nautilus_python_object_get_type (GTypeModule *module,
         NULL
     };
 
-    debug_enter_args("type=%s", PyUnicode_AsUTF8(PyObject_GetAttrString(type, "__name__")));
+    name_str = PyObject_GetAttrString(type, "__name__");
+    debug_enter_args("type=%s", PyUnicode_AsUTF8(name_str));
     info = g_new0 (GTypeInfo, 1);
     
     info->class_size = sizeof (NautilusPythonObjectClass);
@@ -493,9 +495,10 @@ nautilus_python_object_get_type (GTypeModule *module,
     info->class_data = type;
     Py_INCREF(type);
 
-    type_name = g_strdup_printf("%s+NautilusPython",
-                                PyUnicode_AsUTF8(PyObject_GetAttrString(type, "__name__")));
-        
+    type_name = g_strdup_printf("%s+NautilusPython", PyUnicode_AsUTF8(name_str));
+
+    Py_XDECREF(name_str);
+
     gtype = g_type_module_register_type (module, 
                                          G_TYPE_OBJECT,
                                          type_name,

@@ -1,3 +1,12 @@
+1.2.3:
+    - First release from gitlab
+    - Fixed open-terminal example extension (Maximillian Schambach)
+    - Fixed invalid DOAP file category (Andre Klapper)
+    - Fixed bug #3, setting argv[0] to thunar
+    - Fixed bug #4, allow overriding the build date to enable reproducible builds
+    - Removed build warnings (Christian Stadelman)
+    - Fix to work with python 3.8 (stratakis)
+
 1.2.2:
     - Fixed bug #792427, Fix folder string comparison to prevent duplicate extension loading
 

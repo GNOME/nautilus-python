@@ -1,4 +1,4 @@
-AC_INIT([nautilus-python], [1.2.2])
+AC_INIT([nautilus-python], [1.2.3])
 
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_MACRO_DIR([m4])

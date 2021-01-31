@@ -149,6 +149,7 @@ nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provide
     HANDLE_LIST(py_ret, NautilusPropertyPage, "Nautilus.PropertyPage");
     
 beach:
+    free_pygobject_data_list (files);
     Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
     return ret;

@@ -131,7 +131,7 @@ int __PyInt_Check(PyObject *obj) {
 
 static void
 free_pygobject_data(gpointer data, gpointer user_data) {
-    /* Some NautilusFile objects are cached and not freed until nautilus
+    /* Some NautilusFileInfo objects are cached and not freed until nautilus
         itself is closed.  Since PyGObject stores data that must be freed by
         the Python interpreter, we must always free it before the interpreter
         is finalized. */
@@ -186,8 +186,8 @@ beach:
 #undef METHOD_NAME
 
 static void
-nautilus_python_object_property_page_provider_iface_init (NautilusPropertyPageProviderIface *iface) {
-    iface->get_pages = nautilus_python_object_get_property_pages;
+nautilus_python_object_property_page_provider_interface_init (NautilusPropertyPageProviderInterface *interface) {
+    interface->get_pages = nautilus_python_object_get_property_pages;
 }
 
 #define METHOD_NAME "get_widget"
@@ -231,8 +231,8 @@ beach:
 #undef METHOD_NAME
 
 static void
-nautilus_python_object_location_widget_provider_iface_init (NautilusLocationWidgetProviderIface *iface) {
-    iface->get_widget = nautilus_python_object_get_widget;
+nautilus_python_object_location_widget_provider_interface_init (NautilusLocationWidgetProviderInterface *interface) {
+    interface->get_widget = nautilus_python_object_get_widget;
 }
 
 #define METHOD_NAME "get_file_items"
@@ -324,9 +324,9 @@ beach:
 #undef METHOD_NAME
 
 static void
-nautilus_python_object_menu_provider_iface_init (NautilusMenuProviderIface *iface) {
-    iface->get_background_items = nautilus_python_object_get_background_items;
-    iface->get_file_items = nautilus_python_object_get_file_items;
+nautilus_python_object_menu_provider_interface_init (NautilusMenuProviderInterface *interface) {
+    interface->get_background_items = nautilus_python_object_get_background_items;
+    interface->get_file_items = nautilus_python_object_get_file_items;
 }
 
 #define METHOD_NAME "get_columns"
@@ -358,8 +358,8 @@ beach:
 #undef METHOD_NAME
 
 static void
-nautilus_python_object_column_provider_iface_init (NautilusColumnProviderIface *iface) {
-    iface->get_columns = nautilus_python_object_get_columns;
+nautilus_python_object_column_provider_interface_init (NautilusColumnProviderInterface *interface) {
+    interface->get_columns = nautilus_python_object_get_columns;
 }
 
 
@@ -389,7 +389,7 @@ beach:
 #define METHOD_NAME "update_file_info"
 static NautilusOperationResult
 nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
-                                         NautilusFile                 *file,
+                                         NautilusFileInfo             *file,
                                          GClosure                     *update_complete,
                                          NautilusOperationHandle   **handle) {
     NautilusPythonObject *object = (NautilusPythonObject*)provider;
@@ -442,9 +442,9 @@ beach:
 #undef METHOD_NAME
 
 static void
-nautilus_python_object_info_provider_iface_init (NautilusInfoProviderIface *iface) {
-    iface->cancel_update = nautilus_python_object_cancel_update;
-    iface->update_file_info = nautilus_python_object_update_file_info;
+nautilus_python_object_info_provider_interface_init (NautilusInfoProviderInterface *interface) {
+    interface->cancel_update = nautilus_python_object_cancel_update;
+    interface->update_file_info = nautilus_python_object_update_file_info;
 }
 
 static void 
@@ -486,32 +486,32 @@ nautilus_python_object_get_type (GTypeModule *module,
     const char *type_name;
     GType gtype;
       
-    static const GInterfaceInfo property_page_provider_iface_info = {
-        (GInterfaceInitFunc) nautilus_python_object_property_page_provider_iface_init,
+    static const GInterfaceInfo property_page_provider_interface_info = {
+        (GInterfaceInitFunc) nautilus_python_object_property_page_provider_interface_init,
         NULL,
         NULL
     };
 
-    static const GInterfaceInfo location_widget_provider_iface_info = {
-        (GInterfaceInitFunc) nautilus_python_object_location_widget_provider_iface_init,
+    static const GInterfaceInfo location_widget_provider_interface_info = {
+        (GInterfaceInitFunc) nautilus_python_object_location_widget_provider_interface_init,
         NULL,
         NULL
     };
 
-    static const GInterfaceInfo menu_provider_iface_info = {
-        (GInterfaceInitFunc) nautilus_python_object_menu_provider_iface_init,
+    static const GInterfaceInfo menu_provider_interface_info = {
+        (GInterfaceInitFunc) nautilus_python_object_menu_provider_interface_init,
         NULL,
         NULL
     };
 
-    static const GInterfaceInfo column_provider_iface_info = {
-        (GInterfaceInitFunc) nautilus_python_object_column_provider_iface_init,
+    static const GInterfaceInfo column_provider_interface_info = {
+        (GInterfaceInitFunc) nautilus_python_object_column_provider_interface_init,
         NULL,
         NULL
     };
 
-    static const GInterfaceInfo info_provider_iface_info = {
-        (GInterfaceInitFunc) nautilus_python_object_info_provider_iface_init,
+    static const GInterfaceInfo info_provider_interface_info = {
+        (GInterfaceInitFunc) nautilus_python_object_info_provider_interface_init,
         NULL,
         NULL
     };
@@ -538,31 +538,31 @@ nautilus_python_object_get_type (GTypeModule *module,
     if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusPropertyPageProvider_Type)) {
         g_type_module_add_interface (module, gtype, 
                                      NAUTILUS_TYPE_PROPERTY_PAGE_PROVIDER,
-                                     &property_page_provider_iface_info);
+                                     &property_page_provider_interface_info);
     }
 
     if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusLocationWidgetProvider_Type)) {
         g_type_module_add_interface (module, gtype,
                                      NAUTILUS_TYPE_LOCATION_WIDGET_PROVIDER,
-                                     &location_widget_provider_iface_info);
+                                     &location_widget_provider_interface_info);
     }
     
     if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusMenuProvider_Type)) {
         g_type_module_add_interface (module, gtype, 
                                      NAUTILUS_TYPE_MENU_PROVIDER,
-                                     &menu_provider_iface_info);
+                                     &menu_provider_interface_info);
     }
 
     if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusColumnProvider_Type)) {
         g_type_module_add_interface (module, gtype, 
                                      NAUTILUS_TYPE_COLUMN_PROVIDER,
-                                     &column_provider_iface_info);
+                                     &column_provider_interface_info);
     }
     
     if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusInfoProvider_Type)) {
         g_type_module_add_interface (module, gtype, 
                                      NAUTILUS_TYPE_INFO_PROVIDER,
-                                     &info_provider_iface_info);
+                                     &info_provider_interface_info);
     }
     
     return gtype;

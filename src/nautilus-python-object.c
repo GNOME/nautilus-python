@@ -126,90 +126,9 @@ nautilus_python_boxed_new (PyTypeObject *type, gpointer boxed, gboolean free_on_
     return (PyObject *) self;
 }
 
-#define METHOD_NAME "get_property_pages"
-static GList *
-nautilus_python_object_get_property_pages (NautilusPropertyPageProvider *provider,
-                                           GList                         *files) {
-    NautilusPythonObject *object = (NautilusPythonObject*)provider;
-    PyObject *py_files, *py_ret = NULL;
-    GList *ret = NULL;
-    PyGILState_STATE state = pyg_gil_state_ensure();
-    
-    debug_enter();
-
-    CHECK_OBJECT(object);
-    CHECK_METHOD_NAME(object->instance);
-
-    CONVERT_LIST(py_files, files);
-    
-    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-                                 "(N)", py_files);
-    HANDLE_RETVAL(py_ret);
-
-    HANDLE_LIST(py_ret, NautilusPropertyPage, "Nautilus.PropertyPage");
-    
-beach:
-    free_pygobject_data_list (files);
-    Py_XDECREF(py_ret);
-    pyg_gil_state_release(state);
-    return ret;
-}
-#undef METHOD_NAME
-
-static void
-nautilus_python_object_property_page_provider_interface_init (NautilusPropertyPageProviderInterface *interface) {
-    interface->get_pages = nautilus_python_object_get_property_pages;
-}
-
-#define METHOD_NAME "get_widget"
-static GtkWidget *
-nautilus_python_object_get_widget (NautilusLocationWidgetProvider *provider,
-                                   const char                        *uri,
-                                   GtkWidget                       *window) {
-    NautilusPythonObject *object = (NautilusPythonObject*)provider;
-    GtkWidget *ret = NULL;
-    PyObject *py_ret = NULL;
-    PyGObject *py_ret_gobj;
-    PyObject *py_uri = NULL;
-    PyGILState_STATE state = pyg_gil_state_ensure();
-
-    debug_enter();
-
-    CHECK_OBJECT(object);
-    CHECK_METHOD_NAME(object->instance);
-
-    py_uri = PyUnicode_FromString(uri);
-
-    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-                                 "(NN)", py_uri,
-                                 pygobject_new((GObject *)window));
-    HANDLE_RETVAL(py_ret);
-
-    py_ret_gobj = (PyGObject *)py_ret;
-    if (!pygobject_check(py_ret_gobj, &PyGtkWidget_Type)) {
-        PyErr_SetString(PyExc_TypeError,
-                        METHOD_NAME "should return a gtk.Widget");
-        goto beach;
-    }
-
-    ret = (GtkWidget *)g_object_ref(py_ret_gobj->obj);
-
-beach:
-    Py_XDECREF(py_ret);
-    pyg_gil_state_release(state);
-    return ret;
-}
-#undef METHOD_NAME
-
-static void
-nautilus_python_object_location_widget_provider_interface_init (NautilusLocationWidgetProviderInterface *interface) {
-    interface->get_widget = nautilus_python_object_get_widget;
-}
-
 #define METHOD_NAME "get_file_items"
 static GList *
 nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
-                                       GtkWidget             *window,
                                        GList                 *files) {
     NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
@@ -223,16 +142,14 @@ nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
     if (PyObject_HasAttrString(object->instance, "get_file_items_full")) {
         CONVERT_LIST(py_files, files);
         py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX "get_file_items_full",
-                                     "(NNN)",
+                                     "(NN)",
                                      pygobject_new((GObject *)provider), 
-                                     pygobject_new((GObject *)window), 
                                      py_files);
     }
     else if (PyObject_HasAttrString(object->instance, "get_file_items")) {
         CONVERT_LIST(py_files, files);
         py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-                                     "(NN)", 
-                                     pygobject_new((GObject *)window), 
+                                     "(N)",
                                      py_files);
     }
     else {
@@ -254,7 +171,6 @@ beach:
 #define METHOD_NAME "get_background_items"
 static GList *
 nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
-                                             GtkWidget               *window,
                                              NautilusFileInfo       *file) {
     NautilusPythonObject *object = (NautilusPythonObject*)provider;
     GList *ret = NULL;
@@ -267,15 +183,13 @@ nautilus_python_object_get_background_items (NautilusMenuProvider *provider,
 
     if (PyObject_HasAttrString(object->instance, "get_background_items_full")) {
         py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX "get_background_items_full",
-                                     "(NNN)",
+                                     "(NN)",
                                      pygobject_new((GObject *)provider),
-                                     pygobject_new((GObject *)window),
                                      pygobject_new((GObject *)file));
     }
     else if (PyObject_HasAttrString(object->instance, "get_background_items")) {
         py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
-                                     "(NN)",
-                                     pygobject_new((GObject *)window),
+                                     "(N)",
                                      pygobject_new((GObject *)file));
     }
     else {
@@ -453,18 +367,6 @@ nautilus_python_object_get_type (GTypeModule *module,
     g_autofree GTypeInfo *info = NULL;
     g_autofree gchar *type_name = NULL;
     GType gtype;
-      
-    static const GInterfaceInfo property_page_provider_interface_info = {
-        (GInterfaceInitFunc) nautilus_python_object_property_page_provider_interface_init,
-        NULL,
-        NULL
-    };
-
-    static const GInterfaceInfo location_widget_provider_interface_info = {
-        (GInterfaceInitFunc) nautilus_python_object_location_widget_provider_interface_init,
-        NULL,
-        NULL
-    };
 
     static const GInterfaceInfo menu_provider_interface_info = {
         (GInterfaceInitFunc) nautilus_python_object_menu_provider_interface_init,
@@ -505,18 +407,6 @@ nautilus_python_object_get_type (GTypeModule *module,
                                          type_name,
                                          info, 0);
 
-    if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusPropertyPageProvider_Type)) {
-        g_type_module_add_interface (module, gtype, 
-                                     NAUTILUS_TYPE_PROPERTY_PAGE_PROVIDER,
-                                     &property_page_provider_interface_info);
-    }
-
-    if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusLocationWidgetProvider_Type)) {
-        g_type_module_add_interface (module, gtype,
-                                     NAUTILUS_TYPE_LOCATION_WIDGET_PROVIDER,
-                                     &location_widget_provider_interface_info);
-    }
-    
     if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusMenuProvider_Type)) {
         g_type_module_add_interface (module, gtype, 
                                      NAUTILUS_TYPE_MENU_PROVIDER,

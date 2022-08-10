@@ -37,9 +37,6 @@ extern NautilusPythonDebug nautilus_python_debug;
 #define debug_enter_args(x, y) { if (nautilus_python_debug & NAUTILUS_PYTHON_DEBUG_MISC) \
                                      g_printf("%s: entered " x "\n", __FUNCTION__, y); }
 
-extern PyTypeObject *_PyGtkWidget_Type;
-#define PyGtkWidget_Type (*_PyGtkWidget_Type)
-
 extern PyTypeObject *_PyNautilusColumn_Type;
 #define PyNautilusColumn_Type (*_PyNautilusColumn_Type)
 
@@ -49,9 +46,6 @@ extern PyTypeObject *_PyNautilusColumnProvider_Type;
 extern PyTypeObject *_PyNautilusInfoProvider_Type;
 #define PyNautilusInfoProvider_Type (*_PyNautilusInfoProvider_Type)
 
-extern PyTypeObject *_PyNautilusLocationWidgetProvider_Type;
-#define PyNautilusLocationWidgetProvider_Type (*_PyNautilusLocationWidgetProvider_Type)
-
 extern PyTypeObject *_PyNautilusMenu_Type;
 #define PyNautilusMenu_Type (*_PyNautilusMenu_Type)
 
@@ -60,12 +54,6 @@ extern PyTypeObject *_PyNautilusMenuItem_Type;
 
 extern PyTypeObject *_PyNautilusMenuProvider_Type;
 #define PyNautilusMenuProvider_Type (*_PyNautilusMenuProvider_Type)
-
-extern PyTypeObject *_PyNautilusPropertyPage_Type;
-#define PyNautilusPropertyPage_Type (*_PyNautilusPropertyPage_Type)
-
-extern PyTypeObject *_PyNautilusPropertyPageProvider_Type;
-#define PyNautilusPropertyPageProvider_Type (*_PyNautilusPropertyPageProvider_Type)
 
 extern PyTypeObject *_PyNautilusOperationHandle_Type;
 #define PyNautilusOperationHandle_Type (*_PyNautilusOperationHandle_Type)

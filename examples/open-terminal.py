@@ -1,7 +1,7 @@
 # This example is contributed by Martin Enlund
 import os
 from urllib.parse import unquote
-from gi.repository import Nautilus, GObject, Gtk
+from gi.repository import Nautilus, GObject
 from typing import List
 
 
@@ -28,7 +28,6 @@ class OpenTerminalExtension(GObject.GObject, Nautilus.MenuProvider):
 
     def get_file_items(
         self,
-        window: Gtk.Widget,
         files: List[Nautilus.FileInfo],
     ) -> List[Nautilus.MenuItem]:
         if len(files) != 1:
@@ -51,7 +50,6 @@ class OpenTerminalExtension(GObject.GObject, Nautilus.MenuProvider):
 
     def get_background_items(
         self,
-        window: Gtk.Widget,
         current_folder: Nautilus.FileInfo,
     ) -> List[Nautilus.MenuItem]:
         item = Nautilus.MenuItem(

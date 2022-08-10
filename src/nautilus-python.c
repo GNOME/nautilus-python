@@ -23,7 +23,6 @@
 #define NO_IMPORT_PYGOBJECT //To avoid a multiple definition, nautilus-python-object.c also includes and does the import.
 #include <pygobject.h>
 #include <gmodule.h>
-#include <gtk/gtk.h>
 
 #include "nautilus-python.h"
 #include "nautilus-python-object.h"
@@ -41,16 +40,12 @@ static gboolean nautilus_python_init_python(void);
 static GArray *all_types = NULL;
 
 
-PyTypeObject *_PyGtkWidget_Type;
 PyTypeObject *_PyNautilusColumn_Type;
 PyTypeObject *_PyNautilusColumnProvider_Type;
 PyTypeObject *_PyNautilusInfoProvider_Type;
-PyTypeObject *_PyNautilusLocationWidgetProvider_Type;
 PyTypeObject *_PyNautilusMenu_Type;
 PyTypeObject *_PyNautilusMenuItem_Type;
 PyTypeObject *_PyNautilusMenuProvider_Type;
-PyTypeObject *_PyNautilusPropertyPage_Type;
-PyTypeObject *_PyNautilusPropertyPageProvider_Type;
 PyTypeObject *_PyNautilusOperationHandle_Type;
 
 static inline gboolean 
@@ -96,9 +91,7 @@ nautilus_python_load_file(GTypeModule *type_module,
 
         if (PyObject_IsSubclass(value, (PyObject*)&PyNautilusColumnProvider_Type) ||
 				PyObject_IsSubclass(value, (PyObject*)&PyNautilusInfoProvider_Type) ||
-				PyObject_IsSubclass(value, (PyObject*)&PyNautilusLocationWidgetProvider_Type) ||
-				PyObject_IsSubclass(value, (PyObject*)&PyNautilusMenuProvider_Type) ||
-				PyObject_IsSubclass(value, (PyObject*)&PyNautilusPropertyPageProvider_Type)) {
+				PyObject_IsSubclass(value, (PyObject*)&PyNautilusMenuProvider_Type)) {
             gtype = nautilus_python_object_get_type(type_module, value);
             g_array_append_val(all_types, gtype);
         }
@@ -194,15 +187,12 @@ nautilus_python_init_python (void) {
     /* import nautilus */
     g_setenv("INSIDE_NAUTILUS_PYTHON", "", FALSE);
     debug("import nautilus");
-    PyRun_SimpleString("import gi; gi.require_version('Nautilus', '3.0')");
+    PyRun_SimpleString("import gi; gi.require_version('Nautilus', '4.0')");
     nautilus = PyImport_ImportModule("gi.repository.Nautilus");
     if (!nautilus) {
         PyErr_Print();
         return FALSE;
     }
-
-    _PyGtkWidget_Type = pygobject_lookup_class(GTK_TYPE_WIDGET);
-    g_assert(_PyGtkWidget_Type != NULL);
 
 #define IMPORT(x, y) \
     _PyNautilus##x##_Type = (PyTypeObject *)PyObject_GetAttrString(nautilus, y); \
@@ -214,12 +204,9 @@ nautilus_python_init_python (void) {
     IMPORT(Column, "Column");
     IMPORT(ColumnProvider, "ColumnProvider");
     IMPORT(InfoProvider, "InfoProvider");
-    IMPORT(LocationWidgetProvider, "LocationWidgetProvider");
     IMPORT(Menu, "Menu");
     IMPORT(MenuItem, "MenuItem");
     IMPORT(MenuProvider, "MenuProvider");
-    IMPORT(PropertyPage, "PropertyPage");
-    IMPORT(PropertyPageProvider, "PropertyPageProvider");
     IMPORT(OperationHandle, "OperationHandle");
 
 #undef IMPORT

@@ -7,8 +7,6 @@
     <title>Provider Interfaces</title>
     <xi:include href="nautilus-python-column-provider.xml"/>
     <xi:include href="nautilus-python-info-provider.xml"/>
-    <xi:include href="nautilus-python-location-widget-provider.xml"/>
     <xi:include href="nautilus-python-menu-provider.xml"/>
-    <xi:include href="nautilus-python-property-page-provider.xml"/>
 </chapter>
 

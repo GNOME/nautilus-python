@@ -10,8 +10,8 @@
     One simply imports the Nautilus module from the gobject introspection repository and creates a class which is derived from a gobject.GObject and 
     one of the Nautilus module's classes. When an extension derives a class, it becomes a "provider", 
     telling Nautilus to ask it for information. There are several types of providers 
-    available for extensions to use: there is MenuProvider, LocationWidgetProvider, 
-    ColumnProvider, PropertyPageProvider, and InfoProvider, all of which will be explained 
+    available for extensions to use: there is MenuProvider, 
+    ColumnProvider, and InfoProvider, all of which will be explained 
     in more detail below. Your class can be derived from multiple providers.</para>
     
     <para>Here are the basic steps:</para>

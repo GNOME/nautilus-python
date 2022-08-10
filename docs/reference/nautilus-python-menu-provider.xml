@@ -23,27 +23,23 @@
 
       <methodsynopsis language="python">
         <methodname><link linkend="method-nautilus-python-menu-provider--get-file-items">get_file_items</link></methodname>
-        <methodparam><parameter role="keyword">window</parameter></methodparam>
         <methodparam><parameter role="keyword">files</parameter></methodparam>
       </methodsynopsis>
 
       <methodsynopsis language="python">
         <methodname><link linkend="method-nautilus-python-menu-provider--get-file-items-full">get_file_items_full</link></methodname>
         <methodparam><parameter role="keyword">provider</parameter></methodparam>
-        <methodparam><parameter role="keyword">window</parameter></methodparam>
         <methodparam><parameter role="keyword">files</parameter></methodparam>
       </methodsynopsis>
 
       <methodsynopsis language="python">
         <methodname><link linkend="method-nautilus-python-menu-provider--get-background-items">get_background_items</link></methodname>
-        <methodparam><parameter role="keyword">window</parameter></methodparam>
         <methodparam><parameter role="keyword">folder</parameter></methodparam>
       </methodsynopsis>
 
       <methodsynopsis language="python">
         <methodname><link linkend="method-nautilus-python-menu-provider--get-background-items-full">get_background_items_full</link></methodname>
         <methodparam><parameter role="keyword">provider</parameter></methodparam>
-        <methodparam><parameter role="keyword">window</parameter></methodparam>
         <methodparam><parameter role="keyword">folder</parameter></methodparam>
       </methodsynopsis>
 
@@ -109,15 +105,10 @@
 
           <programlisting><methodsynopsis language="python">
             <methodname>get_file_items</methodname>
-            <methodparam><parameter role="keyword">window</parameter></methodparam>
             <methodparam><parameter role="keyword">files</parameter></methodparam>
           </methodsynopsis></programlisting>
 
           <variablelist>
-            <varlistentry>
-                <term><parameter role="keyword">window</parameter>&nbsp;:</term>
-                <listitem><simpara>the current <link linkend="class-gtkwindow"><classname>gtk.Window</classname></link> instance</simpara></listitem>
-            </varlistentry>
             <varlistentry>
                 <term><parameter role="keyword">menu</parameter>&nbsp;:</term>
                 <listitem><simpara>a list of <link linkend="class-nautilus-python-file-info"><classname>Nautilus.FileInfo</classname></link> objects.</simpara></listitem>
@@ -140,7 +131,6 @@
           <programlisting><methodsynopsis language="python">
             <methodname>get_file_items_full</methodname>
             <methodparam><parameter role="keyword">provider</parameter></methodparam>
-            <methodparam><parameter role="keyword">window</parameter></methodparam>
             <methodparam><parameter role="keyword">files</parameter></methodparam>
           </methodsynopsis></programlisting>
 
@@ -148,10 +138,6 @@
             <varlistentry>
                 <term><parameter role="keyword">provider</parameter>&nbsp;:</term>
                 <listitem><simpara>the current <link linkend="class-nautilus-python-menu-provider"><classname>Nautilus.MenuProvider</classname></link> instance</simpara></listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><parameter role="keyword">window</parameter>&nbsp;:</term>
-                <listitem><simpara>the current <link linkend="class-gtkwindow"><classname>gtk.Window</classname></link> instance</simpara></listitem>
             </varlistentry>
             <varlistentry>
                 <term><parameter role="keyword">files</parameter>&nbsp;:</term>
@@ -183,15 +169,10 @@
 
           <programlisting><methodsynopsis language="python">
             <methodname>get_background_items</methodname>
-            <methodparam><parameter role="keyword">window</parameter></methodparam>
             <methodparam><parameter role="keyword">folder</parameter></methodparam>
           </methodsynopsis></programlisting>
 
           <variablelist>
-            <varlistentry>
-                <term><parameter role="keyword">window</parameter>&nbsp;:</term>
-                <listitem><simpara>the current <link linkend="class-gtkwindow"><classname>gtk.Window</classname></link> instance</simpara></listitem>
-            </varlistentry>
             <varlistentry>
                 <term><parameter role="keyword">folder</parameter>&nbsp;:</term>
                 <listitem><simpara>the current folder, as a <link linkend="class-nautilus-python-file-info"><classname>Nautilus.FileInfo</classname></link> object.</simpara></listitem>
@@ -214,7 +195,6 @@
           <programlisting><methodsynopsis language="python">
             <methodname>get_background_items_full</methodname>
             <methodparam><parameter role="keyword">provider</parameter></methodparam>
-            <methodparam><parameter role="keyword">window</parameter></methodparam>
             <methodparam><parameter role="keyword">folder</parameter></methodparam>
           </methodsynopsis></programlisting>
 
@@ -222,10 +202,6 @@
             <varlistentry>
                 <term><parameter role="keyword">provider</parameter>&nbsp;:</term>
                 <listitem><simpara>the current <link linkend="class-nautilus-python-menu-provider"><classname>Nautilus.MenuProvider</classname></link> instance</simpara></listitem>
-            </varlistentry>
-            <varlistentry>
-                <term><parameter role="keyword">window</parameter>&nbsp;:</term>
-                <listitem><simpara>the current <link linkend="class-gtkwindow"><classname>gtk.Window</classname></link> instance</simpara></listitem>
             </varlistentry>
             <varlistentry>
                 <term><parameter role="keyword">folder</parameter>&nbsp;:</term>

@@ -6,7 +6,7 @@ For examples and documentation check the `examples/` subdirectory.
 
 ## Requirements
 
-- Nautilus ≥ 3.27.90
+- Nautilus ≥ 43.beta
 - Python 3.x
 - PyGObject 3
 

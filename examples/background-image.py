@@ -1,4 +1,4 @@
-from gi.repository import Nautilus, GObject, Gio, Gtk
+from gi.repository import Nautilus, GObject, Gio
 from typing import List
 
 SUPPORTED_FORMATS = "image/jpeg", "image/png"
@@ -23,7 +23,6 @@ class BackgroundImageExtension(GObject.GObject, Nautilus.MenuProvider):
 
     def get_file_items(
         self,
-        window: Gtk.Widget,
         files: List[Nautilus.FileInfo],
     ) -> List[Nautilus.MenuItem]:
         if len(files) != 1:
@@ -55,7 +54,6 @@ class BackgroundImageExtension(GObject.GObject, Nautilus.MenuProvider):
     # isn't present
     def get_background_items(
         self,
-        window: Gtk.Widget,
         current_folder: Nautilus.FileInfo,
     ) -> List[Nautilus.MenuItem]:
         return []

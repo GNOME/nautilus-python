@@ -1,4 +1,4 @@
-from gi.repository import Nautilus, GObject, Gtk
+from gi.repository import Nautilus, GObject
 from typing import List
 
 
@@ -16,7 +16,6 @@ class TestExtension(GObject.GObject, Nautilus.MenuProvider):
 
     def get_file_items(
         self,
-        window: Gtk.Widget,
         files: List[Nautilus.FileInfo],
     ) -> List[Nautilus.MenuItem]:
         if len(files) != 1:
@@ -39,7 +38,6 @@ class TestExtension(GObject.GObject, Nautilus.MenuProvider):
     # a warning if the method isn't present
     def get_background_items(
         self,
-        window: Gtk.Widget,
         current_folder: Nautilus.FileInfo,
     ) -> List[Nautilus.MenuItem]:
         return []

@@ -1,0 +1,163 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-nautilus-python-properties-item">
+  <refmeta>
+    <refentrytitle>Nautilus.PropertiesItem</refentrytitle>
+  </refmeta>
+  <refnamediv>
+    <refname>Nautilus.PropertiesItem</refname>
+    <refpurpose>Nautilus.PropertiesItem Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF NAUTILUS-PYTHON SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+        <ooclass><classname>Nautilus.PropertiesItem</classname></ooclass>
+        <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
+
+        <constructorsynopsis language="python">
+            <methodname><link linkend="constructor-nautilus-properties-item">Nautilus.PropertiesItem</link></methodname>
+            <methodparam><parameter role="keyword">name</parameter></methodparam>
+            <methodparam><parameter role="keyword">value</parameter></methodparam>
+        </constructorsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-nautilus-python-properties-item--get_name">get_name</link></methodname>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-nautilus-python-properties-item--get_value">get_value</link></methodname>
+        </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************* -->
+<!-- BEGIN OF ANCESTRY -->
+<!-- ********************************* -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
+    +-- <link linkend="class-nautilus-python-properties-item">Nautilus.PropertiesItem</link>
+</synopsis>
+</refsect1>
+
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-properties-item">
+    <title>Description</title>
+
+      <para>
+        <link linkend="class-nautilus-python-properties-item"><classname>Nautilus.PropertiesItem</classname></link> is an object that describes a name &amp; value pair in file properties. Extensions can provide <classname>Nautilus.PropertiesItem</classname> objects grouped in <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link>.
+      </para>
+
+  </refsect1>
+
+
+<!-- *********************************** -->
+<!-- BEGIN OF PROPERTIES -->
+<!-- *********************************** -->
+
+<refsect1>
+    <title>Properties</title>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+      <tgroup cols="3">
+        <colspec column="1" colwidth="1in"/>
+        <colspec column="2" colwidth="1in"/>
+        <colspec column="3" colwidth="4in"/>
+          <tbody>
+
+            <row valign="top">
+              <entry>"name"</entry>
+              <entry>The user-visible name for the properties item</entry>
+              <entry>Read-Write-ConstructOnly</entry>
+            </row>
+
+            <row valign="top">
+              <entry>"value"</entry>
+              <entry>The user-visible value for the properties item</entry>
+              <entry>Read-Write-ConstructOnly</entry>
+            </row>
+
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+</refsect1>
+
+
+<!-- ************************************ -->
+<!-- BEGIN OF CONSTRUCTOR -->
+<!-- ************************************ -->
+
+<refsect1 id="constructor-nautilus-properties-item">
+  <title>Constructor</title>
+
+  <programlisting><constructorsynopsis language="python">
+        <methodname>Nautilus.PropertiesItem</methodname>
+        <methodparam><parameter role="keyword">name</parameter></methodparam>
+        <methodparam><parameter role="keyword">value</parameter></methodparam>
+  </constructorsynopsis></programlisting>
+
+  <variablelist>
+    <varlistentry>
+	    <term><parameter role="keyword">name</parameter>&nbsp;:</term>
+	    <listitem><simpara>the user-visible name for the properties item</simpara></listitem>
+    </varlistentry>
+    <varlistentry>
+	    <term><parameter role="keyword">value</parameter>&nbsp;:</term>
+	    <listitem><simpara>the user-visible value for the properties item</simpara></listitem>
+    </varlistentry>
+  </variablelist>
+
+  <para>
+    Creates a new <link linkend="class-nautilus-python-properties-item"><classname>Nautilus.PropertiesItem</classname></link> object.
+  </para>
+</refsect1>
+
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ******************************** -->
+
+<refsect1>
+    <title>Public Methods</title>
+
+  <refsect2 id="method-nautilus-python-properties-item--get_name">
+    <title>Nautilus.Menu.get_name</title>
+    <programlisting><methodsynopsis language="python">
+    <methodname>get_name</methodname>
+    </methodsynopsis></programlisting>
+    <para>
+      Returns the name of this <link linkend="class-nautilus-python-properties-item"><classname>Nautilus.PropertiesItem</classname></link>.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-nautilus-python-properties-item--get_value">
+    <title>Nautilus.Menu.get_value</title>
+    <programlisting><methodsynopsis language="python">
+    <methodname>get_value</methodname>
+    </methodsynopsis></programlisting>
+    <para>
+      Returns the value of this <link linkend="class-nautilus-python-properties-item"><classname>Nautilus.PropertiesItem</classname></link>.
+    </para>
+  </refsect2>
+</refsect1>
+
+
+
+</refentry>
+

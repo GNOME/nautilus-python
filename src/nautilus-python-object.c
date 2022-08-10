@@ -126,6 +126,41 @@ nautilus_python_boxed_new (PyTypeObject *type, gpointer boxed, gboolean free_on_
     return (PyObject *) self;
 }
 
+#define METHOD_NAME "get_models"
+static GList *
+nautilus_python_object_get_models (NautilusPropertiesModelProvider *provider,
+                                   GList                           *files) {
+    NautilusPythonObject *object = (NautilusPythonObject*)provider;
+    PyObject *py_files, *py_ret = NULL;
+    GList *ret = NULL;
+    PyGILState_STATE state = pyg_gil_state_ensure();
+
+    debug_enter();
+
+    CHECK_OBJECT(object);
+    CHECK_METHOD_NAME(object->instance);
+
+    CONVERT_LIST(py_files, files);
+
+    py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
+                                 "(N)", py_files);
+    HANDLE_RETVAL(py_ret);
+
+    HANDLE_LIST(py_ret, NautilusPropertiesModel, "Nautilus.PropertiesModel");
+
+beach:
+    free_pygobject_data_list(files);
+    Py_XDECREF(py_ret);
+    pyg_gil_state_release(state);
+    return ret;
+}
+#undef METHOD_NAME
+
+static void
+nautilus_python_object_properties_model_provider_interface_init (NautilusPropertiesModelProviderInterface *interface) {
+    interface->get_models = nautilus_python_object_get_models;
+}
+
 #define METHOD_NAME "get_file_items"
 static GList *
 nautilus_python_object_get_file_items (NautilusMenuProvider *provider,
@@ -368,6 +403,12 @@ nautilus_python_object_get_type (GTypeModule *module,
     g_autofree gchar *type_name = NULL;
     GType gtype;
 
+    static const GInterfaceInfo properties_model_provider_interface_info = {
+        (GInterfaceInitFunc) nautilus_python_object_properties_model_provider_interface_init,
+        NULL,
+        NULL
+    };
+
     static const GInterfaceInfo menu_provider_interface_info = {
         (GInterfaceInitFunc) nautilus_python_object_menu_provider_interface_init,
         NULL,
@@ -406,6 +447,12 @@ nautilus_python_object_get_type (GTypeModule *module,
                                          G_TYPE_OBJECT,
                                          type_name,
                                          info, 0);
+
+    if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusPropertiesModelProvider_Type)) {
+        g_type_module_add_interface (module, gtype,
+                                     NAUTILUS_TYPE_PROPERTIES_MODEL_PROVIDER,
+                                     &properties_model_provider_interface_info);
+    }
 
     if (PyObject_IsSubclass(type, (PyObject*)&PyNautilusMenuProvider_Type)) {
         g_type_module_add_interface (module, gtype, 

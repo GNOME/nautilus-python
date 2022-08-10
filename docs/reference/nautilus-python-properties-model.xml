@@ -1,0 +1,187 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-nautilus-python-properties-model">
+  <refmeta>
+    <refentrytitle>Nautilus.PropertiesModel</refentrytitle>
+  </refmeta>
+  <refnamediv>
+    <refname>Nautilus.PropertiesModel</refname>
+    <refpurpose>Nautilus.PropertiesModel Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF NAUTILUS-PYTHON SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+        <ooclass><classname>Nautilus.PropertiesModel</classname></ooclass>
+        <ooclass><classname><link linkend="class-gobject">gobject.GObject</link></classname></ooclass>
+
+        <constructorsynopsis language="python">
+            <methodname><link linkend="constructor-nautilus-properties-model">Nautilus.PropertiesModel</link></methodname>
+            <methodparam><parameter role="keyword">title</parameter></methodparam>
+            <methodparam><parameter role="keyword">model</parameter></methodparam>
+        </constructorsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-nautilus-python-menu--set_title">set_title</link></methodname>
+            <methodparam><parameter role="keyword">title</parameter></methodparam>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-nautilus-python-menu--get_title">get_title</link></methodname>
+        </methodsynopsis>
+
+        <methodsynopsis language="python">
+            <methodname><link linkend="method-nautilus-python-menu--get_model">get_model</link></methodname>
+        </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************* -->
+<!-- BEGIN OF ANCESTRY -->
+<!-- ********************************* -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
+    +-- <link linkend="class-nautilus-python-properties-model">Nautilus.PropertiesModel</link>
+</synopsis>
+</refsect1>
+
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-properties-model">
+    <title>Description</title>
+
+      <para>
+        A <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link> object an model that describes a set of file properties. Extensions can provide <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link> objects by registering it in <link linkend="class-nautilus-python-properties-model-provider"><classname>Nautilus.PropertiesModelProvider</classname></link>.
+      </para>
+
+  </refsect1>
+
+
+<!-- *********************************** -->
+<!-- BEGIN OF PROPERTIES -->
+<!-- *********************************** -->
+
+<refsect1>
+    <title>Properties</title>
+
+    <blockquote role="properties">
+      <informaltable pgwide="1" frame="none">
+      <tgroup cols="3">
+        <colspec column="1" colwidth="1in"/>
+        <colspec column="2" colwidth="1in"/>
+        <colspec column="3" colwidth="4in"/>
+          <tbody>
+
+            <row valign="top">
+              <entry>"title"</entry>
+              <entry>The user-visible name for the set of properties in this model.</entry>
+              <entry>Read-Write</entry>
+            </row>
+
+            <row valign="top">
+              <entry>"model"</entry>
+              <entry>The <classname>GListModel</classname> containing <link linkend="class-nautilus-python-properties-item"><classname>Nautilus.PropertyItem</classname></link> objects.  Default value: <literal>[]</literal></entry>
+              <entry>Read-Write-ConstructOnly</entry>
+            </row>
+
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </blockquote>
+</refsect1>
+
+
+<!-- ************************************ -->
+<!-- BEGIN OF CONSTRUCTOR -->
+<!-- ************************************ -->
+
+<refsect1 id="constructor-nautilus-properties-model">
+  <title>Constructor</title>
+
+  <programlisting><constructorsynopsis language="python">
+        <methodname>Nautilus.PropertiesModel</methodname>
+        <methodparam><parameter role="keyword">title</parameter></methodparam>
+        <methodparam><parameter role="keyword">model</parameter></methodparam>
+  </constructorsynopsis></programlisting>
+
+  <variablelist>
+    <varlistentry>
+	    <term><parameter role="keyword">title</parameter>&nbsp;:</term>
+	    <listitem><simpara>the user-visible name for the set of properties in this model</simpara></listitem>
+    </varlistentry>
+    <varlistentry>
+	    <term><parameter role="keyword">model</parameter>&nbsp;:</term>
+	    <listitem><simpara>The <classname>GListModel</classname> containing <link linkend="class-nautilus-python-properties-item"><classname>Nautilus.PropertyItem</classname></link> objects.</simpara></listitem>
+    </varlistentry>
+  </variablelist>
+
+  <para>
+    Creates a new <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link> object.
+  </para>
+</refsect1>
+
+
+
+<!-- ******************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ******************************** -->
+
+<refsect1>
+    <title>Public Methods</title>
+
+  <refsect2 id="method-nautilus-python-menu--set_title">
+    <title>Nautilus.Menu.set_title</title>
+    <programlisting><methodsynopsis language="python">
+    <methodname>set_title</methodname>
+      <methodparam><parameter role="keyword">title</parameter></methodparam>
+    </methodsynopsis></programlisting>
+    <variablelist>
+      <varlistentry>
+        <term><parameter role="keyword">title</parameter>&nbsp;:</term>
+        <listitem><simpara>a new name of this <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link></simpara></listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para>
+      Sets a new name of this <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link>.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-nautilus-python-menu--get_title">
+    <title>Nautilus.Menu.get_title</title>
+    <programlisting><methodsynopsis language="python">
+    <methodname>get_title</methodname>
+    </methodsynopsis></programlisting>
+    <para>
+      Returns the title of this <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link>.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-nautilus-python-menu--get_model">
+    <title>Nautilus.Menu.get_model</title>
+    <programlisting><methodsynopsis language="python">
+    <methodname>get_model</methodname>
+    </methodsynopsis></programlisting>
+    <para>
+      Returns a <classname>GListModel</classname> containing <link linkend="class-nautilus-python-properties-item"><classname>Nautilus.PropertyItem</classname></link> objects.
+    </para>
+  </refsect2>
+</refsect1>
+
+
+
+</refentry>
+

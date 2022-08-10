@@ -9,5 +9,7 @@
     <xi:include href="nautilus-python-file-info.xml"/>
     <xi:include href="nautilus-python-menu.xml"/>
     <xi:include href="nautilus-python-menu-item.xml"/>
+    <xi:include href="nautilus-python-properties-model.xml"/>
+    <xi:include href="nautilus-python-properties-item.xml"/>
 </chapter>
 

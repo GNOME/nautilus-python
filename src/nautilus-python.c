@@ -46,6 +46,9 @@ PyTypeObject *_PyNautilusInfoProvider_Type;
 PyTypeObject *_PyNautilusMenu_Type;
 PyTypeObject *_PyNautilusMenuItem_Type;
 PyTypeObject *_PyNautilusMenuProvider_Type;
+PyTypeObject *_PyNautilusPropertiesItem_Type;
+PyTypeObject *_PyNautilusPropertiesModel_Type;
+PyTypeObject *_PyNautilusPropertiesModelProvider_Type;
 PyTypeObject *_PyNautilusOperationHandle_Type;
 
 static inline gboolean 
@@ -91,7 +94,8 @@ nautilus_python_load_file(GTypeModule *type_module,
 
         if (PyObject_IsSubclass(value, (PyObject*)&PyNautilusColumnProvider_Type) ||
 				PyObject_IsSubclass(value, (PyObject*)&PyNautilusInfoProvider_Type) ||
-				PyObject_IsSubclass(value, (PyObject*)&PyNautilusMenuProvider_Type)) {
+				PyObject_IsSubclass(value, (PyObject*)&PyNautilusMenuProvider_Type) ||
+				PyObject_IsSubclass(value, (PyObject*)&PyNautilusPropertiesModelProvider_Type)) {
             gtype = nautilus_python_object_get_type(type_module, value);
             g_array_append_val(all_types, gtype);
         }
@@ -207,6 +211,9 @@ nautilus_python_init_python (void) {
     IMPORT(Menu, "Menu");
     IMPORT(MenuItem, "MenuItem");
     IMPORT(MenuProvider, "MenuProvider");
+    IMPORT(PropertiesItem, "PropertiesItem");
+    IMPORT(PropertiesModel, "PropertiesModel");
+    IMPORT(PropertiesModelProvider, "PropertiesModelProvider");
     IMPORT(OperationHandle, "OperationHandle");
 
 #undef IMPORT

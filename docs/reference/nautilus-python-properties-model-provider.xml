@@ -1,0 +1,84 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-nautilus-python-properties-model-provider" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <refmeta>
+    <refentrytitle>Nautilus.PropertiesModelProvider</refentrytitle>
+  </refmeta>
+  <refnamediv>
+    <refname>Nautilus.PropertiesModelProvider</refname>
+    <refpurpose>Nautilus.PropertiesModelProvider Reference</refpurpose>
+  </refnamediv>
+
+<!-- ******************************* -->
+<!-- BEGIN OF SYNOPSIS -->
+<!-- ******************************* -->
+
+  <refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+      <ooclass><classname>Nautilus.PropertiesModelProvider</classname></ooclass>
+
+      <methodsynopsis language="python">
+        <methodname><link linkend="method-nautilus-properties-model-provider--get-models">get_models</link></methodname>
+        <methodparam><parameter role="keyword">files</parameter></methodparam>
+      </methodsynopsis>
+    </classsynopsis>
+  </refsect1>
+
+<!-- ********************************** -->
+<!-- BEGIN OF DESCRIPTION -->
+<!-- ********************************** -->
+
+  <refsect1 id="description-properties-model-provider">
+    <title>Description</title>
+
+      <para>
+      If subclassed, Nautilus will request a list of custom properties models that should
+      appear when a user opens the Properties dialog for a file or folder.
+      </para>
+
+<example>
+    <title>Nautilus.PropertiesModelProvider Example</title>
+    <programlisting><xi:include href="../../examples/md5sum-properties-model.py" parse="text" /></programlisting>
+</example>
+
+  </refsect1>
+
+<!-- ****************************** -->
+<!-- BEGIN OF METHODS -->
+<!-- ****************************** -->
+
+  <refsect1>
+        <title>Passive Methods</title>
+
+        <refsect2 id="method-nautilus-properties-model-provider--get-models">
+          <title>Nautilus.PropertiesModelProvider.get_models</title>
+
+          <programlisting><methodsynopsis language="python">
+            <methodname>get_models</methodname>
+            <methodparam><parameter role="keyword">files</parameter></methodparam>
+          </methodsynopsis></programlisting>
+
+          <variablelist>
+            <varlistentry>
+	            <term><parameter role="keyword">files</parameter>&nbsp;:</term>
+	            <listitem><simpara>a list of <link linkend="class-nautilus-python-file-info"><classname>Nautilus.FileInfo</classname></link> objects.</simpara></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><emphasis>Returns</emphasis>&nbsp;:</term>
+              <listitem><simpara>a list of <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link> objects</simpara></listitem>
+            </varlistentry>
+          </variablelist>
+
+          <para>
+                This function is called by Nautilus when it wants properties model items from the extension.
+                It is called in the main thread before a properties model is shown, so it should return quickly.
+          </para>
+        </refsect2>
+    </refsect1>
+
+</refentry>
+

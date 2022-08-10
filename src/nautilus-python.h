@@ -55,6 +55,15 @@ extern PyTypeObject *_PyNautilusMenuItem_Type;
 extern PyTypeObject *_PyNautilusMenuProvider_Type;
 #define PyNautilusMenuProvider_Type (*_PyNautilusMenuProvider_Type)
 
+extern PyTypeObject *_PyNautilusPropertiesItem_Type;
+#define PyNautilusPropertiesItem_Type (*_PyNautilusPropertiesItem_Type)
+
+extern PyTypeObject *_PyNautilusPropertiesModel_Type;
+#define PyNautilusPropertiesModel_Type (*_PyNautilusPropertiesModel_Type)
+
+extern PyTypeObject *_PyNautilusPropertiesModelProvider_Type;
+#define PyNautilusPropertiesModelProvider_Type (*_PyNautilusPropertiesModelProvider_Type)
+
 extern PyTypeObject *_PyNautilusOperationHandle_Type;
 #define PyNautilusOperationHandle_Type (*_PyNautilusOperationHandle_Type)
 

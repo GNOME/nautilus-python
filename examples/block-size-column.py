@@ -1,11 +1,5 @@
 import os
-
-# A way to get unquote working with python 2 and 3
-try:
-    from urllib import unquote
-except ImportError:
-    from urllib.parse import unquote
-
+from urllib.parse import unquote
 from gi.repository import GObject, Nautilus
 
 class ColumnExtension(GObject.GObject, Nautilus.ColumnProvider, Nautilus.InfoProvider):

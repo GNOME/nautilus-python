@@ -1,0 +1,5 @@
+option(
+  'docs',
+  type: 'feature',
+  description: 'Generate and install API docs',
+)

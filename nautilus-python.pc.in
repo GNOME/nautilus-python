@@ -1,7 +1,0 @@
-Name: Nautilus-Python
-Description: Nautilus-Python Components
-Version: @VERSION@
-
-prefix=@prefix@
-libdir=${prefix}/lib
-pythondir=@datadir@/nautilus-python/extensions

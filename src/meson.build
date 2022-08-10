@@ -4,9 +4,6 @@ nautilus_python = shared_module(
     'nautilus-python.c',
     'nautilus-python-object.c',
   ],
-  c_args: [
-    '-DHAVE_CONFIG_H'
-  ],
   dependencies: [
     libnautilus_extension,
     pygobject,

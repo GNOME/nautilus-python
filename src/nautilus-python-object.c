@@ -40,7 +40,7 @@ int __PyString_Check(PyObject *obj) {
 #endif
 }
 
-char* __PyString_AsString(PyObject *obj) {
+const char* __PyString_AsString(PyObject *obj) {
 #if PY_MAJOR_VERSION >= 3
     return PyUnicode_AsUTF8(obj);
 #else

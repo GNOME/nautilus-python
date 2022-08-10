@@ -243,8 +243,6 @@ nautilus_python_init_python (void) {
 
 static void
 nautilus_python_check_all_directories(GTypeModule *module) {
-    gchar *extensions_dir = NULL;
-
     GList *dirs = NULL;
 
     // Check ~/.local/share first
@@ -280,7 +278,6 @@ nautilus_python_check_all_directories(GTypeModule *module) {
 
 void
 nautilus_module_initialize(GTypeModule *module) {
-    gchar *user_extensions_dir;
     const gchar *env_string;
 
     env_string = g_getenv("NAUTILUS_PYTHON_DEBUG");

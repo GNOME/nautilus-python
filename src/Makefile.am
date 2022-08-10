@@ -6,9 +6,7 @@ AM_CPPFLAGS =                        \
     -I$(top_builddir)                \
     $(DISABLE_DEPRECATED_CFLAGS)            \
     $(NAUTILUS_PYTHON_CFLAGS)            \
-    -DPYTHON_VERSION=\"$(PYTHON_VERSION)\"        \
-    -DPY_LIB_LOC="\"$(PYTHON_LIB_LOC)\""        \
-    -DPY_LIB_NAME="\"$(PYTHON_LIB_NAME)\""        \
+    -DPYTHON_LIBPATH="\"$(PYTHON_LIB_LOC)/lib$(PYTHON_LIB_NAME).so.1.0\"" \
     $(PYTHON_INCLUDES)
 
 nautilus_extensiondir=$(NAUTILUS_EXTENSION_DIR)

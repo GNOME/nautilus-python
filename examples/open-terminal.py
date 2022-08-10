@@ -1,15 +1,13 @@
 # This example is contributed by Martin Enlund
 import os
 from urllib.parse import unquote
-import gi
-gi.require_version('GConf', '2.0')
-from gi.repository import Nautilus, GObject, GConf
+from gi.repository import Nautilus, GObject
 
 
 class OpenTerminalExtension(Nautilus.MenuProvider, GObject.GObject):
     def __init__(self):
-        self.client = GConf.Client.get_default()
-        
+        pass
+
     def _open_terminal(self, file):
         filename = unquote(file.get_uri()[7:])
 

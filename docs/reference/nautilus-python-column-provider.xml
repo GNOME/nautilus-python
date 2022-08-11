@@ -2,7 +2,7 @@
 <!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
-<refentry id="class-nautilus-python-column-provider">
+<refentry id="class-nautilus-python-column-provider" xmlns:xi="http://www.w3.org/2001/XInclude">
   <refnamediv>
     <refname>Nautilus.ColumnProvider</refname>
     <refpurpose>Nautilus.ColumnProvider Reference</refpurpose>
@@ -44,35 +44,7 @@
 
 <example>
     <title>Nautilus.ColumnProvider Example</title>
-    <programlisting>
-import os
-
-# A way to get unquote working with python 2 and 3
-try:
-    from urllib import unquote
-except ImportError:
-    from urllib.parse import unquote
-
-from gi.repository import GObject, Nautilus
-
-class ColumnExtension(GObject.GObject, Nautilus.ColumnProvider, Nautilus.InfoProvider):
-    def __init__(self):
-        pass
-    
-    def get_columns(self):
-        return Nautilus.Column(name="NautilusPython::block_size_column",
-                               attribute="block_size",
-                               label="Block size",
-                               description="Get the block size"),
-
-    def update_file_info(self, file):
-        if file.get_uri_scheme() != 'file':
-            return
-        
-        filename = unquote(file.get_uri()[7:])
-        
-        file.add_string_attribute('block_size', str(os.stat(filename).st_blksize))
-    </programlisting>
+    <programlisting><xi:include href="../../examples/block-size-column.py" parse="text" /></programlisting>
 </example>
         
   </refsect1>

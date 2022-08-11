@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="class-nautilus-python-column">
+  <refmeta>
+    <refentrytitle>Nautilus.Column</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.Column</refname>
     <refpurpose>Nautilus.Column Reference</refpurpose>

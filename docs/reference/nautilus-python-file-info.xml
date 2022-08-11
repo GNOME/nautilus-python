@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="class-nautilus-python-file-info">
+  <refmeta>
+    <refentrytitle>Nautilus.FileInfo</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.FileInfo</refname>
     <refpurpose>Nautilus.FileInfo Reference</refpurpose>

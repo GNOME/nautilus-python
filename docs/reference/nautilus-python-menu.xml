@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="class-nautilus-python-menu">
+  <refmeta>
+    <refentrytitle>Nautilus.Menu</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.Menu</refname>
     <refpurpose>Nautilus.Menu Reference</refpurpose>

@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="class-nautilus-python-property-page-provider" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <refmeta>
+    <refentrytitle>Nautilus.PropertyPageProvider</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.PropertyPageProvider</refname>
     <refpurpose>Nautilus.PropertyPageProvider Reference</refpurpose>

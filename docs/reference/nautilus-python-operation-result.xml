@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="enum-nautilus-python-operation-result">
+  <refmeta>
+    <refentrytitle>Nautilus.OperationResult</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.OperationResult</refname>
     <refpurpose>Nautilus.OperationResult Reference</refpurpose>

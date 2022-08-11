@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="class-nautilus-python-column-provider" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <refmeta>
+    <refentrytitle>Nautilus.ColumnProvider</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.ColumnProvider</refname>
     <refpurpose>Nautilus.ColumnProvider Reference</refpurpose>

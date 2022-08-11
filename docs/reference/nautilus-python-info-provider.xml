@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="class-nautilus-python-info-provider" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <refmeta>
+    <refentrytitle>Nautilus.InfoProvider</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.InfoProvider</refname>
     <refpurpose>Nautilus.InfoProvider Reference</refpurpose>

@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="class-nautilus-python-location-widget-provider" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <refmeta>
+    <refentrytitle>Nautilus.LocationWidgetProvider</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.LocationWidgetProvider</refname>
     <refpurpose>Nautilus.LocationWidgetProvider Reference</refpurpose>

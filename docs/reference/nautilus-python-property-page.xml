@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="class-nautilus-python-property-page">
+  <refmeta>
+    <refentrytitle>Nautilus.PropertyPage</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.PropertyPage</refname>
     <refpurpose>Nautilus.PropertyPage Reference</refpurpose>

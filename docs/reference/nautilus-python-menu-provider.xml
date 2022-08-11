@@ -3,6 +3,9 @@
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 
 <refentry id="class-nautilus-python-menu-provider" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <refmeta>
+    <refentrytitle>Nautilus.MenuProvider</refentrytitle>
+  </refmeta>
   <refnamediv>
     <refname>Nautilus.MenuProvider</refname>
     <refpurpose>Nautilus.MenuProvider Reference</refpurpose>

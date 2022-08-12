@@ -73,7 +73,7 @@
 
 <example>
     <title>Nautilus.MenuProvider Example</title>
-    <programlisting><xi:include href="../../examples/docs/submenu.py" parse="text" /></programlisting>
+    <programlisting><xi:include href="../../examples/submenu.py" parse="text" /></programlisting>
 </example>
         
         

@@ -65,7 +65,7 @@
 
 <example>
     <title>Nautilus.InfoProvider Example</title>
-    <programlisting><xi:include href="../../examples/docs/update-file-info-async.py" parse="text" /></programlisting>
+    <programlisting><xi:include href="../../examples/update-file-info-async.py" parse="text" /></programlisting>
 </example>
         
   </refsect1>

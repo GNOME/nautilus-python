@@ -7,6 +7,7 @@ BACKGROUND_KEY = "picture-uri"
 
 class BackgroundImageExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
+        super().__init__()
         self.bgsettings = Gio.Settings.new(BACKGROUND_SCHEMA)
 
     def menu_activate_cb(self, menu, file):

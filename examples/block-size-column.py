@@ -4,9 +4,6 @@ from gi.repository import GObject, Nautilus
 
 
 class ColumnExtension(GObject.GObject, Nautilus.ColumnProvider, Nautilus.InfoProvider):
-    def __init__(self):
-        pass
-
     def get_columns(self):
         column = Nautilus.Column(
             name="NautilusPython::block_size_column",

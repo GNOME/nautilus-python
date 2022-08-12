@@ -3,7 +3,8 @@ from gi.repository import Nautilus, GObject
 
 class TestExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
-        pass
+        super().__init__()
+        print("Initialized test extension")
 
     def menu_activate_cb(self, menu, file):
         print("menu_activate_cb", file)

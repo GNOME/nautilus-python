@@ -4,9 +4,6 @@ from gi.repository import Nautilus, Gtk, GObject
 
 
 class MD5SumPropertyPage(GObject.GObject, Nautilus.PropertyPageProvider):
-    def __init__(self):
-        pass
-
     def get_property_pages(self, files):
         if len(files) != 1:
             return

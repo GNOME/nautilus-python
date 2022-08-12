@@ -2,9 +2,6 @@ from gi.repository import Nautilus, GObject
 
 
 class ExampleMenuProvider(GObject.GObject, Nautilus.MenuProvider):
-    def __init__(self):
-        pass
-
     def get_file_items(self, window, files):
         top_menuitem = Nautilus.MenuItem(
             name="ExampleMenuProvider::Foo",

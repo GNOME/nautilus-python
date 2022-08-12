@@ -4,10 +4,7 @@ from urllib.parse import unquote
 from gi.repository import Nautilus, GObject
 
 
-class OpenTerminalExtension(Nautilus.MenuProvider, GObject.GObject):
-    def __init__(self):
-        pass
-
+class OpenTerminalExtension(GObject.GObject, Nautilus.MenuProvider):
     def _open_terminal(self, file):
         filename = unquote(file.get_uri()[7:])
 

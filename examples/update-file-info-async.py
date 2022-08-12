@@ -3,6 +3,7 @@ from gi.repository import Nautilus, GObject
 
 class UpdateFileInfoAsync(GObject.GObject, Nautilus.InfoProvider):
     def __init__(self):
+        super().__init__()
         self.timers = []
         pass
 

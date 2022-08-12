@@ -448,8 +448,8 @@ nautilus_python_object_class_init (NautilusPythonObjectClass *class,
 GType 
 nautilus_python_object_get_type (GTypeModule *module, 
                                  PyObject     *type) {
-    GTypeInfo *info;
-    const char *type_name;
+    g_autofree GTypeInfo *info = NULL;
+    g_autofree gchar *type_name = NULL;
     GType gtype;
       
     static const GInterfaceInfo property_page_provider_interface_info = {

@@ -122,12 +122,8 @@ nautilus_python_load_dir (GTypeModule *module,
             
     while ((name = g_dir_read_name(dir))) {
         if (g_str_has_suffix(name, ".py")) {
-            char *modulename;
-            int len;
-
-            len = strlen(name) - 3;
-            modulename = g_new0(char, len + 1 );
-            strncpy(modulename, name, len);
+            size_t len = strlen (name) - 3;
+            g_autofree char *modulename = g_strndup (name, len);
 
             if (!initialized) {
                 PyObject *sys_path, *py_path;
@@ -136,7 +132,6 @@ nautilus_python_load_dir (GTypeModule *module,
                 * at all if no extensions are found) */
                 if (!nautilus_python_init_python()) {
                     g_warning("nautilus_python_init_python failed");
-                    g_dir_close(dir);
                     break;
                 }
                 
@@ -150,6 +145,8 @@ nautilus_python_load_dir (GTypeModule *module,
             nautilus_python_load_file(module, modulename);
         }
     }    
+
+    g_dir_close (dir);
 }
 
 static gboolean
@@ -242,7 +239,7 @@ nautilus_python_check_all_directories(GTypeModule *module) {
     // If nautilus is built in a non-standard prefix
     // Check nautilus prefix's DATADIR
     gchar *prefix_extension_dir = DATADIR "/nautilus-python/extensions";
-    dirs = g_list_append(dirs, prefix_extension_dir);
+    dirs = g_list_append(dirs, g_strdup (prefix_extension_dir));
 
     // Check all system data dirs 
     const gchar *const *temp = g_get_system_data_dirs();
@@ -251,6 +248,8 @@ nautilus_python_check_all_directories(GTypeModule *module) {
             "nautilus-python", "extensions", NULL);
         if (g_strcmp0(dir, prefix_extension_dir) != 0) {
             dirs = g_list_append(dirs, dir);
+        } else {
+            g_free (dir);
         }
 
         temp++;
@@ -263,7 +262,7 @@ nautilus_python_check_all_directories(GTypeModule *module) {
         dirs = dirs->next;
     }
 
-    g_list_free(dirs);
+    g_list_free_full (dirs, g_free);
 }
 
 void

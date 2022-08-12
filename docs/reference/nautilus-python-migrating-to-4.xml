@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<chapter id="nautilus-python-migrating-to-4">
+
+    <title>Migrating to Nautilus API 4.0</title>
+
+    <para>Nautilus 43 no longer allows extensions to directly manipulate GTK widgets – all UI changes now need to happen through model objects. If your script implements any of the following provider interfaces, you will need to update it:</para>
+
+    <simplesect id="nautilus-python-migrating-to-4-location-widget-provider">
+        <title>LocationWidgetProvider</title>
+        <para> The <classname>Nautilus.LocationWidgetProvider</classname> was removed without replacement. If your script requires it, you can request a new model-based API for your specific use case on the <ulink url="https://gitlab.gnome.org/GNOME/nautilus">Nautilus issue tracker</ulink>.</para>
+    </simplesect>
+
+    <simplesect id="nautilus-python-migrating-to-4-menu-provider">
+        <title>MenuProvider</title>
+        <para> The<link linkend="method-nautilus-python-menu-provider--get-file-items"> <methodname>get_file_items</methodname></link>, <link linkend="method-nautilus-python-menu-provider--get-file-items-full"><methodname>get_file_items_full</methodname></link>, <link linkend="method-nautilus-python-menu-provider--get-background-items"><methodname>get_background_items</methodname></link> a <link linkend="method-nautilus-python-menu-provider--get-background-items-full"><methodname>get_background_items_full</methodname></link> methods of <link linkend="class-nautilus-python-menu-provider"><classname>Nautilus.MenuProvider</classname></link> no longer take the <parameter role="keyword">window</parameter> argument. Remove it from your implementations.</para>
+    </simplesect>
+
+    <simplesect id="nautilus-python-migrating-to-4-property-page-provider">
+        <title>PropertyPageProvider</title>
+        <para> The <classname>Nautilus.PropertyPageProvider</classname> was replaced by <link linkend="class-nautilus-python-properties-model-provider"><classname>Nautilus.PropertiesModelProvider</classname></link> class. Unlike the previous unrestricted property pages that could contain any GTK widget, the new model-based interface currently only supports a pre-defined layout. Scripts can add <link linkend="class-nautilus-python-properties-model">pages</link>, each of which can display a list of <link linkend="class-nautilus-python-properties-item">text properties</link>.</para>
+        <para>Subclass the <link linkend="class-nautilus-python-properties-model-provider"><classname>Nautilus.PropertiesModelProvider</classname></link> abstract class and have the <link linkend="method-nautilus-python-properties-model-provider--get_models"><methodname>get_models</methodname></link> method return the list of <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link>, one for each properties page.</para>
+    </simplesect>
+
+    <para>See the <ulink url="https://gitlab.gnome.org/GNOME/nautilus/-/merge_requests/927">relevant Nautilus change</ulink> for more context and the <ulink url="https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/11">corresponding nautilus-python update</ulink> for more migration examples.</para>
+</chapter>
+

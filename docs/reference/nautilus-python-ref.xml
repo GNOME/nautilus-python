@@ -28,6 +28,7 @@
 <!-- the reference page chapters for the nautilus-python classes -->
 
     <xi:include href="nautilus-python-overview.xml"/>
+    <xi:include href="nautilus-python-migrating-to-4.xml"/>
     <xi:include href="nautilus-python-class-reference.xml"/>
     <xi:include href="nautilus-python-provider-reference.xml"/>
     <xi:include href="nautilus-python-enum-reference.xml"/>

@@ -142,11 +142,7 @@ nautilus_python_load_dir (GTypeModule *module,
                 
                 /* sys.path.insert(0, dirname) */
                 sys_path = PySys_GetObject("path");
-#if PY_MAJOR_VERSION >= 3
                 py_path = PyUnicode_FromString(dirname);
-#else
-                py_path = PyString_FromString(dirname);
-#endif
                 PyList_Insert(sys_path, 0, py_path);
                 Py_DECREF(py_path);
             }
@@ -177,11 +173,7 @@ nautilus_python_init_python (void) {
     }
     
     debug("PySys_SetArgv");
-#if PY_MAJOR_VERSION >= 3
     wchar_t *argv[] = { L"nautilus", NULL };
-#else
-    char *argv[] = { "nautilus", NULL };
-#endif
     PySys_SetArgv(1, argv);
     if (PyErr_Occurred()) {
         PyErr_Print();

@@ -32,38 +32,6 @@
 
 static GObjectClass *parent_class;
 
-int __PyString_Check(PyObject *obj) {
-#if PY_MAJOR_VERSION >= 3
-    return PyUnicode_Check(obj);
-#else
-    return PyString_Check(obj);
-#endif
-}
-
-const char* __PyString_AsString(PyObject *obj) {
-#if PY_MAJOR_VERSION >= 3
-    return PyUnicode_AsUTF8(obj);
-#else
-    return PyString_AsString(obj);
-#endif
-}
-
-PyObject* __PyString_FromString(const char *c) {
-#if PY_MAJOR_VERSION >= 3
-    return PyUnicode_FromString(c);
-#else
-    return PyString_FromString(c);
-#endif
-}
-
-int __PyInt_Check(PyObject *obj) {
-#if PY_MAJOR_VERSION >= 3
-    return PyLong_Check(obj);
-#else
-    return PyInt_Check(obj);
-#endif
-}
-
 /* These macros assumes the following things:
  *   a METHOD_NAME is defined with is a string
  *   a goto label called beach
@@ -107,7 +75,7 @@ int __PyInt_Check(PyObject *obj) {
 #define HANDLE_LIST(py_ret, type, type_name)                           \
     {                                                                  \
         Py_ssize_t i = 0;                                              \
-        if (!PySequence_Check(py_ret) || __PyString_Check(py_ret))       \
+        if (!PySequence_Check(py_ret) || PyUnicode_Check(py_ret))      \
         {                                                              \
             PyErr_SetString(PyExc_TypeError,                           \
                             METHOD_NAME " must return a sequence");    \
@@ -209,7 +177,7 @@ nautilus_python_object_get_widget (NautilusLocationWidgetProvider *provider,
     CHECK_OBJECT(object);
     CHECK_METHOD_NAME(object->instance);
 
-    py_uri = __PyString_FromString(uri);
+    py_uri = PyUnicode_FromString(uri);
 
     py_ret = PyObject_CallMethod(object->instance, METHOD_PREFIX METHOD_NAME,
                                  "(NN)", py_uri,
@@ -423,17 +391,13 @@ nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
     
     HANDLE_RETVAL(py_ret);
 
-    if (!__PyInt_Check(py_ret)) {
+    if (!PyLong_Check(py_ret)) {
         PyErr_SetString(PyExc_TypeError,
                         METHOD_NAME " must return None or a int");
         goto beach;
     }
 
-#if PY_MAJOR_VERSION >= 3
     ret = PyLong_AsLong(py_ret);
-#else
-    ret = PyInt_AsLong(py_ret);
-#endif
 
 beach:
     free_pygobject_data(file, NULL);
@@ -518,7 +482,7 @@ nautilus_python_object_get_type (GTypeModule *module,
         NULL
     };
 
-    debug_enter_args("type=%s", __PyString_AsString(PyObject_GetAttrString(type, "__name__")));
+    debug_enter_args("type=%s", PyUnicode_AsUTF8(PyObject_GetAttrString(type, "__name__")));
     info = g_new0 (GTypeInfo, 1);
     
     info->class_size = sizeof (NautilusPythonObjectClass);
@@ -530,7 +494,7 @@ nautilus_python_object_get_type (GTypeModule *module,
     Py_INCREF(type);
 
     type_name = g_strdup_printf("%s+NautilusPython",
-                                __PyString_AsString(PyObject_GetAttrString(type, "__name__")));
+                                PyUnicode_AsUTF8(PyObject_GetAttrString(type, "__name__")));
         
     gtype = g_type_module_register_type (module, 
                                          G_TYPE_OBJECT,

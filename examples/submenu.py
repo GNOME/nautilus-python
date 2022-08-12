@@ -1,8 +1,13 @@
-from gi.repository import Nautilus, GObject
+from gi.repository import Nautilus, GObject, Gtk
+from typing import List
 
 
 class ExampleMenuProvider(GObject.GObject, Nautilus.MenuProvider):
-    def get_file_items(self, window, files):
+    def get_file_items(
+        self,
+        window: Gtk.Widget,
+        files: List[Nautilus.FileInfo],
+    ) -> List[Nautilus.MenuItem]:
         top_menuitem = Nautilus.MenuItem(
             name="ExampleMenuProvider::Foo",
             label="Foo",
@@ -21,9 +26,15 @@ class ExampleMenuProvider(GObject.GObject, Nautilus.MenuProvider):
         )
         submenu.append_item(sub_menuitem)
 
-        return (top_menuitem,)
+        return [
+            top_menuitem,
+        ]
 
-    def get_background_items(self, window, file):
+    def get_background_items(
+        self,
+        window: Gtk.Widget,
+        current_folder: Nautilus.FileInfo,
+    ) -> List[Nautilus.MenuItem]:
         submenu = Nautilus.Menu()
         submenu.append_item(
             Nautilus.MenuItem(
@@ -42,4 +53,6 @@ class ExampleMenuProvider(GObject.GObject, Nautilus.MenuProvider):
         )
         menuitem.set_submenu(submenu)
 
-        return (menuitem,)
+        return [
+            menuitem,
+        ]

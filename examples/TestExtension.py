@@ -1,4 +1,5 @@
-from gi.repository import Nautilus, GObject
+from gi.repository import Nautilus, GObject, Gtk
+from typing import List
 
 
 class TestExtension(GObject.GObject, Nautilus.MenuProvider):
@@ -6,12 +7,20 @@ class TestExtension(GObject.GObject, Nautilus.MenuProvider):
         super().__init__()
         print("Initialized test extension")
 
-    def menu_activate_cb(self, menu, file):
+    def menu_activate_cb(
+        self,
+        menu: Nautilus.MenuItem,
+        file: Nautilus.FileInfo,
+    ) -> None:
         print("menu_activate_cb", file)
 
-    def get_file_items(self, window, files):
+    def get_file_items(
+        self,
+        window: Gtk.Widget,
+        files: List[Nautilus.FileInfo],
+    ) -> List[Nautilus.MenuItem]:
         if len(files) != 1:
-            return
+            return []
 
         file = files[0]
 
@@ -22,9 +31,15 @@ class TestExtension(GObject.GObject, Nautilus.MenuProvider):
         )
         item.connect("activate", self.menu_activate_cb, file)
 
-        return [item]
+        return [
+            item,
+        ]
 
     # Even though we're not using background items, Nautilus will generate
     # a warning if the method isn't present
-    def get_background_items(self, window, file):
-        return None
+    def get_background_items(
+        self,
+        window: Gtk.Widget,
+        current_folder: Nautilus.FileInfo,
+    ) -> List[Nautilus.MenuItem]:
+        return []

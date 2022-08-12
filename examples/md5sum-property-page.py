@@ -1,19 +1,23 @@
 import hashlib
 from urllib.parse import unquote
 from gi.repository import Nautilus, Gtk, GObject
+from typing import List
 
 
 class MD5SumPropertyPage(GObject.GObject, Nautilus.PropertyPageProvider):
-    def get_property_pages(self, files):
+    def get_property_pages(
+        self,
+        files: List[Nautilus.FileInfo],
+    ) -> List[Nautilus.PropertyPage]:
         if len(files) != 1:
-            return
+            return []
 
         file = files[0]
         if file.get_uri_scheme() != "file":
-            return
+            return []
 
         if file.is_directory():
-            return
+            return []
 
         filename = unquote(file.get_uri()[7:])
 
@@ -34,10 +38,10 @@ class MD5SumPropertyPage(GObject.GObject, Nautilus.PropertyPageProvider):
         self.value_label.set_text(md5sum)
         self.value_label.show()
 
-        return (
+        return [
             Nautilus.PropertyPage(
                 name="NautilusPython::md5_sum",
                 label=self.property_label,
                 page=self.hbox,
             ),
-        )
+        ]

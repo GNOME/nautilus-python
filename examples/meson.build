@@ -10,6 +10,7 @@ install_data(
   'open-terminal.py',
   'md5sum-property-page.py',
   'submenu.py',
+  'TestExtension.py',
   'update-file-info-async.py',
   install_dir: docdir / 'examples',
 )

@@ -1,7 +1,7 @@
 from gi.repository import Nautilus, GObject
 
 
-class ColumnExtension(GObject.GObject, Nautilus.MenuProvider):
+class TestExtension(GObject.GObject, Nautilus.MenuProvider):
     def __init__(self):
         pass
 

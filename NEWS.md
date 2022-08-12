@@ -1,3 +1,14 @@
+## 4.0.alpha (2022-08-12)
+
+- The extension was ported to Nautilus 43 (https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/11)
+  - Notably, this removes any direct access to GTK widgets from the API. **Most scripts will need to be modified.** Please check the migration guide in the docs on how to update your scripts.
+- Switched to Meson build system (https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/10)
+- Removed support for Python 2
+- Fixed build with `-fno-common` (Andreas Henriksson)
+- Added missing parent constructor calls to examples
+- Decorated the examples with typehints
+- Fixed several memory leaks (Michael Webster)
+
 ## 1.2.3 (2019-07-17)
 
 - First release from gitlab

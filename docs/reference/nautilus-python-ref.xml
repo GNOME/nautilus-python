@@ -3,12 +3,9 @@
 [
 <!ENTITY % entities SYSTEM "entities.docbook">
 %entities;
-<!ENTITY builddate SYSTEM "builddate.xml">
-<!ENTITY version SYSTEM "version.xml">
 ]>
 <book id="nautilus-python-reference" xmlns:xi="http://www.w3.org/2001/XInclude">
   <bookinfo>
-    <pubdate>&builddate;</pubdate>
     <title>nautilus-python Reference Manual</title>
     <edition>Reference Manual for nautilus-python &version;</edition>
     <releaseinfo>For nautilus-python version &version;</releaseinfo>

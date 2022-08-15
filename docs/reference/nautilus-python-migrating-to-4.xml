@@ -15,12 +15,29 @@
     <simplesect id="nautilus-python-migrating-to-4-menu-provider">
         <title>MenuProvider</title>
         <para> The<link linkend="method-nautilus-python-menu-provider--get-file-items"> <methodname>get_file_items</methodname></link>, <link linkend="method-nautilus-python-menu-provider--get-file-items-full"><methodname>get_file_items_full</methodname></link>, <link linkend="method-nautilus-python-menu-provider--get-background-items"><methodname>get_background_items</methodname></link> a <link linkend="method-nautilus-python-menu-provider--get-background-items-full"><methodname>get_background_items_full</methodname></link> methods of <link linkend="class-nautilus-python-menu-provider"><classname>Nautilus.MenuProvider</classname></link> no longer take the <parameter role="keyword">window</parameter> argument. Remove it from your implementations.</para>
+        <para>If you need to keep supporting older versions of Nautilus, you can use <ulink url="https://docs.python.org/3/reference/compound_stmts.html#grammar-token-python-grammar-parameter_list_starargs">variadic arguments</ulink>:</para>
+        <informalexample>
+            <programlisting>def get_file_items(self, *args):
+    # `args` will be `[files: List[Nautilus.FileInfo]]` in Nautilus 4.0 API,
+    # and `[window: Gtk.Widget, files: List[Nautilus.FileInfo]]` in Nautilus 3.0 API.
+    files = args[-1]</programlisting>
+    </informalexample>
     </simplesect>
 
     <simplesect id="nautilus-python-migrating-to-4-property-page-provider">
         <title>PropertyPageProvider</title>
         <para> The <classname>Nautilus.PropertyPageProvider</classname> was replaced by <link linkend="class-nautilus-python-properties-model-provider"><classname>Nautilus.PropertiesModelProvider</classname></link> class. Unlike the previous unrestricted property pages that could contain any GTK widget, the new model-based interface currently only supports a pre-defined layout. Scripts can add <link linkend="class-nautilus-python-properties-model">pages</link>, each of which can display a list of <link linkend="class-nautilus-python-properties-item">text properties</link>.</para>
         <para>Subclass the <link linkend="class-nautilus-python-properties-model-provider"><classname>Nautilus.PropertiesModelProvider</classname></link> abstract class and have the <link linkend="method-nautilus-python-properties-model-provider--get_models"><methodname>get_models</methodname></link> method return the list of <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link>, one for each properties page.</para>
+        <para>If you need to keep supporting older versions of Nautilus, you can keep the old definition conditionally:</para>
+        <informalexample>
+            <programlisting language="Python">if hasattr(Nautilus, "PropertiesModelProvider"):
+    # For Nautilus 4.0 API
+    class MD5SumPropertiesModel(GObject.GObject, Nautilus.PropertiesModelProvider):
+        ...
+else:
+    class MD5SumPropertyPage(GObject.GObject, Nautilus.PropertyPageProvider):
+        ...</programlisting>
+    </informalexample>
     </simplesect>
 
     <simplesect id="nautilus-python-migrating-to-4-more">

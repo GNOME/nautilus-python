@@ -1,57 +1,41 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
-<chapter id="nautilus-python-overview"
-  xmlns:xi="http://www.w3.org/2001/XInclude">
+<chapter id="nautilus-python-overview" xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <title>Overview</title>
 
-    <para>Writing a Nautilus-Python extension is a fairly straight-forward process.
-    One simply imports the Nautilus module from the gobject introspection repository and creates a class which is derived from a gobject.GObject and 
-    one of the Nautilus module's classes. When an extension derives a class, it becomes a "provider", 
-    telling Nautilus to ask it for information. There are several types of providers 
-    available for extensions to use: there is MenuProvider, PropertiesModelProvider,
-    ColumnProvider, and InfoProvider, all of which will be explained 
-    in more detail below. Your class can be derived from multiple providers.</para>
-    
-    <para>Here are the basic steps:</para>
-    
-    <para>1. A script is written and installed to the standard nautilus-python extension install path</para>
-    <para>2. Nautilus is (re)started and loads the nautilus-python C extension, which in turn loads all python extensions it can find</para>
-    <para>3. Any python script in the standard nautilus-python extension install path that imports the Nautilus module from the gobject introspection repository and derives 
-    the main class from a Nautilus module class will be loaded</para>
-    
-    <note>
-<title>Extension Install Path for &lt; v1.2.0</title>
+    <para>Writing a Nautilus-Python extension is a fairly straight-forward process. One simply imports the Nautilus module from the GObject Introspection repository and creates a class which is derived from a <classname>GObject.GObject</classname> and one or more of the Nautilus module’s abstract classes. When an extension derives a class, it becomes a “provider”, telling Nautilus to ask it for information.</para>
 
-<para>As of nautilus-python 0.7.0 (and continued in 1.0+), nautilus-python looks in ~/.local/share/nautilus-python/extensions 
-for local extensions and $PREFIX/share/nautilus-python/extensions for global extensions.</para>
+    <para>There are several types of providers available for extensions to use, all of which will be explained in more detail in later chapters:</para>
+
+    <itemizedlist>
+        <listitem><simpara><link linkend="class-nautilus-python-column-provider"><classname>ColumnProvider</classname></link></simpara></listitem>
+        <listitem><simpara><link linkend="class-nautilus-python-info-provider"><classname>InfoProvider</classname></link></simpara></listitem>
+        <listitem><simpara><link linkend="class-nautilus-python-menu-provider"><classname>MenuProvider</classname></link></simpara></listitem>
+        <listitem><simpara><link linkend="class-nautilus-python-properties-model-provider"><classname>PropertiesModelProvider</classname></link></simpara></listitem>
+    </itemizedlist>
+
+    <para>Your class can be derived from multiple providers.</para>
+
+    <para>Then the script needs to be installed to one of the paths nautilus-python looks for extensions to. That will be <filename>nautilus-python/extensions</filename> subdirectory of one of the following data directories:</para>
+    <orderedlist>
+        <listitem><simpara>the path in <envar>XDG_DATA_HOME</envar> environment variable , falling back to <filename><envar>$HOME</envar>/.local/share</filename> if not set</simpara></listitem>
+        <listitem><simpara> <varname>datadir</varname> configured when building nautilus-python (such as <filename>/usr/local/share</filename>)</simpara></listitem>
+        <listitem><simpara>Any path listed in the <envar>XDG_DATA_DIRS</envar> environment variable</simpara></listitem>
+    </orderedlist>
+
+    <para>After that, you will need to (re)start Nautilus, which will loads the nautilus-python C extension, which in turn will load all python extensions it can find.</para>
+
+    <note>
+        <para>Do not forget to have the extension class derive from a <classname>GObject.GObject</classname> in addition to the standard Nautilus classes.</para>
     </note>
 
     <note>
-<title>Extension Install Path for &gt;= v1.2.0</title>
-<para>As of nautilus-python 1.2.0, python extensions are loaded in the following order:
-
-  1. $XDG_DATA_HOME/nautilus-python/extensions
-  2. nautilus_prefix/share/nautilus-python/extensions
-  3. $XDG_DATA_DIRS/nautilus-python/extensions</para>
-    </note>
-    
-    <note>
-<title>A note about compatibility issues for nautilus-python 1.0</title>
-    <para>1. We no longer support the "import nautilus" command that previous versions used.  This is because
-    nautilus-python now directly uses Nautilus's annotations, which must be imported by the "from gi.repository import Nautilus" command.</para>
-    <para>2. The extension class must now derive itself from a gobject.GObject in addition to the standard Nautilus classes.</para>
-    <para>3. For now, some Nautilus class constructors require passing named arguments instead of a standard argument list.  This requirement may go away at some point.</para>
-    </note>
-
-    <note>
-        <title>Python3</title>
-        <para>As of nautilus-python v1.2.0, nautilus-python can be built to embed python3 instead of python2.  It uses the $PYTHON environment variable to determine which library to use.</para>
+        <para>For now, some Nautilus class constructors require passing named arguments instead of a standard argument list.  This requirement may go away at some point.</para>
     </note>
 
     <xi:include href="nautilus-python-overview-example.xml"/>
     <xi:include href="nautilus-python-overview-methods.xml"/>
 
 </chapter>
-

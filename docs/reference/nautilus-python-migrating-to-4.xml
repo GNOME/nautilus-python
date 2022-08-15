@@ -23,6 +23,9 @@
         <para>Subclass the <link linkend="class-nautilus-python-properties-model-provider"><classname>Nautilus.PropertiesModelProvider</classname></link> abstract class and have the <link linkend="method-nautilus-python-properties-model-provider--get_models"><methodname>get_models</methodname></link> method return the list of <link linkend="class-nautilus-python-properties-model"><classname>Nautilus.PropertiesModel</classname></link>, one for each properties page.</para>
     </simplesect>
 
-    <para>See the <ulink url="https://gitlab.gnome.org/GNOME/nautilus/-/merge_requests/927">relevant Nautilus change</ulink> for more context and the <ulink url="https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/11">corresponding nautilus-python update</ulink> for more migration examples.</para>
+    <simplesect id="nautilus-python-migrating-to-4-more">
+        <title>More information</title>
+            <para>See the <ulink url="https://gitlab.gnome.org/GNOME/nautilus/-/merge_requests/927">relevant Nautilus change</ulink> for more context and the <ulink url="https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/11">corresponding nautilus-python update</ulink> for more migration examples.</para>
+    </simplesect>
 </chapter>
 

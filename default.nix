@@ -75,6 +75,8 @@ in
 makeDerivation rec {
   name = "nautilus-python";
 
+  outputs = [ "out" "devdoc" ];
+
   src =
     let
       # Do not copy to the store paths listed in .gitignore files

@@ -1,0 +1,25 @@
+build:
+  stage: test
+  image: nixpkgs/nix:latest
+  script:
+    # Sandboxing would require privileged docker.
+    - mkdir -p /etc/nix
+    - echo 'sandbox = false' > /etc/nix/nix.conf
+    # Build the project including docs.
+    - nix-build -A all
+    - cp -r result-devdoc/share/gtk-doc/html/nautilus-python/ public/
+  artifacts:
+    paths:
+      - public/
+
+pages:
+  stage: deploy
+  dependencies:
+    - build
+  script:
+    - echo "Re-using public artifact from build job"
+  artifacts:
+    paths:
+      - public/
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

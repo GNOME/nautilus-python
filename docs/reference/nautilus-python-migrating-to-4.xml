@@ -40,6 +40,12 @@ else:
     </informalexample>
     </simplesect>
 
+    <simplesect id="nautilus-python-migrating-to-4-other-libraries">
+        <title>Direct use of GTK and other libraries</title>
+        <para>If you use GTK directly, e.g. to create dialogue windows, you will need to <ulink url="https://docs.gtk.org/gtk4/migrating-3to4.html">upgrade the code to GTK 4</ulink> as well, since Nautilus switched to GTK 4 and it is not possible to use multiple versions of GTK in the same process. Do not forget to replace <code>gi.require_version("Gtk", "3.0")</code> with <code>gi.require_version("Gtk", "4.0")</code>, then.</para>
+        <para>The other option is moving the window and dialogues into a separate program and having the extension just launch it. But unless the code base is very large, migrating to GTK 4 will probably be easier.</para>
+    </simplesect>
+
     <simplesect id="nautilus-python-migrating-to-4-more">
         <title>More information</title>
             <para>See the <ulink url="https://gitlab.gnome.org/GNOME/nautilus/-/merge_requests/927">relevant Nautilus change</ulink> for more context and the <ulink url="https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/11">corresponding nautilus-python update</ulink> for more migration examples.</para>

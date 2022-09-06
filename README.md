@@ -2,7 +2,7 @@
 
 This is an extension for Nautilus that allows further extending it with Python scripts with the help of Nautilus’s GObject API.
 
-For examples and documentation check the `examples/` subdirectory.
+Documentation, including an API reference, is available through the [Devhelp app](https://apps.gnome.org/app/org.gnome.Devhelp/), if you have `nautilus-python` package installed, or [on-line](https://gnome.pages.gitlab.gnome.org/nautilus-python/). For sample extensions, check the `examples/` subdirectory in the source distribution. Note that some distros move the documentation into a separate package.
 
 ## Requirements
 

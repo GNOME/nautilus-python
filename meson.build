@@ -1,7 +1,7 @@
 project(
   'nautilus-python',
   'c',
-  version: '4.0.alpha',
+  version: '4.0',
   meson_version: '>= 0.59.0',
 )
 

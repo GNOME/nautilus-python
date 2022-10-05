@@ -21,6 +21,7 @@ pygobject_minor_version = 0
 pygobject_micro_version = 0
 pygobject = dependency('pygobject-3.0', version: f'>= @pygobject_major_version@.@pygobject_minor_version@.@pygobject_micro_version@')
 libnautilus_extension = dependency('libnautilus-extension-4', version: '>= 43.beta')
+gmodule = dependency('gmodule-2.0', version: '>= 2.44')
 python_dep = python3.dependency(embed: true)
 
 nautilus_extension_dir = libnautilus_extension.get_variable('extensiondir', pkgconfig_define: ['libdir', libdir])

@@ -7,6 +7,7 @@ nautilus_python = shared_module(
   dependencies: [
     libnautilus_extension,
     pygobject,
+    gmodule,
     python_dep,
   ],
   include_directories: [

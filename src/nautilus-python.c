@@ -32,7 +32,6 @@
 static const GDebugKey nautilus_python_debug_keys[] = {
     {"misc", NAUTILUS_PYTHON_DEBUG_MISC},
 };
-static const guint nautilus_python_ndebug_keys = sizeof (nautilus_python_debug_keys) / sizeof (GDebugKey);
 NautilusPythonDebug nautilus_python_debug;
 
 static gboolean nautilus_python_init_python(void);
@@ -261,7 +260,7 @@ nautilus_module_initialize(GTypeModule *module) {
     if (env_string != NULL) {
         nautilus_python_debug = g_parse_debug_string(env_string,
                                                      nautilus_python_debug_keys,
-                                                     nautilus_python_ndebug_keys);
+                                                     G_N_ELEMENTS (nautilus_python_debug_keys));
         env_string = NULL;
     }
     

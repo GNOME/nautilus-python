@@ -319,6 +319,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
     NautilusPythonObject *object = (NautilusPythonObject*)provider;
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
     PyObject *py_ret = NULL;
+    gboolean is_full = FALSE;
     PyGILState_STATE state = pyg_gil_state_ensure();
 
     /* For Python extensions, we can't do assignment on the handle within Python itself,
@@ -337,35 +338,41 @@ nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
     CHECK_OBJECT(object);
 
     if (PyObject_HasAttrString(object->instance, "update_file_info_full")) {
+        is_full = TRUE;
         py_ret = PyObject_CallMethod(object->instance,
                                      METHOD_PREFIX "update_file_info_full", "(NNNN)",
                                      pygobject_new((GObject*)provider),
                                      py_handle,
                                      pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE),
                                      pygobject_new((GObject*)file));
-
-        HANDLE_RETVAL(py_ret);
-
-        if (!PyLong_Check(py_ret)
-            || (ret = PyLong_AsLong(py_ret)
-                , !(ret == NAUTILUS_OPERATION_COMPLETE
-                     || ret == NAUTILUS_OPERATION_FAILED
-                     || ret == NAUTILUS_OPERATION_IN_PROGRESS))) {
-            PyErr_SetString(PyExc_TypeError,
-                            METHOD_NAME "_full must return None or Nautilus.OperationResult value");
-            goto beach;
-        }
     }
     else if (PyObject_HasAttrString(object->instance, "update_file_info")) {
         py_ret = PyObject_CallMethod(object->instance,
                                      METHOD_PREFIX METHOD_NAME, "(N)",
                                      pygobject_new((GObject*)file));
+    }
+    else {
+        goto beach;
+    }
 
-        // Goes directly to beach on Py_None.
-        HANDLE_RETVAL(py_ret);
+    HANDLE_RETVAL(py_ret);
 
+    if (!PyLong_Check(py_ret)
+        || (ret = PyLong_AsLong(py_ret)
+            , !(ret == NAUTILUS_OPERATION_COMPLETE
+                 || ret == NAUTILUS_OPERATION_FAILED
+                 || ret == NAUTILUS_OPERATION_IN_PROGRESS))) {
+        ret = NAUTILUS_OPERATION_COMPLETE;
         PyErr_SetString(PyExc_TypeError,
-                        METHOD_NAME " must not return anything");
+                        METHOD_NAME " must return None or Nautilus.OperationResult value");
+        goto beach;
+    }
+
+    if (!is_full && ret == NAUTILUS_OPERATION_IN_PROGRESS) {
+        ret = NAUTILUS_OPERATION_COMPLETE;
+        PyErr_SetString(PyExc_TypeError,
+                        METHOD_NAME " cannot return Nautilus.OperationResult.IN_PROGRESS");
+        goto beach;
     }
 
 beach:

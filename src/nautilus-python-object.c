@@ -343,25 +343,30 @@ nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
                                      py_handle,
                                      pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE),
                                      pygobject_new((GObject*)file));
+
+        HANDLE_RETVAL(py_ret);
+
+        if (!PyLong_Check(py_ret)
+            || (ret = PyLong_AsLong(py_ret)
+                , !(ret == NAUTILUS_OPERATION_COMPLETE
+                     || ret == NAUTILUS_OPERATION_FAILED
+                     || ret == NAUTILUS_OPERATION_IN_PROGRESS))) {
+            PyErr_SetString(PyExc_TypeError,
+                            METHOD_NAME "_full must return None or Nautilus.OperationResult value");
+            goto beach;
+        }
     }
     else if (PyObject_HasAttrString(object->instance, "update_file_info")) {
         py_ret = PyObject_CallMethod(object->instance,
                                      METHOD_PREFIX METHOD_NAME, "(N)",
                                      pygobject_new((GObject*)file));
-    }
-    else {
-        goto beach;
-    }
-    
-    HANDLE_RETVAL(py_ret);
 
-    if (!PyLong_Check(py_ret)) {
+        // Goes directly to beach on Py_None.
+        HANDLE_RETVAL(py_ret);
+
         PyErr_SetString(PyExc_TypeError,
-                        METHOD_NAME " must return None or a int");
-        goto beach;
+                        METHOD_NAME " must not return anything");
     }
-
-    ret = PyLong_AsLong(py_ret);
 
 beach:
     free_pygobject_data(file, NULL);

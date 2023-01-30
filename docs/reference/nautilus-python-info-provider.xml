@@ -45,7 +45,7 @@
         <methodparam><parameter role="keyword">closure</parameter></methodparam>
         <methodparam><parameter role="keyword">provider</parameter></methodparam>
         <methodparam><parameter role="keyword">handle</parameter></methodparam>
-        <methodparam><parameter role="keyword">result</parameter><initializer>Nautilus.OperationResult.COMPLETE</initializer></methodparam>
+        <methodparam><parameter role="keyword">result</parameter></methodparam>
       </methodsynopsis>
     </classsynopsis>
   </refsect1>
@@ -201,7 +201,7 @@
             <methodparam><parameter role="keyword">closure</parameter></methodparam>
             <methodparam><parameter role="keyword">provider</parameter></methodparam>
             <methodparam><parameter role="keyword">handle</parameter></methodparam>
-            <methodparam><parameter role="keyword">result</parameter><initializer>Nautilus.OperationResult.COMPLETE</initializer></methodparam>
+            <methodparam><parameter role="keyword">result</parameter></methodparam>
           </methodsynopsis></programlisting>
 
           <variablelist>
@@ -219,8 +219,7 @@
             </varlistentry>
             <varlistentry>
 	            <term><parameter role="keyword">result</parameter>&nbsp;:</term>
-	            <listitem><simpara>an optional parameter.  If left out, <link linkend="enum-nautilus-python-operation-result--OPERATION_COMPLETE"><classname>Nautilus.OperationResult.COMPLETE</classname></link> is assumed.  
-	            Otherwise, you may pass any any of the <link linkend="enum-nautilus-python-operation-result"><classname>Nautilus.OperationResult</classname></link> enums.</simpara></listitem>
+	            <listitem><simpara>Any of the <link linkend="enum-nautilus-python-operation-result"><classname>Nautilus.OperationResult</classname></link> enums.</simpara></listitem>
             </varlistentry>
           </variablelist>
 

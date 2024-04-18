@@ -1,4 +1,4 @@
-## 4.0.1 (unreleased)
+## 4.0.1 (2024-04-19)
 
 - Fixed build failure due to underlinking. (https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/13)
 - Fixed build failure with Python 3.13 (Patrick Monnerat)

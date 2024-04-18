@@ -165,17 +165,11 @@ nautilus_python_init_python (void) {
         PyErr_Print();
         return FALSE;
     }
-    
-    debug("PySys_SetArgv");
-    wchar_t *argv[] = { L"nautilus", NULL };
-    PySys_SetArgv(1, argv);
-    if (PyErr_Occurred()) {
-        PyErr_Print();
-        return FALSE;
-    }
-    
-    debug("Sanitize the python search path");
-    PyRun_SimpleString("import sys; sys.path = [path for path in sys.path if path]");
+
+    debug("Sanitize the python search path and set sys.argv");
+    PyRun_SimpleString("import sys; "
+                       "sys.path = [path for path in sys.path if path]; "
+                       "sys.argv = ['nautilus']");
     if (PyErr_Occurred()) {
         PyErr_Print();
         return FALSE;

@@ -100,7 +100,7 @@ makeDerivation rec {
   buildInputs = with pkgs; [
     python3
     python3.pkgs.pygobject3
-    gnome.nautilus
+    nautilus
   ];
 
   inherit doCheck;

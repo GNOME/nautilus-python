@@ -1,5 +1,4 @@
 build:
-  stage: test
   image: nixpkgs/nix:latest
   script:
     # Build the project including docs.

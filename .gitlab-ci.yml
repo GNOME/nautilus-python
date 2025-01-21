@@ -2,9 +2,6 @@ build:
   stage: test
   image: nixpkgs/nix:latest
   script:
-    # Sandboxing would require privileged docker.
-    - mkdir -p /etc/nix
-    - echo 'sandbox = false' > /etc/nix/nix.conf
     # Build the project including docs.
     - nix-build -A all
     - cp -r result-devdoc/share/gtk-doc/html/nautilus-python/ public/

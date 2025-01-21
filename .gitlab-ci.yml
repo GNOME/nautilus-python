@@ -1,4 +1,4 @@
-build:
+build-nix-derivation:
   image: nixpkgs/nix:latest
   script:
     # Build the project including docs.
@@ -11,7 +11,7 @@ build:
 pages:
   stage: deploy
   dependencies:
-    - build
+    - build-nix-derivation
   script:
     - echo "Re-using public artifact from build job"
   artifacts:

@@ -21,6 +21,9 @@ pygobject_minor_version = 0
 pygobject_micro_version = 0
 pygobject = dependency('pygobject-3.0', version: f'>= @pygobject_major_version@.@pygobject_minor_version@.@pygobject_micro_version@')
 libnautilus_extension = dependency('libnautilus-extension-4', version: '>= 43.beta')
+if libnautilus_extension.version().version_compare('>= 49')
+  add_project_arguments('-DNAUTILUS_4_1_API', language: 'c')
+endif
 gmodule = dependency('gmodule-2.0', version: '>= 2.44')
 python_dep = python3.dependency(embed: true)
 

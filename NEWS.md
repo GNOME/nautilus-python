@@ -1,3 +1,8 @@
+## 4.1.0 (2025-10-04)
+
+- Added support for Nautilus 49 (https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/13)
+- Removed `MenuItem.icon`, `MenuItem.priority`, `MenuItem.tip` from docs. These were unsupported for a long time and now Nautilus officially deprecated them.
+
 ## 4.0.1 (2024-04-19)
 
 - Fixed build failure due to underlinking. (https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/13)

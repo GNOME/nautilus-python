@@ -20,7 +20,7 @@ in the current directory pointing to the in-store location.
 
 The dependencies are pinned, you can update them to latest versions with:
 
-    $ nix-shell --run 'niv update'
+    $ nix-shell --run 'npins update'
 
 How to tweak default arguments?
 *******************************
@@ -39,7 +39,7 @@ Or to speed up the build by not running the test suite:
 */
 
 {
-  # Nixpkgs instance, will default to one from Niv.
+  # Nixpkgs instance, will default to one from npins.
   pkgs ? null,
   # Whether to run tests when building File Roller using nix-build.
   doCheck ? true,
@@ -50,8 +50,8 @@ Or to speed up the build by not running the test suite:
 } @ args:
 
 let
-  # Pinned Nix dependencies (e.g. Nixpkgs) managed by Niv.
-  sources = import ./nix/sources.nix;
+  # Pinned Nix dependencies (e.g. Nixpkgs) managed by npins.
+  sources = import ./npins/default.nix;
 
   # Setting pkgs to the pinned version
   # when not overridden in args.
@@ -93,7 +93,7 @@ makeDerivation rec {
     docbook-xsl-nons
     docbook_xml_dtd_412
   ] ++ lib.optionals shell [
-    niv
+    npins
   ]);
 
   # Dependencies for host platform

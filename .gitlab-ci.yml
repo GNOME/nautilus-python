@@ -2,23 +2,22 @@ include:
   - component: gitlab.gnome.org/GNOME/citemplates/release-service@master
     inputs:
       dist-job-name: "build-and-test"
-      tarball-artifact-path: "${TARBALL_ARTIFACT_DIR}/${CI_PROJECT_NAME}-${CI_COMMIT_TAG}.tar.xz"
-
-variables:
-  MESON_BUILD_DIR: _build
-  TARBALL_ARTIFACT_DIR: "${MESON_BUILD_DIR}/meson-dist"
 
 build-and-test:
   image: nixpkgs/nix:latest
+  variables:
+    MESON_BUILD_DIR: _build
   script:
     - nix-shell --run "meson setup '${MESON_BUILD_DIR}'"
     - nix-shell --run "meson compile -C '${MESON_BUILD_DIR}'"
     - nix-shell --run "meson test -C '${MESON_BUILD_DIR}'"
     - nix-shell --run "meson dist -C '${MESON_BUILD_DIR}' --include-subprojects"
+    - cp -r "${MESON_BUILD_DIR}/meson-dist/" "${CI_PROJECT_DIR}/public-dist/"
   artifacts:
-    name: "Tarball"
+    name: "${CI_JOB_NAME}-${CI_COMMIT_REF_NAME}"
+    when: "always"
     paths:
-      - "${TARBALL_ARTIFACT_DIR}/"
+      - "public-dist"
 
 build-nix-derivation:
   image: nixpkgs/nix:latest

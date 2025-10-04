@@ -1,0 +1,5 @@
+# Meson
+_build/
+
+# Nix
+result*

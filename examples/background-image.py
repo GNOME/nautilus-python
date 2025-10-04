@@ -42,7 +42,6 @@ class BackgroundImageExtension(GObject.GObject, Nautilus.MenuProvider):
         item = Nautilus.MenuItem(
             name="Nautilus::set_background_image",
             label="Use as background image",
-            tip="Set the current image as a background image",
         )
         item.connect("activate", self.menu_activate_cb, file)
 

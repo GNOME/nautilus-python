@@ -26,8 +26,6 @@
             <methodname><link linkend="constructor-nautilus-menu-item">Nautilus.MenuItem</link></methodname>
             <methodparam><parameter role="keyword">name</parameter></methodparam>
             <methodparam><parameter role="keyword">label</parameter></methodparam>
-            <methodparam><parameter role="keyword">tooltip</parameter></methodparam>
-            <methodparam><parameter role="keyword">icon</parameter></methodparam>
         </constructorsynopsis>
 
         <methodsynopsis language="python">
@@ -85,12 +83,6 @@
           <tbody>
       
             <row valign="top">
-              <entry>"<link linkend="property-nautilus-python-menu-item--icon">icon</link>"</entry>
-              <entry>Name of the icon to display in the menu item.  Default value: None</entry>
-              <entry>Read-Write</entry>
-            </row>
-      
-            <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--label">label</link>"</entry>
               <entry>The label to display to the user.  Default value: None</entry>
               <entry>Read-Write</entry>
@@ -109,20 +101,8 @@
             </row>
       
             <row valign="top">
-              <entry>"<link linkend="property-nautilus-python-menu-item--priority">priority</link>"</entry>
-              <entry>Whether or not to show priority text in toolbars.  Default value: True</entry>
-              <entry>Read-Write</entry>
-            </row>
-      
-            <row valign="top">
               <entry>"<link linkend="property-nautilus-python-menu-item--sensitive">sensitive</link>"</entry>
               <entry>Whether or not the menu item is sensitive.  Default value: True</entry>
-              <entry>Read-Write</entry>
-            </row>
-
-            <row valign="top">
-              <entry>"<link linkend="property-nautilus-python-menu-item--tip">tip</link>"</entry>
-              <entry>The tooltip for the menu item.  Default value: None</entry>
               <entry>Read-Write</entry>
             </row>
 
@@ -167,8 +147,6 @@
         <methodname>Nautilus.MenuItem</methodname>
         <methodparam><parameter role="keyword">name</parameter></methodparam>
         <methodparam><parameter role="keyword">label</parameter></methodparam>
-        <methodparam><parameter role="keyword">tooltip</parameter></methodparam>
-        <methodparam><parameter role="keyword">icon</parameter></methodparam>
   </constructorsynopsis></programlisting>
     
   <variablelist>
@@ -179,14 +157,6 @@
     <varlistentry>
 	    <term><parameter role="keyword">label</parameter>&nbsp;:</term>
 	    <listitem><simpara>the user-visible label for the item</simpara></listitem>
-    </varlistentry>
-    <varlistentry>
-	    <term><parameter role="keyword">tooltip</parameter>&nbsp;:</term>
-	    <listitem><simpara>the user-visible tooltip for the item</simpara></listitem>
-    </varlistentry>
-    <varlistentry>
-	    <term><parameter role="keyword">icon</parameter>&nbsp;:</term>
-	    <listitem><simpara>Name of the icon to display in the item</simpara></listitem>
     </varlistentry>
   </variablelist>
 

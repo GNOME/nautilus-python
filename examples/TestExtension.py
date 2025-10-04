@@ -26,7 +26,6 @@ class TestExtension(GObject.GObject, Nautilus.MenuProvider):
         item = Nautilus.MenuItem(
             name="SimpleMenuExtension::Show_File_Name",
             label="Showing %s" % file.get_name(),
-            tip="Showing %s" % file.get_name(),
         )
         item.connect("activate", self.menu_activate_cb, file)
 

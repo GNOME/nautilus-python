@@ -105,7 +105,8 @@ nautilus_python_load_file(GTypeModule *type_module,
 
 static void
 nautilus_python_load_dir (GTypeModule *module, 
-                          const char  *dirname) {
+                          const char  *dirname,
+                          GHashTable  *loaded_modules) {
     GDir *dir;
     const char *name;
     gboolean initialized = FALSE;
@@ -120,6 +121,9 @@ nautilus_python_load_dir (GTypeModule *module,
         if (g_str_has_suffix(name, ".py")) {
             size_t len = strlen (name) - 3;
             g_autofree char *modulename = g_strndup (name, len);
+
+            if (g_hash_table_contains(loaded_modules, modulename))
+                continue;
 
             if (!initialized) {
                 PyObject *sys_path, *py_path;
@@ -141,6 +145,7 @@ nautilus_python_load_dir (GTypeModule *module,
             }
 
             nautilus_python_load_file(module, modulename);
+            g_hash_table_add(loaded_modules, g_steal_pointer (&modulename));
         }
     }    
 
@@ -257,10 +262,14 @@ nautilus_python_check_all_directories(GTypeModule *module) {
         temp++;
     }
 
+    GHashTable *loaded_modules = g_hash_table_new_full(g_str_hash, g_str_equal,
+                                                      g_free, NULL);
+
     for (GList *l = dirs; l != NULL; l = l->next) {
-        nautilus_python_load_dir(module, l->data);
+        nautilus_python_load_dir(module, l->data, loaded_modules);
     }
 
+    g_hash_table_destroy (loaded_modules);
     g_list_free_full (dirs, g_free);
 }
 

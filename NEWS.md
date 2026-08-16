@@ -1,3 +1,7 @@
+## 4.2.0 (unreleased)
+
+- Fixed Python extensions not loading when another `python3` of a matching version precedes the system one in `PATH` (Peter Bittner)
+
 ## 4.1.0 (2025-10-04)
 
 - Added support for Nautilus 49 (https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/13)

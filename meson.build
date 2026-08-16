@@ -31,6 +31,7 @@ nautilus_extension_dir = libnautilus_extension.get_variable('extensiondir', pkgc
 
 py_so_filename = python3.get_variable('INSTSONAME')
 python_libpath = python3.get_variable('LIBDIR') / py_so_filename
+python_prefix = python3.get_variable('prefix')
 
 conf = configuration_data()
 conf.set_quoted('DATADIR', datadir)
@@ -38,6 +39,7 @@ conf.set('PYGOBJECT_MAJOR_VERSION', pygobject_major_version)
 conf.set('PYGOBJECT_MINOR_VERSION', pygobject_minor_version)
 conf.set('PYGOBJECT_MICRO_VERSION', pygobject_micro_version)
 conf.set_quoted('PYTHON_LIBPATH', python_libpath)
+conf.set_quoted('PYTHON_PREFIX', python_prefix)
 
 configure_file(
   output: 'config.h',
@@ -68,5 +70,6 @@ pkg.generate(
 summary({
   'PyGObject Version': 'pygobject-3.0',
   'Python Library': python_libpath,
+  'Python Prefix': python_prefix,
   'Documentation': get_option('docs'),
 })

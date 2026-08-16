@@ -158,10 +158,19 @@ nautilus_python_init_python (void) {
     if (!libpython)
         g_warning("g_module_open libpython failed: %s", g_module_error());
 
-    debug("Py_Initialize");
-    Py_Initialize();
-    if (PyErr_Occurred()) {
-        PyErr_Print();
+    debug("Py_InitializeFromConfig " PYTHON_PREFIX);
+    PyConfig config;
+    PyStatus status;
+
+    PyConfig_InitPythonConfig(&config);
+    PyConfig_SetBytesString(&config, &config.home, PYTHON_PREFIX);
+
+    status = Py_InitializeFromConfig(&config);
+    PyConfig_Clear(&config);
+
+    if (PyStatus_Exception(status)) {
+        g_warning("Py_InitializeFromConfig failed: %s",
+                  status.err_msg != NULL ? status.err_msg : "unknown error");
         return FALSE;
     }
 

@@ -136,6 +136,8 @@ nautilus_python_load_dir (GTypeModule *module,
                 py_path = PyUnicode_FromString(dirname);
                 PyList_Insert(sys_path, 0, py_path);
                 Py_DECREF(py_path);
+
+                initialized = TRUE;
             }
 
             nautilus_python_load_file(module, modulename);

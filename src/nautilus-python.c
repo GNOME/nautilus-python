@@ -255,11 +255,8 @@ nautilus_python_check_all_directories(GTypeModule *module) {
         temp++;
     }
 
-    dirs = g_list_first(dirs);
-    while (dirs != NULL) {
-        gchar *dir = dirs->data;
-        nautilus_python_load_dir(module, dir);
-        dirs = dirs->next;
+    for (GList *l = dirs; l != NULL; l = l->next) {
+        nautilus_python_load_dir(module, l->data);
     }
 
     g_list_free_full (dirs, g_free);

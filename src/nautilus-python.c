@@ -251,24 +251,20 @@ nautilus_python_check_all_directories(GTypeModule *module) {
     // Check all system data dirs 
     const char *const *temp = g_get_system_data_dirs();
     while (*temp != NULL) {
-        char *dir = g_build_filename(*temp, "nautilus-python", "extensions", NULL);
+        g_autofree char *dir = g_build_filename(*temp, "nautilus-python", "extensions", NULL);
         if (g_strcmp0(dir, prefix_extension_dir) != 0) {
-            dirs = g_list_append(dirs, dir);
-        } else {
-            g_free (dir);
+            dirs = g_list_append(dirs, g_steal_pointer (&dir));
         }
 
         temp++;
     }
 
-    GHashTable *loaded_modules = g_hash_table_new_full(g_str_hash, g_str_equal,
-                                                      g_free, NULL);
+    g_autoptr (GHashTable) loaded_modules = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
 
     for (GList *l = dirs; l != NULL; l = l->next) {
         nautilus_python_load_dir(module, l->data, loaded_modules);
     }
 
-    g_hash_table_destroy (loaded_modules);
     g_list_free_full (dirs, g_free);
 }
 

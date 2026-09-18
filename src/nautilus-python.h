@@ -17,8 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef NAUTILUS_PYTHON_H
-#define NAUTILUS_PYTHON_H
+#pragma once
 
 #include <glib-object.h>
 #include <glib/gprintf.h>
@@ -66,5 +65,3 @@ extern PyTypeObject *_PyNautilusPropertiesModelProvider_Type;
 
 extern PyTypeObject *_PyNautilusOperationHandle_Type;
 #define PyNautilusOperationHandle_Type (*_PyNautilusOperationHandle_Type)
-
-#endif /* NAUTILUS_PYTHON_H */

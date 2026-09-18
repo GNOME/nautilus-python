@@ -17,8 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef NAUTILUS_PYTHON_OBJECT_H
-#define NAUTILUS_PYTHON_OBJECT_H
+#pragma once
 
 #include <Python.h>
 #include <glib-object.h>
@@ -41,5 +40,3 @@ struct _NautilusPythonObjectClass {
 GType nautilus_python_object_get_type (GTypeModule *module, PyObject *type);
 
 G_END_DECLS
-
-#endif

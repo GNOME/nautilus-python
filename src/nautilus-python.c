@@ -64,7 +64,7 @@ np_init_pygobject(void) {
 
 static void
 nautilus_python_load_file(GTypeModule *type_module, 
-                          const gchar *filename) {
+                          const char *filename) {
     PyObject *main_module, *main_locals, *locals, *key, *value;
     PyObject *module;
     GType gtype;
@@ -245,14 +245,13 @@ nautilus_python_check_all_directories(GTypeModule *module) {
 
     // If nautilus is built in a non-standard prefix
     // Check nautilus prefix's DATADIR
-    gchar *prefix_extension_dir = DATADIR "/nautilus-python/extensions";
+    char *prefix_extension_dir = DATADIR "/nautilus-python/extensions";
     dirs = g_list_append(dirs, g_strdup (prefix_extension_dir));
 
     // Check all system data dirs 
-    const gchar *const *temp = g_get_system_data_dirs();
+    const char *const *temp = g_get_system_data_dirs();
     while (*temp != NULL) {
-        gchar *dir = g_build_filename(*temp,
-            "nautilus-python", "extensions", NULL);
+        char *dir = g_build_filename(*temp, "nautilus-python", "extensions", NULL);
         if (g_strcmp0(dir, prefix_extension_dir) != 0) {
             dirs = g_list_append(dirs, dir);
         } else {
@@ -275,7 +274,7 @@ nautilus_python_check_all_directories(GTypeModule *module) {
 
 void
 nautilus_module_initialize(GTypeModule *module) {
-    const gchar *env_string;
+    const char *env_string;
 
     env_string = g_getenv("NAUTILUS_PYTHON_DEBUG");
     if (env_string != NULL) {

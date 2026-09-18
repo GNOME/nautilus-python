@@ -237,35 +237,27 @@ nautilus_python_init_python (void) {
 
 static void
 nautilus_python_check_all_directories(GTypeModule *module) {
-    GList *dirs = NULL;
+    g_autoptr (GHashTable) loaded_modules = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
 
     // Check ~/.local/share first
-    dirs = g_list_append(dirs, g_build_filename(g_get_user_data_dir(), 
-        "nautilus-python", "extensions", NULL));
+    g_autofree char* user_dir = g_build_filename(g_get_user_data_dir(), "nautilus-python", "extensions", NULL);
+    nautilus_python_load_dir(module, user_dir, loaded_modules);
 
     // If nautilus is built in a non-standard prefix
     // Check nautilus prefix's DATADIR
     char *prefix_extension_dir = DATADIR "/nautilus-python/extensions";
-    dirs = g_list_append(dirs, g_strdup (prefix_extension_dir));
+    nautilus_python_load_dir(module, prefix_extension_dir, loaded_modules);
 
     // Check all system data dirs 
     const char *const *temp = g_get_system_data_dirs();
     while (*temp != NULL) {
         g_autofree char *dir = g_build_filename(*temp, "nautilus-python", "extensions", NULL);
         if (g_strcmp0(dir, prefix_extension_dir) != 0) {
-            dirs = g_list_append(dirs, g_steal_pointer (&dir));
+            nautilus_python_load_dir(module, dir, loaded_modules);
         }
 
         temp++;
     }
-
-    g_autoptr (GHashTable) loaded_modules = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
-
-    for (GList *l = dirs; l != NULL; l = l->next) {
-        nautilus_python_load_dir(module, l->data, loaded_modules);
-    }
-
-    g_list_free_full (dirs, g_free);
 }
 
 void

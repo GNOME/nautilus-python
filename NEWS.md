@@ -2,6 +2,7 @@
 
 - Fixed Python extensions not loading when another `python3` of a matching version precedes the system one in `PATH` (Peter Bittner)
 - Fixed extensions reachable from more than one search directory being registered once per directory, showing duplicate menu items and columns (Peter Bittner)
+- Fixed Meson deprecation requiring at least Meson 0.62.0 (https://gitlab.gnome.org/GNOME/nautilus-python/-/merge_requests/20)
 
 ## 4.1.0 (2025-10-04)
 

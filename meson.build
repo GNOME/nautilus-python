@@ -2,7 +2,7 @@ project(
   'nautilus-python',
   'c',
   version: '4.1.0',
-  meson_version: '>= 0.59.0',
+  meson_version: '>= 0.62.0',
 )
 
 gnome = import('gnome', required: get_option('docs'))
@@ -58,10 +58,6 @@ pkg.generate(
   name: 'nautilus-python',
   description: 'Nautilus-Python Components',
   variables: [
-    # TODO: Remove when bumping minimum Meson version to 0.62
-    # https://mesonbuild.com/Release-notes-for-0-62-0.html#pkgconfiggenerate-will-now-include-variables-for-builtin-directories-when-referenced
-    f'prefix=@prefix@',
-    'datadir=${prefix}/share',
     'pythondir=${datadir}/nautilus-python/extensions',
   ],
   dataonly: true,

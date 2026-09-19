@@ -250,13 +250,11 @@ nautilus_python_check_all_directories(GTypeModule *module) {
 
     // Check all system data dirs 
     const char *const *temp = g_get_system_data_dirs();
-    while (*temp != NULL) {
+    for (; *temp != NULL; temp++) {
         g_autofree char *dir = g_build_filename(*temp, "nautilus-python", "extensions", NULL);
         if (g_strcmp0(dir, prefix_extension_dir) != 0) {
             nautilus_python_load_dir(module, dir, loaded_modules);
         }
-
-        temp++;
     }
 }
 

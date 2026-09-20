@@ -1,4 +1,4 @@
-## 4.2.0 (unreleased)
+## 4.2.0 (2026-09-20)
 
 - Fixed Python extensions not loading when another `python3` of a matching version precedes the system one in `PATH` (Peter Bittner)
 - Fixed extensions reachable from more than one search directory being registered once per directory, showing duplicate menu items and columns (Peter Bittner)

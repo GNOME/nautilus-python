@@ -314,12 +314,15 @@ nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
                                          NautilusFileInfo             *file,
                                          GClosure                     *update_complete,
                                          NautilusOperationHandle   **handle) {
+    static guint next_handle = 0;
     NautilusPythonObject *object = (NautilusPythonObject*)provider;
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
     PyObject *py_ret = NULL;
     PyGILState_STATE state = pyg_gil_state_ensure();
 
     debug_enter();
+
+    *handle = GUINT_TO_POINTER (++next_handle);
 
     CHECK_OBJECT(object);
 

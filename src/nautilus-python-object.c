@@ -382,6 +382,8 @@ nautilus_python_object_finalize (GObject *object) {
 
     if (((NautilusPythonObject *)object)->instance != NULL)
         Py_DECREF(((NautilusPythonObject *)object)->instance);
+
+    G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

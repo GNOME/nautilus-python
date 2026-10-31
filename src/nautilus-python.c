@@ -59,6 +59,7 @@ np_init_pygobject(void) {
         return FALSE;
     }
 
+    Py_DECREF (gobject);
     return TRUE;
 }
 
@@ -99,6 +100,8 @@ nautilus_python_load_file(GTypeModule *type_module,
             g_array_append_val(all_types, gtype);
         }
     }
+
+    Py_DECREF(module);
     
     debug("Loaded python modules");
 }
@@ -215,6 +218,7 @@ nautilus_python_init_python (void) {
     _PyNautilus##x##_Type = (PyTypeObject *)PyObject_GetAttrString(nautilus, y); \
     if (_PyNautilus##x##_Type == NULL) { \
         PyErr_Print(); \
+        Py_DECREF(nautilus); \
         return FALSE; \
     }
 
@@ -230,6 +234,8 @@ nautilus_python_init_python (void) {
     IMPORT(OperationHandle, "OperationHandle");
 
 #undef IMPORT
+
+    Py_DECREF(nautilus);
     
     return TRUE;
 }

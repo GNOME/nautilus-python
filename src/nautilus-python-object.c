@@ -87,6 +87,7 @@ static GObjectClass *parent_class;
             py_item = (PyGObject*)PySequence_GetItem (py_ret, i);      \
             if (!pygobject_check(py_item, &Py##type##_Type))           \
             {                                                          \
+                Py_XDECREF(py_item);                                   \
                 PyErr_SetString(PyExc_TypeError,                       \
                                 METHOD_NAME                            \
                                 " must return a sequence of "          \
@@ -288,20 +289,21 @@ static void
 nautilus_python_object_cancel_update (NautilusInfoProvider         *provider,
                                       NautilusOperationHandle     *handle) {
     NautilusPythonObject *object = (NautilusPythonObject*)provider;
+    PyObject *py_ret = NULL;
     PyGILState_STATE state = pyg_gil_state_ensure();
-    PyObject *py_handle = nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, handle, FALSE);
 
     debug_enter();
 
     CHECK_OBJECT(object);
     CHECK_METHOD_NAME(object->instance);
 
-    PyObject_CallMethod(object->instance,
+    py_ret = PyObject_CallMethod(object->instance,
                                  METHOD_PREFIX METHOD_NAME, "(NN)",
                                  pygobject_new((GObject*)provider),
-                                 py_handle);
+                                 nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, handle, FALSE));
 
 beach:
+    Py_XDECREF(py_ret);
     pyg_gil_state_release(state);
 }
 #undef METHOD_NAME
@@ -316,7 +318,6 @@ nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
     NautilusOperationResult ret = NAUTILUS_OPERATION_COMPLETE;
     PyObject *py_ret = NULL;
     PyGILState_STATE state = pyg_gil_state_ensure();
-    PyObject *py_handle = nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, *handle, FALSE);
 
     debug_enter();
 
@@ -326,7 +327,7 @@ nautilus_python_object_update_file_info (NautilusInfoProvider         *provider,
         py_ret = PyObject_CallMethod(object->instance,
                                      METHOD_PREFIX "update_file_info_full", "(NNNN)",
                                      pygobject_new((GObject*)provider),
-                                     py_handle,
+                                     nautilus_python_boxed_new (_PyNautilusOperationHandle_Type, *handle, FALSE),
                                      pyg_boxed_new(G_TYPE_CLOSURE, update_complete, TRUE, TRUE),
                                      pygobject_new((GObject*)file));
     }

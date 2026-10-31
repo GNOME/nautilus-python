@@ -16,6 +16,9 @@ datadir = prefix / get_option('datadir')
 docdir = datadir / 'doc' / meson.project_name()
 
 python3 = python.find_installation('python3')
+if not python3.language_version().version_compare('>= 3.8')
+  error('Python >= 3.8 is required, found @0@'.format(python3.language_version()))
+endif
 pygobject_major_version = 3
 pygobject_minor_version = 0
 pygobject_micro_version = 0

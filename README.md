@@ -7,7 +7,7 @@ Documentation, including an API reference, is available through the [Devhelp app
 ## Requirements
 
 - Nautilus ≥ 43.beta
-- Python 3.x
+- Python ≥ 3.8
 - PyGObject 3
 
 ## Running Extensions
